@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c3ab1485b4abe04b9058345c22322e5, type: 3}
+  m_Name: BasicFloorInformation
+  m_EditorClassIdentifier: 
+  unusedDoor: {fileID: 1959948503372102, guid: 6a202c7508251cc4bb10597f620d6511, type: 2}
+  closedDoor: {fileID: 1401143226448836, guid: c5327f70876505f45873236a71837335, type: 2}
+  rooms:
+  - {fileID: 114620514077019728, guid: 3d37da9f75bcf25419d2dee30ef1e93d, type: 2}
+  - {fileID: 114811830065623058, guid: fd075a1939b32364780f01f674719a12, type: 2}
+  spawnRooms:
+  - {fileID: 114636155154472172, guid: ae9a2f95337434146934b8201fd894c8, type: 2}

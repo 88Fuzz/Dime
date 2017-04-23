@@ -24,9 +24,10 @@ public class Spawner : MonoBehaviour
 
     private Vector3 GetRandomPosition()
     {
-        TODO have a seeded random and a "don't care" random
+        return new Vector3();
+        //TODO have a seeded random and a "don't care" random
         //TODO figure out what to do with this y position
-        return new Vector3(GetRandomFloatInRange(spawnCenter.x, spawnSize.x), .5f,
-            GetRandomFloatInRange(spawnCenter.z, spawnSize.z));
+        //return new Vector3(GetRandomFloatInRange(spawnCenter.x, spawnSize.x), .5f,
+            //GetRandomFloatInRange(spawnCenter.z, spawnSize.z));
     }
 }

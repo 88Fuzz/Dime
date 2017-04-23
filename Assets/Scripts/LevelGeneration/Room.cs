@@ -68,7 +68,7 @@ public class Room : MonoBehaviour
     {
         for(int i = 0; i < tries; i++)
         {
-            Door door = doors[Random.Range(0, doors.Length)];
+            Door door = doors[LevelRandomNumberGenerator.levelRNG.GetValueInRange(0, doors.Length)];
             if (!door.isConnected)
                 return door;
         }

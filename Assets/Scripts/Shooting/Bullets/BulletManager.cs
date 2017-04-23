@@ -23,13 +23,11 @@ public class BulletManager : ScriptableObject
     public BulletVelocityModifier bulletVelocityModifier;
     public BulletSizeModifier bulletSizeModifier;
 
-    private System.Random random;
     private int bulletChanceCount;
     private List<BulletRange> probabilityRange;
 
     public void OnEnable()
     {
-        random = new System.Random();
         probabilityRange = new List<BulletRange>();
         CalculateBulletChances();
     }
@@ -82,7 +80,7 @@ public class BulletManager : ScriptableObject
 
     private Bullet GetRandomBullet()
     {
-        int bulletNumber = random.Next(bulletChanceCount) + 1;
+        int bulletNumber = RandomNumberGeneratorUtils.unityRNG.GetValueInRange(0, bulletChanceCount) + 1;
 
         foreach(BulletRange bulletRange in probabilityRange)
         {

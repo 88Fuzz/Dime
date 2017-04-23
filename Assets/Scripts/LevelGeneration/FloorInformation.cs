@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /*
- * Holder class of all Level generation information, like Rooms and SpawnRooms and everything else. WOOOOO
+ * Holder class of all Level generation information, like Rooms and SpawnRooms and everything else.
  */
 [CreateAssetMenu(fileName = "FloorInformation", menuName = "ScriptableObjects/Rooms/FloorInformation")]
 public class FloorInformation : ScriptableObject 
@@ -14,13 +14,13 @@ public class FloorInformation : ScriptableObject
 
     public Room GetRandomSpawnRoom()
     {
-        int position = Random.Range(0, spawnRooms.Count);
+        int position = LevelRandomNumberGenerator.levelRNG.GetValueInRange(0, spawnRooms.Count);
         return spawnRooms[position];
     }
 
     public Room GetRandomRoom()
     {
-        int position = Random.Range(0, rooms.Count);
+        int position = LevelRandomNumberGenerator.levelRNG.GetValueInRange(0, rooms.Count);
         return rooms[position];
     }
 }

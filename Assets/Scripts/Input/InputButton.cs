@@ -40,7 +40,6 @@ public class InputButton
     public static readonly InputButton MOUSE_Y = new InputButton("Mouse Y");
     //Miscellaneous
     public static readonly InputButton CONSOLE = new InputButton("Console");
-    public static readonly InputButton RANDOM = new InputButton("Random");
     public static readonly InputButton NONE = new InputButton("N/A");
     //DialogueOption Selection
     public static readonly InputButton DIALOGUE_UP = new InputButton("DialogueUp");

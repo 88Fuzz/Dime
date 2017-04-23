@@ -2,21 +2,23 @@
 using System.Globalization;
 using System.Text;
 
-public class LevelRandomNumbreGenerator
+/*
+ * The LevelRandomNumberGenerator should only be used when generating the level as it's based on a user input seed. 
+ * Level generation should include loot, rooms, and mobs.
+ */
+public class LevelRandomNumberGenerator
 {
     private static readonly int SEED_SIZE = 9;
     private static readonly int DASH_LOCATION = 4;
-    public static readonly LevelRandomNumbreGenerator levelRNG;
+    public static readonly LevelRandomNumberGenerator levelRNG = new LevelRandomNumberGenerator();
 
     private Random random;
 
-    public LevelRandomNumbreGenerator()
+    public LevelRandomNumberGenerator()
     {
         float randoValue = UnityEngine.Random.value;
         uint seed = BitConverter.ToUInt32(BitConverter.GetBytes(randoValue), 0);
         string seedString = seed.ToString("X");
-        //TODO will this shit add zeros to the front?
-        //string seedString = seed.ToString("X8");
 
         StringBuilder builder = new StringBuilder(SEED_SIZE);
         for(int i = 0; i < SEED_SIZE - 1 - seedString.Length; i++)
@@ -25,7 +27,6 @@ public class LevelRandomNumbreGenerator
 
         builder.Insert(DASH_LOCATION, "-");
 
-        this shit really needs to be testing mother fucker!
         Seed(builder.ToString());
     }
 
@@ -45,5 +46,27 @@ public class LevelRandomNumbreGenerator
 
         random = new Random(seedValue);
         return true;
+    }
+
+    /*
+     * Return a random number in the range [min, max). If min > max, max is returned
+     */
+    public float GetValueInRange(float min, float max)
+    {
+        if (min >= max)
+            return max;
+
+        return (float) (random.NextDouble() * (max - min)) + min;
+    }
+
+    /*
+     * Return a random number in the range [min, max). If min > max, max is returned
+     */
+    public int GetValueInRange(int min, int max)
+    {
+        if (min >= max)
+            return max;
+
+        return random.Next(min, max);
     }
 }

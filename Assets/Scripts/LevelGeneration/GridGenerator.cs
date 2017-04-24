@@ -1,41 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 /*
  * This code is based off of https://github.com/DMeville/Unity3d-Dungeon-Generator
  * TODO add more stuff here
  */
-public class GridGenerator : MonoBehaviour
+public class GridGenerator : EditorDebug 
 {
     public Vector3 generatorSize = new Vector3(1f, 1f, 1f);
     public GameObject[] gridCells;
-
-    private static EditorDebugInfo gizmoDebug = EditorDebugInfo.DEBUG;
-
     public GameObject gameObjectContainer;
     public Bounds bounds;
-
-    public void OnDrawGizmos()
-    {
-        if (gizmoDebug == EditorDebugInfo.INFO)
-        {
-            if (bounds == null) return;
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireCube(bounds.center, bounds.size);
-        }
-        else if(gizmoDebug == EditorDebugInfo.DEBUG)
-        {
-            if (gameObjectContainer == null)
-            {
-                return;
-            }
-            for (int i = 0; i < gameObjectContainer.transform.childCount; i++)
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawWireCube(gameObjectContainer.transform.GetChild(i).transform.position, Vector3.one * Grid.CELL_SCALE);
-            }
-        }
-    }
-
 
     [ContextMenu("Generate Grid")]
     public void GenerateGrid()
@@ -120,14 +95,6 @@ public class GridGenerator : MonoBehaviour
         bounds = new Bounds((min + max) / 2f, ((max + size) - (min - size)));
     }
 
-    [ContextMenu("Cycle Gizmo Mode")]
-    public void CycleGizmoToDraw()
-    {
-        gizmoDebug++;
-        if (gizmoDebug == EditorDebugInfo.MAX)
-            gizmoDebug = 0;
-    }
-
     //TODO, I don't think this method is needed??
     public void RecalculateBounds()
     {
@@ -157,5 +124,22 @@ public class GridGenerator : MonoBehaviour
 
         Vector3 size = new Vector3(0.5f * Grid.CELL_SCALE, 0.5f * Grid.CELL_SCALE, 0.5f * Grid.CELL_SCALE);
         bounds = new Bounds((min + max) / 2f, ((max + size) - (min - size)));
+    }
+
+    protected override void DrawInfoGizmos()
+    {
+        if (bounds == null)
+            return;
+        Gizmos.DrawWireCube(bounds.center, bounds.size);
+    }
+
+    protected override void DrawDebugGizmos()
+    {
+        if (gameObjectContainer == null)
+            return;
+        for (int i = 0; i < gameObjectContainer.transform.childCount; i++)
+        {
+            Gizmos.DrawWireCube(gameObjectContainer.transform.GetChild(i).transform.position, Vector3.one * Grid.CELL_SCALE);
+        }
     }
 }

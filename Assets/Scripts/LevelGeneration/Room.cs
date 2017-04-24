@@ -9,6 +9,7 @@ public class Room : MonoBehaviour
     //Called when the player leaves the room
     public RoomClearAction[] clearActions;
     public Door[] doors;
+    public Spawner[] spawners;
     public Transform spawnPosition = null;
     public Room nextRoom = null;
 
@@ -17,8 +18,7 @@ public class Room : MonoBehaviour
     //ActiveRoom means the player is currently in the room.
     private bool activeRoom = false;
 
-    // Update is called once per frame
-    public void Update()
+    public void FixedUpdate()
     {
         if (!activeRoom)
             return;

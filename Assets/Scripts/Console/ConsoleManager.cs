@@ -28,7 +28,7 @@ public class ConsoleManager : MonoBehaviour
         textField.text = "";
         canvas.gameObject.SetActive(false);
         ActionManager actionManager = Singleton<ActionManager>.Instance;
-        actionManager.registerStartButtonListener(InputButton.CONSOLE, Enableconsole);
+        actionManager.RegisterStartButtonListener(InputButton.CONSOLE, Enableconsole);
     }
 
     public void Enableconsole(InputButton inputButton)

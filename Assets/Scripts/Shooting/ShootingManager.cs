@@ -21,7 +21,7 @@ public class ShootingManager : MonoBehaviour
 
         //TODO, I like the idea of different ActionManagerss existing, So one may act on button clicks, while another acts on a X second tick
         ActionManager actionManager = Singleton<ActionManager>.Instance;
-        actionManager.registerContinuousButtonListener(InputButton.PRIMARY_ATTACK, FireBullet);
+        actionManager.RegisterContinuousButtonListener(InputButton.PRIMARY_ATTACK, FireBullet);
     }
 	
 	public void Update()

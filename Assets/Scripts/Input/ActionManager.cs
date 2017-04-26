@@ -13,6 +13,31 @@ using System.Collections.Generic;
  */
 public class ActionManager : MonoBehaviour
 {
+    private enum ButtonChangeType
+    {
+        ADD,
+        REMOVE
+    };
+    private struct ButtonChange
+    {
+        private readonly ButtonChangeType _buttonChangeType;
+        private readonly InputButton _inputButton;
+        public ButtonChange(ButtonChangeType buttonChangeType, InputButton inputButton)
+        {
+            _buttonChangeType = buttonChangeType;
+            _inputButton = inputButton;
+        }
+
+        public ButtonChangeType ButtonChangeType
+        {
+            get { return _buttonChangeType; }
+        }
+        public InputButton InputButton
+        {
+            get { return _inputButton; }
+        }
+    };
+
     private MovementListener movementListener;
     private MouseMovementListener mouseMovementListener;
 
@@ -21,6 +46,7 @@ public class ActionManager : MonoBehaviour
     private IDictionary<int, ButtonListener> continuousButtonListeners;
     private HashSet<InputButton> pendingButtons;
     private HashSet<InputButton> pressedButtons;
+    private Queue<ButtonChange> pendingButtonChanges;
 
     public void Awake()
     {
@@ -29,52 +55,57 @@ public class ActionManager : MonoBehaviour
         continuousButtonListeners = new Dictionary<int, ButtonListener>();
         pendingButtons = new HashSet<InputButton>();
         pressedButtons = new HashSet<InputButton>();
+        pendingButtonChanges = new Queue<ButtonChange>();
 
         movementListener = null;
         mouseMovementListener = null;
     }
 
-    //TODO figure out if this should be FixedUpdate or simply Update
+    //TODO, start here and test the shit out this code with unit tests. After you are done with that shit,
+        //Continue moving things out of the Update loop and into the FixedUpdate loop
     public void Update()
     {
+        CheckForButtonPresses();
+        CheckForButtonReleases();
+    }
+
+    public void FixedUpdate()
+    {
+        ProcessPendingButtonChanges();
+        ProcessPressedButtons();
+
         if (movementListener != null)
             movementListener(Input.GetAxis(InputButton.HORIZONTAL.Action), Input.GetAxis(InputButton.FORWARD.Action),
                 Input.GetAxisRaw(InputButton.HORIZONTAL.Action), Input.GetAxisRaw(InputButton.FORWARD.Action));
 
-        checkPressedButtons();
-        checkPendingButtons();
-    }
-
-    public void LateUpdate()
-    {
         if (mouseMovementListener != null)
             mouseMovementListener(Input.GetAxis(InputButton.MOUSE_X.Action), Input.GetAxis(InputButton.MOUSE_Y.Action),
                 Input.GetAxisRaw(InputButton.MOUSE_X.Action), Input.GetAxisRaw(InputButton.MOUSE_Y.Action));
     }
 
-    public void registerMovementListener(MovementListener movementListener)
+    public void RegisterMovementListener(MovementListener movementListener)
     {
         this.movementListener = movementListener;
     }
 
-    public void registerMouseMovementListener(MouseMovementListener mouseMovementListener)
+    public void RegisterMouseMovementListener(MouseMovementListener mouseMovementListener)
     {
         this.mouseMovementListener = mouseMovementListener;
     }
 
-    public void registerStartButtonListener(InputButton inputButton, ButtonListener buttonListener)
+    public void RegisterStartButtonListener(InputButton inputButton, ButtonListener buttonListener)
     {
         pendingButtons.Add(inputButton);
         startButtonListeners[inputButton.Id] = buttonListener;
     }
 
-    public void registerEndButtonListener(InputButton inputButton, ButtonListener buttonListener)
+    public void RegisterEndButtonListener(InputButton inputButton, ButtonListener buttonListener)
     {
         pendingButtons.Add(inputButton);
         endButtonListeners[inputButton.Id] = buttonListener;
     }
 
-    public void registerContinuousButtonListener(InputButton inputButton, ButtonListener buttonListener)
+    public void RegisterContinuousButtonListener(InputButton inputButton, ButtonListener buttonListener)
     {
         pendingButtons.Add(inputButton);
         startButtonListeners[inputButton.Id] = buttonListener;
@@ -82,57 +113,62 @@ public class ActionManager : MonoBehaviour
         endButtonListeners[inputButton.Id] = buttonListener;
     }
 
-    private void checkPressedButtons()
+    private void ProcessPendingButtonChanges()
     {
-        LinkedList<InputButton> removeButtons = new LinkedList<InputButton>();
+        while(pendingButtonChanges.Count > 0)
+        {
+            ButtonChange buttonChange = pendingButtonChanges.Dequeue();
+            ButtonListener buttonListener;
+            switch(buttonChange.ButtonChangeType)
+            {
+                case ButtonChangeType.ADD:
+                    pendingButtons.Remove(buttonChange.InputButton);
+                    if (startButtonListeners.TryGetValue(buttonChange.InputButton.Id, out buttonListener))
+                    {
+                        buttonListener(buttonChange.InputButton);
+                        pressedButtons.Add(buttonChange.InputButton);
+                    }
+                    break;
+                case ButtonChangeType.REMOVE:
+                    pressedButtons.Remove(buttonChange.InputButton);
+                    if (endButtonListeners.TryGetValue(buttonChange.InputButton.Id, out buttonListener))
+                    {
+                        buttonListener(buttonChange.InputButton);
+                        pendingButtons.Add(buttonChange.InputButton);
+                    }
+                    break;
+                default:
+                    //Do nothing
+                    break;
+            }
+        }
+    }
+
+    private void ProcessPressedButtons()
+    {
         foreach (InputButton pressedButton in pressedButtons)
         {
-            if (!Input.GetButton(pressedButton.Action))
-            {
-                ButtonListener buttonListener;
-                if (endButtonListeners.TryGetValue(pressedButton.Id, out buttonListener))
-                {
-                    buttonListener(pressedButton);
-                }
-                pendingButtons.Add(pressedButton);
-                removeButtons.AddFirst(pressedButton);
-            }
-            else
-            {
-                ButtonListener buttonListener;
-                if (continuousButtonListeners.TryGetValue(pressedButton.Id, out buttonListener))
-                {
-                    buttonListener(pressedButton);
-                }
-            }
+            ButtonListener buttonListener;
+            if (continuousButtonListeners.TryGetValue(pressedButton.Id, out buttonListener))
+                buttonListener(pressedButton);
         }
-        removeFromSet(pressedButtons, removeButtons);
     }
 
-    private void checkPendingButtons()
+    private void CheckForButtonReleases()
     {
-        LinkedList<InputButton> removeButtons = new LinkedList<InputButton>();
-        foreach (InputButton pendingButton in pendingButtons)
+        foreach(InputButton pressedButton in pressedButtons)
+        {
+            if (!Input.GetButton(pressedButton.Action))
+                pendingButtonChanges.Enqueue(new ButtonChange(ButtonChangeType.REMOVE, pressedButton));
+        }
+    }
+
+    private void CheckForButtonPresses()
+    {
+        foreach(InputButton pendingButton in pendingButtons)
         {
             if (Input.GetButton(pendingButton.Action))
-            {
-                ButtonListener buttonListener;
-                if (startButtonListeners.TryGetValue(pendingButton.Id, out buttonListener))
-                {
-                    buttonListener(pendingButton);
-                    pressedButtons.Add(pendingButton);
-                    removeButtons.AddFirst(pendingButton);
-                }
-            }
-        }
-        removeFromSet(pendingButtons, removeButtons);
-    }
-
-    private void removeFromSet(HashSet<InputButton> set, LinkedList<InputButton> removeList)
-    {
-        foreach (InputButton removeButton in removeList)
-        {
-            set.Remove(removeButton);
+                pendingButtonChanges.Enqueue(new ButtonChange(ButtonChangeType.ADD, pendingButton));
         }
     }
 }

@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         playerRigidbody = GetComponent<Rigidbody>();
         ActionManager actionManager = Singleton<ActionManager>.Instance;
-        actionManager.registerMovementListener(Move);
+        actionManager.RegisterMovementListener(Move);
     }
 	
     private void Move(float x, float z, float rawX, float rawZ)

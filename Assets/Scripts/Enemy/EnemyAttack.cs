@@ -31,7 +31,7 @@ public class EnemyAttack : MonoBehaviour
             playerInRange = false;
     }
 	
-	public void Update()
+	public void FixedUpdate()
     {
         timer += Time.deltaTime;
 	

@@ -29,7 +29,7 @@ public class PlayerShooting : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	public void Update()
+	public void FixedUpdate()
     {
         timer += Time.deltaTime;
 

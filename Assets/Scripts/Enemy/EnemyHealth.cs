@@ -24,7 +24,7 @@ public class EnemyHealth : MonoBehaviour
         capsuleCollider = GetComponent<CapsuleCollider>();
 	}
 	
-	public void Update()
+	public void FixedUpdate()
     {
         if(isSinking)
         {

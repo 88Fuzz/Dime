@@ -24,7 +24,7 @@ public class ShootingManager : MonoBehaviour
         actionManager.RegisterContinuousButtonListener(InputButton.PRIMARY_ATTACK, FireBullet);
     }
 	
-	public void Update()
+	public void FixedUpdate()
     {
         timer += Time.deltaTime;
 	}

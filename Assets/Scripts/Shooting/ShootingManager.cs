@@ -35,12 +35,14 @@ public class ShootingManager : MonoBehaviour
         {
             timer = 0;
             Bullet[] spawnBullets = bulletManager.GetBullets();
-            List<BulletSpawnListener> bulletSpawnListeners = bulletManager.bulletSpawnListeners;
             foreach(Bullet bullet in spawnBullets)
             {
                 Transform nextBulletPositionTransform = GetNextSpawnPosition();
                 Bullet spawnedBullet = Instantiate(bullet, nextBulletPositionTransform.position, nextBulletPositionTransform.rotation) as Bullet;
-                foreach(BulletSpawnListener spawnListener in bulletSpawnListeners)
+                spawnedBullet.SetBulletVelocityModifier(bulletManager.bulletVelocityModifier);
+                spawnedBullet.SetBulletSizeModifier(bulletManager.bulletSizeModifier);
+                spawnedBullet.AddBulletHitListeners(bulletManager.hitListeners);
+                foreach(BulletSpawnListener spawnListener in bulletManager.bulletSpawnListeners)
                 {
                     spawnListener.OnBulletSpawn(spawnedBullet);
                 }

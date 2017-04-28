@@ -4,6 +4,7 @@ using System.Collections.Generic;
 /*
  * Responsible for deciding what kind of bullets and the modifiers placed on the bullets that should be spawned.
  */
+ //TODO Bullets should use an Item pool at some point in the future
 [CreateAssetMenu(fileName = "BulletManager", menuName = "ScriptableObjects/Bullets/BulletManager", order = 1)]
 public class BulletManager : ScriptableObject 
 {
@@ -11,17 +12,19 @@ public class BulletManager : ScriptableObject
      * //TODO move somewhere else!
      * Holder class to organize a range with the bullet associated with the range.
      */
-    private class BulletRange
+    private struct BulletRange
     {
         public Range range;
         public Bullet bullet;
     }
-    public List<BulletSpawnListener> bulletSpawnListeners;
     public List<BulletChanceInformation> bulletTypes;
-    public List<BulletHitListener> hitListeners;
     public BulletSpawnNumberDecider bulletSpawnNumberDecider;
+
     public BulletVelocityModifier bulletVelocityModifier;
     public BulletSizeModifier bulletSizeModifier;
+    public List<BulletHitListener> hitListeners;
+    //TODO, this guy is not being used I think. It should be!
+    public List<BulletSpawnListener> bulletSpawnListeners;
 
     private int bulletChanceCount;
     private List<BulletRange> probabilityRange;
@@ -42,11 +45,7 @@ public class BulletManager : ScriptableObject
 
         for(int i = 0; i < numberOfBullets; i++)
         {
-            Bullet bullet = GetRandomBullet();
-            bullet.SetBulletVelocityModifier(bulletVelocityModifier);
-            bullet.SetBulletSizeModifier(bulletSizeModifier);
-            bullet.AddBulletHitListeners(hitListeners);
-            bulletSpawnInformation[i] = bullet;
+            bulletSpawnInformation[i] = GetRandomBullet();
         }
 
         return bulletSpawnInformation;

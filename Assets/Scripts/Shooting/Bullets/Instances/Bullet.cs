@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-//TODO shouldn't be abstract anymore!!
+//TODO shouldn't be abstract anymore!! It should be using all the ScriptableObjects you created
 //TODO, bullets should have a max amount of time to live
 public abstract class Bullet : MonoBehaviour
 {
@@ -85,9 +85,7 @@ public abstract class Bullet : MonoBehaviour
                 OnEnemyKill(hittable);
         }
         else
-        {
             OnObjectHit(collider);
-        }
         Destroyed();
     }
 

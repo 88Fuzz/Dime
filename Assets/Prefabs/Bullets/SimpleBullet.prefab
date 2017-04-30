@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4000013686963102}
   - component: {fileID: 33000011897168958}
   - component: {fileID: 23000010348305084}
-  - component: {fileID: 114000011203943126}
   - component: {fileID: 54000011816191522}
+  - component: {fileID: 114842701878661580}
   m_Layer: 0
   m_Name: SimpleBullet
   m_TagString: Untagged
@@ -97,7 +97,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114000011203943126
+--- !u!114 &114842701878661580
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -105,10 +105,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000011358584404}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d05127e01865314294f4f299e1b8c08, type: 3}
+  m_Script: {fileID: 11500000, guid: ccfc54e7758903f4da5bd2520b444d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocityModifier: {fileID: 11400000, guid: 12ee6dca089b62a4cadd9713f624e9be, type: 2}
-  sizeModifier: {fileID: 11400000, guid: 0521b764a41a5ab48871e5bc3317bc38, type: 2}
+  hitInformationProvider: {fileID: 0}
+  velocityModifier: {fileID: 0}
+  sizeModifier: {fileID: 0}
   hitListeners: []
-  baseDamage: 10

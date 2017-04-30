@@ -11,15 +11,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 995b55bb29e3f5f48998d9000b2a5655, type: 3}
   m_Name: BulletManager
   m_EditorClassIdentifier: 
-  bulletSpawnListeners:
-  - {fileID: 11400000, guid: eecb02350d382e4459a56620f78c9251, type: 2}
   bulletTypes:
-  - bullet: {fileID: 114000011203943126, guid: bc46b1ff149875f4db3285d5fad78365, type: 2}
+  - bullet: {fileID: 114842701878661580, guid: bc46b1ff149875f4db3285d5fad78365, type: 2}
     chance: 10
-  hitListeners:
-  - {fileID: 11400000, guid: 86c6caefa8bac6643af06cb9d9ed53aa, type: 2}
   bulletSpawnNumberDecider: {fileID: 11400000, guid: aaa9b98bbf798d64399f9c7dd83e4766,
+    type: 2}
+  hitInformationProvider: {fileID: 11400000, guid: a947affda522c0747a0d5b3b0d1fbd71,
     type: 2}
   bulletVelocityModifier: {fileID: 11400000, guid: 12ee6dca089b62a4cadd9713f624e9be,
     type: 2}
   bulletSizeModifier: {fileID: 11400000, guid: 0521b764a41a5ab48871e5bc3317bc38, type: 2}
+  hitListeners:
+  - {fileID: 11400000, guid: 86c6caefa8bac6643af06cb9d9ed53aa, type: 2}
+  bulletSpawnListeners:
+  - {fileID: 11400000, guid: eecb02350d382e4459a56620f78c9251, type: 2}

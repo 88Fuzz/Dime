@@ -39,18 +39,13 @@ public class ShootingManager : MonoBehaviour
             {
                 Transform nextBulletPositionTransform = GetNextSpawnPosition();
                 Bullet spawnedBullet = Instantiate(bullet, nextBulletPositionTransform.position, nextBulletPositionTransform.rotation) as Bullet;
+                spawnedBullet.hitInformationProvider = bulletManager.hitInformationProvider;
                 spawnedBullet.SetBulletVelocityModifier(bulletManager.bulletVelocityModifier);
                 spawnedBullet.SetBulletSizeModifier(bulletManager.bulletSizeModifier);
                 spawnedBullet.AddBulletHitListeners(bulletManager.hitListeners);
                 foreach(BulletSpawnListener spawnListener in bulletManager.bulletSpawnListeners)
                 {
                     spawnListener.OnBulletSpawn(spawnedBullet);
-                }
-                //TODO this should be moved to a spawnListener!!
-                Rigidbody bulletRigidbody = spawnedBullet.GetComponent<Rigidbody>();
-                if(bulletRigidbody)
-                {
-                    bulletRigidbody.velocity = nextBulletPositionTransform.TransformDirection(spawnedBullet.GetInitialVelocity());
                 }
             }
         }

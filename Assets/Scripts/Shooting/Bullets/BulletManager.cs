@@ -20,6 +20,7 @@ public class BulletManager : ScriptableObject
     public List<BulletChanceInformation> bulletTypes;
     public BulletSpawnNumberDecider bulletSpawnNumberDecider;
 
+    public BulletHitInformationProvider hitInformationProvider;
     public BulletVelocityModifier bulletVelocityModifier;
     public BulletSizeModifier bulletSizeModifier;
     public List<BulletHitListener> hitListeners;

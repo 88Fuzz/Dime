@@ -1,32 +1,30 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-//TODO shouldn't be abstract anymore!! It should be using all the ScriptableObjects you created
 //TODO, bullets should have a max amount of time to live
-public abstract class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
+    public BulletHitInformationProvider hitInformationProvider;
     public BulletVelocityModifier velocityModifier;
     public BulletSizeModifier sizeModifier;
     public List<BulletHitListener> hitListeners;
 
     private Rigidbody bulletRigidbody;
-    private int objectMask;
+    private int hittableMask;
     private Vector3 previousPosition;
-    private Renderer rendererComponent;
 
 	public void Awake()
     {
         hitListeners = new List<BulletHitListener>();
-        objectMask = LayerMask.GetMask("Object") | LayerMask.GetMask("Floor");
-        Initalize();
+        hittableMask = LayerMask.GetMask("Object") | LayerMask.GetMask("Floor") | LayerMask.GetMask("Enemy");
+        SetRadius(PlayerStats.shootSize);
         previousPosition = transform.position;
-        rendererComponent = GetComponent<Renderer>();
         bulletRigidbody = GetComponent<Rigidbody>();
-	}
+        bulletRigidbody.velocity = transform.TransformDirection(Vector3.forward * PlayerStats.shootSpeed);
+    }
 	
 	public void FixedUpdate()
     {
-        int layerMask = objectMask | GetLayerMask();
         RaycastHit hitInfo;
         float maxDistance = Vector3.Distance(previousPosition, transform.position);
         float radius = GetRadius();
@@ -34,12 +32,12 @@ public abstract class Bullet : MonoBehaviour
         if(maxDistance == 0)
         {
             Collider[] colliders = new Collider[1];
-            int collidersFound = Physics.OverlapSphereNonAlloc(previousPosition, radius, colliders, layerMask, QueryTriggerInteraction.Collide);
+            int collidersFound = Physics.OverlapSphereNonAlloc(previousPosition, radius, colliders, hittableMask, QueryTriggerInteraction.Collide);
             //There should only be one collider found, since we are allocating a space for 1 collider.
             if(collidersFound != 0)
                 ColliderHit(colliders[0]);
         }
-        else if (Physics.SphereCast(previousPosition, radius, transform.position - previousPosition, out hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Collide))
+        else if (Physics.SphereCast(previousPosition, radius, transform.position - previousPosition, out hitInfo, maxDistance, hittableMask, QueryTriggerInteraction.Collide))
         {
             ColliderHit(hitInfo.collider);
         }
@@ -78,7 +76,7 @@ public abstract class Bullet : MonoBehaviour
         Hittable hittable = collider.GetComponent<Hittable>();
         if (hittable)
         {
-            float hitStrength = GetHitInformation();
+            float hitStrength = hitInformationProvider.GetHitInformation();
             bool hitKilled = hittable.Hit(hitStrength);
             OnEnemyHit(hittable);
             if (hitKilled)
@@ -86,7 +84,7 @@ public abstract class Bullet : MonoBehaviour
         }
         else
             OnObjectHit(collider);
-        Destroyed();
+        Destroy(gameObject);
     }
 
     private void OnEnemyHit(Hittable hittable)
@@ -119,34 +117,8 @@ public abstract class Bullet : MonoBehaviour
         return transform.localScale.x;
     }
 
-    //TODO once this is no longer abstract, make this private!!
-    protected void SetRadius(float radius)
+    private void SetRadius(float radius)
     {
         transform.localScale = Vector3.one * radius;
     }
-
-    /*
-     * Return the hit information associated with the bullet.
-     */
-    abstract protected float GetHitInformation();
-
-    /*
-     * The layermask returned will be OR'd with the Object layer to find collisions with objects in the world.
-     */
-    abstract protected int GetLayerMask();
-
-    /*
-     * Do any initialization needed for the bullet. Called during the Awake method.
-     */
-    abstract protected void Initalize();
-
-    /*
-     * The Bullet has hit something to make the stop/disapear. Do anything that needs to be done as an "end action" for the bullet life span.
-     */
-    abstract protected void Destroyed();
-
-    /*
-     * Return the velocity for when the bullet is first spawned.
-     */
-    abstract public Vector3 GetInitialVelocity();
 }

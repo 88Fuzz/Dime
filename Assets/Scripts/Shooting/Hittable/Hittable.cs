@@ -3,7 +3,9 @@ using System.Collections;
 
 public class Hittable : MonoBehaviour
 {
-    public RoomController roomController;
+    public HittableKilledAction[] killActions;
+    public HittableHitAction[] hitActions;
+    public Room parentRoom = null;
     public float maxHealth;
     public Color hitColor = Color.red;
     public int hitColorFlashCount;
@@ -69,12 +71,23 @@ public class Hittable : MonoBehaviour
 
         if(hitColorFlashCount > 0)
             StartCoroutine(HitColorCoroutine());
+
+        foreach(HittableHitAction action in hitActions)
+        {
+            action.HittableHasBeenHit(this);
+        }
     }
 
     protected virtual void DeadAction()
     {
-        if(LayerUtils.CompareLayerWithLayerMask(gameObject.layer, enemyLayer) && roomController)
-            roomController.EnemyKilled(1);
+        if (parentRoom)
+            parentRoom.HittableKilled(this);
+
+        foreach(HittableKilledAction action in killActions)
+        {
+            action.HittableHasBeenKilled(this);
+        }
+
         Destroy(gameObject);
     }
 

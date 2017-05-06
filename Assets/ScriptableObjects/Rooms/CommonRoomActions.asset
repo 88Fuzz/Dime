@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2f72ecf04903934fb25e7e2ab6d5e5d, type: 3}
+  m_Name: CommonRoomActions
+  m_EditorClassIdentifier: 
+  clearActions:
+  - {fileID: 11400000, guid: 7c5cee0fa78b0da42a9aafea8452c9d7, type: 2}
+  - {fileID: 11400000, guid: 1e1a99f847173634bacc2922ca449975, type: 2}
+  - {fileID: 11400000, guid: 3d066db7cb318c741954aac4a594f92d, type: 2}
+  spawnActions:
+  - {fileID: 11400000, guid: a48cefac34466e8439bcdfc03abdc517, type: 2}
+  playerEnterActions:
+  - {fileID: 11400000, guid: 6bdb5aa118637ad419e5d3236f8d1bcf, type: 2}

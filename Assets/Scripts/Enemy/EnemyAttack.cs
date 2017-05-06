@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+//I think this can be deleted. I believe it's from a tutorial
 public class EnemyAttack : MonoBehaviour
 {
     public float timeBetweenAttacks = .5f;

@@ -1,21 +1,32 @@
-﻿using System;
 using UnityEngine;
 
+/*
+ * Used to indicate where enemies can be spawned in a room.
+ */
 public class Spawner : EditorDebug
 {
+    //In case a spawner is up against a door the player will enter, it can be deactivated so that enemies don't spawn on top of the player.
     public bool active;
+    the size needs to take into account the rotation of the room. Somehow!
     public Vector2 size;
 
-    public void Spawn(GameObject gameObject, RoomController roomController, int count)
+    /*
+     * Pick a random location within the box for the hittable to spawn and spawn it at that location.
+     * Return true if the hittable was spawned. False if not.
+     */
+    public bool Spawn(Hittable hittable, Room parentRoom)
     {
-        for (int i = 0; i < count; i++)
+        if (active)
         {
             Vector3 randomPosition = GetRandomPosition();
-            GameObject newObject = Instantiate(gameObject, randomPosition, Quaternion.identity, null) as GameObject;
-            Hittable hittable = newObject.GetComponent<Hittable>();
-            if (hittable)
-                hittable.roomController = roomController;
+            GameObject newObject = Instantiate(hittable.gameObject, randomPosition, Quaternion.identity, null) as GameObject;
+            Hittable newHittable = newObject.GetComponent<Hittable>();
+            parentRoom.activeEnemies.Add(newHittable);
+            if (newHittable)
+                newHittable.parentRoom = parentRoom;
         }
+
+        return active;
     }
 
     private Vector3 GetRandomPosition()
@@ -32,8 +43,7 @@ public class Spawner : EditorDebug
 
     protected override void DrawDebugGizmos()
     {
-        Gizmos.DrawWireCube(transform.position, new Vector3(size.x, Grid.CELL_SCALE, size.y));
-        throw new NotImplementedException();
+        Gizmos.DrawWireCube(new Vector3(transform.position.x, transform.position.y + Grid.CELL_SCALE/2, transform.position.z), new Vector3(size.x, Grid.CELL_SCALE, size.y));
     }
 
     protected override void DrawInfoGizmos()

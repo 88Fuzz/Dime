@@ -8,5 +8,5 @@ public abstract class RoomStartAction : ScriptableObject
     /*
      * Method called when a player enters the room.
      */
-    public abstract void OnPlayerEnter();
+    public abstract void OnPlayerEnter(Room room);
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+//I think this can be deleted from the tutorial.
 public class EnemyMovement : MonoBehaviour
 {
     public Transform target;

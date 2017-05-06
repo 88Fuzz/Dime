@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+//TODO I think this class can be deleted!!
 [RequireComponent(typeof(BoxCollider))]
 public class RandomSpawner : MonoBehaviour
 {
@@ -22,8 +23,8 @@ public class RandomSpawner : MonoBehaviour
             Vector3 randomPosition = GetRandomPosition();
             GameObject newObject = Instantiate(gameObject, randomPosition, Quaternion.identity, null) as GameObject;
             Hittable hittable = newObject.GetComponent<Hittable>();
-            if (hittable)
-                hittable.roomController = roomController;
+            //if (hittable)
+                //hittable.roomController = roomController;
         }
     }
 

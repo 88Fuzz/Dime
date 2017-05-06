@@ -7,7 +7,7 @@ public class ActivateNextRoom : RoomClearAction
 {
     public override void OnRoomClear(Room room)
     {
-        room.nextRoom.RoomSpawned();
+        room.nextRoom.RoomActivated();
         room.nextRoom.gameObject.SetActive(true);
     }
 }

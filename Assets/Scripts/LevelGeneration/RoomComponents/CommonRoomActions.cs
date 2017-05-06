@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-public class CommonRoomActions
+/*
+ * Collection of common ScriptableObjects that should be used by Rooms when a room is cleared,
+ * player enters a room, or the room is placed into the world by the level generator
+ */
+[CreateAssetMenu(fileName = "CommonRoomActions", menuName = "ScriptableObjects/Rooms/CommonRoomActions")]
+public class CommonRoomActions : ScriptableObject
 {
-    public static readonly RoomClearAction[] COMMON_CLEAR_ACTIONS =
-    {
-        ScriptableObject.CreateInstance<OpenDoors>(),
-        ScriptableObject.CreateInstance<ActivateNextRoom>(),
-        ScriptableObject.CreateInstance<GenerateRoomOnEnd>()
-    };
-    public static readonly RoomSpawnAction[] COMMON_SPAWN_ACTIONS = { };
-    public static readonly RoomStartAction[] COMMON_START_ACTIONS = { };
+    public RoomClearAction[] clearActions;
+    public RoomSpawnAction[] spawnActions;
+    public RoomStartAction[] playerEnterActions;
 }

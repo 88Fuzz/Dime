@@ -1214,6 +1214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63407e3c45765dd40bacf372f77dc8d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commonRoomActions: {fileID: 11400000, guid: 84a546d8b9018c3438d9c83daa1c62ae, type: 2}
   spawnActions:
   - {fileID: 11400000, guid: d27f2c4512fddd14495ce5f379abbcb8, type: 2}
   startActions: []
@@ -1221,6 +1222,7 @@ MonoBehaviour:
   doors:
   - {fileID: 114841572858010130}
   - {fileID: 114005277522200406}
+  spawners: []
   spawnPosition: {fileID: 4433488198216856}
   nextRoom: {fileID: 0}
 --- !u!114 &114841572858010130

@@ -8,12 +8,12 @@ public class SpawnPlayer : RoomSpawnAction
 {
     public GameObject player;
 
-    public override void OnLevelActivated(Room room)
+    public override void OnRoomActivated(Room room)
     {
         //Do Nothing
     }
 
-    public override void OnLevelGenerationDone(Room room)
+    public override void OnRoomGenerationDone(Room room)
     {
         Transform spawnPosition = room.spawnPosition;
         if (spawnPosition == null)

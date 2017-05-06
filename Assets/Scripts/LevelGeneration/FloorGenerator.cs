@@ -84,7 +84,7 @@ public class FloorGenerator : MonoBehaviour
         }*/
         //locked doors and keys, etc come next. 
 
-        spawnRoom.LevelGenerated(floorInformation.unusedDoor);
+        spawnRoom.LevelGenerationDone(floorInformation.unusedDoor);
         GenerationComplete(spawnRoom);
         //Debug.Log("DungeonGenerator::Generation completed : " + DDebugTimer.Lap() + "ms");
     }
@@ -143,7 +143,7 @@ public class FloorGenerator : MonoBehaviour
         Room newRoom = possibleRoomObject.GetComponent<Room>();
         newDoors.sourceDoor.ConnectDoor(floorInformation.closedDoor, newDoors.destinationDoor, false);
         newDoors.destinationDoor.ConnectDoor(floorInformation.closedDoor, newDoors.sourceDoor, true);
-        newRoom.LevelGenerated(floorInformation.unusedDoor);
+        newRoom.LevelGenerationDone(floorInformation.unusedDoor);
 
         return newRoom;
     }
@@ -202,7 +202,7 @@ public class FloorGenerator : MonoBehaviour
 
     private void GenerationComplete(Room spawnRoom)
     {
-        spawnRoom.RoomSpawned();
+        spawnRoom.RoomActivated();
         /*Room currentRoom = spawnRoom;
         while(currentRoom != null)
         {

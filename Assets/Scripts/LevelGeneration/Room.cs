@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class Room : MonoBehaviour
 {
+    public CommonRoomActions commonRoomActions;
     //Called when the room is spawned into the world
     public RoomSpawnAction[] spawnActions;
     //Called when the player enters a room
@@ -10,11 +12,12 @@ public class Room : MonoBehaviour
     public RoomClearAction[] clearActions;
     public Door[] doors;
     public Spawner[] spawners;
+    public Hittable[] enemies;
     public Transform spawnPosition = null;
     public Room nextRoom = null;
+    public HashSet<Hittable> activeEnemies;
 
     private bool roomCleared = false;
-    private int enemyCount = 0;
     //ActiveRoom means the player is currently in the room.
     private bool activeRoom = false;
 
@@ -23,11 +26,14 @@ public class Room : MonoBehaviour
         if (!activeRoom)
             return;
 
-        if (enemyCount == 0)
+        if (activeEnemies.Count == 0)
             DoClearActions();
     }
 
-    public void LevelGenerated(GameObject unusedDoorObject)
+    /*
+     * Called when a level is placed into the world. The room is considered a valid place but is not currently active.
+     */
+    public void LevelGenerationDone(GameObject unusedDoorObject)
     {
         foreach(Door door in doors)
         {
@@ -36,20 +42,31 @@ public class Room : MonoBehaviour
 
             door.ApplyDoorObject(unusedDoorObject);
         }
-        foreach (RoomSpawnAction spawnAction in CommonRoomActions.COMMON_SPAWN_ACTIONS)
-            spawnAction.OnLevelGenerationDone(this);
+        foreach (RoomSpawnAction spawnAction in commonRoomActions.spawnActions)
+            spawnAction.OnRoomGenerationDone(this);
 
         foreach (RoomSpawnAction spawnAction in spawnActions)
-            spawnAction.OnLevelGenerationDone(this);
+            spawnAction.OnRoomGenerationDone(this);
     }
 
-    public void RoomSpawned()
+    /*
+     * Called when the connected room has all enemies killed
+     */
+    public void RoomActivated()
     {
-        foreach (RoomSpawnAction spawnAction in CommonRoomActions.COMMON_SPAWN_ACTIONS)
-            spawnAction.OnLevelActivated(this);
+        foreach (RoomSpawnAction spawnAction in commonRoomActions.spawnActions)
+            spawnAction.OnRoomActivated(this);
 
         foreach (RoomSpawnAction spawnAction in spawnActions)
-            spawnAction.OnLevelActivated(this);
+            spawnAction.OnRoomActivated(this);
+    }
+
+    /*
+     * Removed the Hittable from the set of enemies in the room.
+     */
+    public void HittableKilled(Hittable hittable)
+    {
+        activeEnemies.Remove(hittable);
     }
 
     public void DoClearActions()
@@ -58,7 +75,7 @@ public class Room : MonoBehaviour
             return;
 
         roomCleared = true;
-        foreach (RoomClearAction clearAction in CommonRoomActions.COMMON_CLEAR_ACTIONS)
+        foreach (RoomClearAction clearAction in commonRoomActions.clearActions)
             clearAction.OnRoomClear(this);
         foreach (RoomClearAction clearAction in clearActions)
             clearAction.OnRoomClear(this);
@@ -95,10 +112,11 @@ public class Room : MonoBehaviour
     //TODO does this need to have an OnTriggerExit to deactivate the room????? Or will that be handled by the room turning "grey" once the player leaves
     public void OnTriggerEnter(Collider other)
     {
+        //TODO check if the other is the player!
         activeRoom = true;
-        foreach (RoomStartAction startAction in CommonRoomActions.COMMON_START_ACTIONS)
-            startAction.OnPlayerEnter();
+        foreach (RoomStartAction startAction in commonRoomActions.playerEnterActions)
+            startAction.OnPlayerEnter(this);
         foreach(RoomStartAction startAction in startActions)
-            startAction.OnPlayerEnter();
+            startAction.OnPlayerEnter(this);
     }
 }

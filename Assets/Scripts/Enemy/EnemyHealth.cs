@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+//I think this can be deleted. I think it is from a tutorial.
 public class EnemyHealth : MonoBehaviour
 {
     public int startingHealth = 50;

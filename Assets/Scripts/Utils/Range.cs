@@ -1,5 +1,5 @@
 ﻿[System.Serializable]
-public class Range
+public struct Range
 {
     public float min;
     public float max;
@@ -13,5 +13,10 @@ public class Range
     public float GetDifference()
     {
         return max - min;
+    }
+
+    public override string ToString()
+    {
+        return "[" + min + ", " + max + "]";
     }
 }

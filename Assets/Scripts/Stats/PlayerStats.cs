@@ -12,7 +12,7 @@ public class PlayerStats
 
     //Bullet information
     public static float shootDelay = .5f;
-    public static float shootDamageMultiplier = 1;
+    public static float shootDamageMultiplier = 100;
     public static float shootSpeed = 20;
     public static float shootSize = .25f;
 }

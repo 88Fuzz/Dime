@@ -10,6 +10,14 @@ public class RandomNumberGeneratorUtils
     /*
      * Return a random number in the range [min, max). If min > max, max is returned
      */
+    public float GetValueInRange(Range range)
+    {
+        return GetValueInRange(range.min, range.max);
+    }
+
+    /*
+     * Return a random number in the range [min, max). If min > max, max is returned
+     */
     public float GetValueInRange(float min, float max)
     {
         if (min >= max)

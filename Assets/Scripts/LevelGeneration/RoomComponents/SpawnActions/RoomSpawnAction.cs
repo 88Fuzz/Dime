@@ -12,7 +12,7 @@ public abstract class RoomSpawnAction : ScriptableObject
 
     /*
      * Any action that needs to be triggered once a room as been activated. At the time of writting this, that means
-     * that the room adjacent to the called Room has had all the enemies killed.
+     * the room adjacent to the called Room has had all the enemies killed.
      */
     public abstract void OnRoomActivated(Room room);
 }

@@ -36,6 +36,10 @@ public class LevelRandomNumberGenerator
      */
     public bool Seed(string seed)
     {
+        seed = "3EBB-F671";
+        //TODO remove debug log
+        UnityEngine.Debug.Log("SEED: " + seed);
+
         if (seed == null || seed.Length != SEED_SIZE)
             return false;
 
@@ -46,6 +50,14 @@ public class LevelRandomNumberGenerator
 
         random = new Random(seedValue);
         return true;
+    }
+
+    /*
+     * Return a random number in the range [min, max). If min > max, max is returned
+     */
+    public float GetValueInRange(Range range)
+    {
+        return GetValueInRange(range.min, range.max);
     }
 
     /*

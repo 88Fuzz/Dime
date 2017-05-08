@@ -21,8 +21,6 @@ public class FloorInformation : ScriptableObject
     public Room GetRandomRoom()
     {
         int position = LevelRandomNumberGenerator.levelRNG.GetValueInRange(0, rooms.Count);
-        this shit is fucking up now :(
-        Debug.Log("position " + position);
-        return rooms[0];
+        return rooms[position];
     }
 }

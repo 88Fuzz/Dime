@@ -16,7 +16,6 @@ public class HittableSpawnerDecider : ScriptableObject
     {
         //TODO constantly creating arrays here is possibly expensive? Maybe have a set of arrays that are free that you can use?
         Hittable[] hittables = new Hittable[numberOfEnemies];
-        Debug.Log("TRYING TO SPAWN THIS MANY ENEMIES " + numberOfEnemies);
         for(int i = 0; i < numberOfEnemies; i++)
             hittables[i] = enemy;
 

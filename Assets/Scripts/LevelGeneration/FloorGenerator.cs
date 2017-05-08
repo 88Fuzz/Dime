@@ -110,8 +110,8 @@ public class FloorGenerator : MonoBehaviour
         {
             //TODO, use the roomOptions instead of getting a random room from the floor information.
             possibleRoomObject = Instantiate(floorInformation.GetRandomRoom().gameObject);
-            Room possibleRoom = possibleRoomObject.GetComponent<Room>();
             possibleRoomObject.transform.parent = gameObject.transform;
+            Room possibleRoom = possibleRoomObject.GetComponent<Room>();
 
             newDoors = ConnectRooms(processRoom, possibleRoom);
             if(newDoors.destinationDoor == null || newDoors.sourceDoor == null)

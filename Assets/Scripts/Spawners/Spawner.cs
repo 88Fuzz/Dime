@@ -37,8 +37,6 @@ public class Spawner : EditorDebug
         if (active)
         {
             Vector3 randomPosition = GetRandomPosition();
-            Debug.Log("Spawning hittable within spawner: " + gameObject.name + " localPosition: " + transform.localPosition + " globalPosition: " + transform.position + 
-                " xRange: " + xRange + " zRange: " + zRange + " randomPosition: " + randomPosition);
             GameObject newObject = Instantiate(hittable.gameObject, randomPosition, Quaternion.identity, null) as GameObject;
             Hittable newHittable = newObject.GetComponent<Hittable>();
             parentRoom.activeEnemies.Add(newHittable);

@@ -19,6 +19,7 @@ public class PlayerStats
     public static float shootCritDamageMultiplier = 2f;
     public static float shootGlanceDamageMultiplier = .5f;
 
+    //Max values for crit and glance chances are 99. As the random decision making chances go from [0,99]
     public static float shootCritChance = 2.0f;
     public static float shootGlanceChance = 5.0f;
 }

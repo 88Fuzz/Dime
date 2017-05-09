@@ -9,10 +9,13 @@ public class DefaultBulletHitInformationProvider : BulletHitInformationProvider
     public override float GetHitInformation()
     {
         float damage = baseDamage;
+        float random = RandomNumberGeneratorUtils.unityRNG.GetValueInRange(0f, 200f);
 
-        if (GetRandomPercent() < PlayerStats.shootCritChance)
+        if (random < PlayerStats.shootCritChance)
             damage *= PlayerStats.shootCritDamageMultiplier;
-        else if(GetRandomPercent() < PlayerStats.shootGlanceChance)
+
+        random -= 100;
+        if (random >= 0 && random < PlayerStats.shootGlanceChance)
             damage *= PlayerStats.shootGlanceDamageMultiplier;
 
         return damage * PlayerStats.shootDamageMultiplier;
@@ -20,6 +23,6 @@ public class DefaultBulletHitInformationProvider : BulletHitInformationProvider
 
     private float GetRandomPercent()
     {
-        return RandomNumberGeneratorUtils.unityRNG.GetValueInRange(0f, 100f);
+        return RandomNumberGeneratorUtils.unityRNG.GetValueInRange(0f, 200f);
     }
 }

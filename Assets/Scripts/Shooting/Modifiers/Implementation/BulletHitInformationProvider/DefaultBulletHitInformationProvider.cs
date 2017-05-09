@@ -5,24 +5,17 @@
 [CreateAssetMenu(fileName = "DefaultBulletHitInformationProvider", menuName = "ScriptableObjects/Bullets/BulletHitInformationProvider/DefaultBulletHitInformationProvider")]
 public class DefaultBulletHitInformationProvider : BulletHitInformationProvider
 {
-    public float baseDamage;
-    public override float GetHitInformation()
+    protected override float GetFallbackHitInformation()
     {
-        float damage = baseDamage;
         float random = RandomNumberGeneratorUtils.unityRNG.GetValueInRange(0f, 200f);
 
         if (random < PlayerStats.shootCritChance)
-            damage *= PlayerStats.shootCritDamageMultiplier;
+            return GetDamageValue(DamageModifier.CRIT);
 
         random -= 100;
         if (random >= 0 && random < PlayerStats.shootGlanceChance)
-            damage *= PlayerStats.shootGlanceDamageMultiplier;
+            return GetDamageValue(DamageModifier.GLANCE);
 
-        return damage * PlayerStats.shootDamageMultiplier;
-    }
-
-    private float GetRandomPercent()
-    {
-        return RandomNumberGeneratorUtils.unityRNG.GetValueInRange(0f, 200f);
+        return GetDamageValue(DamageModifier.NONE);
     }
 }

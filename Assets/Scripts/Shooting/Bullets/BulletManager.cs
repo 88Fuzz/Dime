@@ -4,7 +4,7 @@ using System.Collections.Generic;
 /*
  * Responsible for deciding what kind of bullets and the modifiers placed on the bullets that should be spawned.
  */
- //TODO Bullets should use an Item pool at some point in the future
+ //TODO Bullets should use an Item pool at some point in the future to spawn the bullet GameObjects
 [CreateAssetMenu(fileName = "BulletManager", menuName = "ScriptableObjects/Bullets/BulletManager", order = 1)]
 public class BulletManager : ScriptableObject 
 {
@@ -24,7 +24,6 @@ public class BulletManager : ScriptableObject
     public BulletVelocityModifier bulletVelocityModifier;
     public BulletSizeModifier bulletSizeModifier;
     public List<BulletHitListener> hitListeners;
-    //TODO, this guy is not being used I think. It should be!
     public List<BulletSpawnListener> bulletSpawnListeners;
 
     private int bulletChanceCount;

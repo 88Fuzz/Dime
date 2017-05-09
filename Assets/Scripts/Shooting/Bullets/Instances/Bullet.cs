@@ -4,10 +4,10 @@ using UnityEngine;
 //TODO, bullets should have a max amount of time to live
 public class Bullet : MonoBehaviour
 {
-    public BulletHitInformationProvider hitInformationProvider;
     public BulletVelocityModifier velocityModifier;
     public BulletSizeModifier sizeModifier;
     public List<BulletHitListener> hitListeners;
+    public float damage;
 
     private Rigidbody bulletRigidbody;
     private int hittableMask;
@@ -76,8 +76,7 @@ public class Bullet : MonoBehaviour
         Hittable hittable = collider.GetComponent<Hittable>();
         if (hittable)
         {
-            float hitStrength = hitInformationProvider.GetHitInformation();
-            bool hitKilled = hittable.Hit(hitStrength);
+            bool hitKilled = hittable.Hit(damage);
             OnEnemyHit(hittable);
             if (hitKilled)
                 OnEnemyKill(hittable);

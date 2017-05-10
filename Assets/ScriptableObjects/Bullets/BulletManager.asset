@@ -23,5 +23,6 @@ MonoBehaviour:
   bulletSizeModifier: {fileID: 11400000, guid: 0521b764a41a5ab48871e5bc3317bc38, type: 2}
   hitListeners:
   - {fileID: 11400000, guid: 86c6caefa8bac6643af06cb9d9ed53aa, type: 2}
+  - {fileID: 11400000, guid: 07e2ac394781b5e4abadb0106939216e, type: 2}
   bulletSpawnListeners:
   - {fileID: 11400000, guid: eecb02350d382e4459a56620f78c9251, type: 2}

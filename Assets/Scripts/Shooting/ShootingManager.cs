@@ -39,6 +39,7 @@ public class ShootingManager : MonoBehaviour
             {
                 Transform nextBulletPositionTransform = GetNextSpawnPosition();
                 Bullet spawnedBullet = Instantiate(bullet, nextBulletPositionTransform.position, nextBulletPositionTransform.rotation) as Bullet;
+                spawnedBullet.bulletManager = bulletManager;
                 spawnedBullet.damage = bulletManager.hitInformationProvider.GetHitInformation();
                 spawnedBullet.SetBulletVelocityModifier(bulletManager.bulletVelocityModifier);
                 spawnedBullet.SetBulletSizeModifier(bulletManager.bulletSizeModifier);

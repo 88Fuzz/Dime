@@ -4,6 +4,7 @@ using UnityEngine;
 //TODO, bullets should have a max amount of time to live
 public class Bullet : MonoBehaviour
 {
+    public BulletManager bulletManager;
     public BulletVelocityModifier velocityModifier;
     public BulletSizeModifier sizeModifier;
     public List<BulletHitListener> hitListeners;

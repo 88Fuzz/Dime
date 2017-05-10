@@ -60,12 +60,15 @@ public abstract class BulletHitInformationProvider : ScriptableObject
         switch (damageModifier)
         {
             case DamageModifier.CRIT:
+                Debug.Log("CRIT");
                 damage *= PlayerStats.shootCritDamageMultiplier;
                 break;
             case DamageModifier.GLANCE:
+                Debug.Log("GLANCE");
                 damage *= PlayerStats.shootGlanceDamageMultiplier;
                 break;
             default:
+                Debug.Log("NOTHING");
                 //Do nothing
                 break;
         }

@@ -12,16 +12,15 @@ public class Hittable : MonoBehaviour
     public float hitFlashSpeed;
     public float hitColorFlashDuration;
     public bool invulnerableWhenHit;
+    public Renderer materialRenderer;
 
     protected bool invulnerable;
     protected float currentHealth;
     protected LayerMask enemyLayer;
     private Color baseColor;
-    private Renderer materialRenderer;
 
 	public void Awake()
     {
-        materialRenderer = GetComponent<Renderer>();
         invulnerable = false;
         currentHealth = maxHealth;
         enemyLayer = LayerMask.GetMask("Enemy");

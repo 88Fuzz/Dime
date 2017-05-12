@@ -422,13 +422,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af0ad3cdb0d5aef46b54be9741414319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomController: {fileID: 0}
+  killActions: []
+  hitActions: []
+  parentRoom: {fileID: 0}
   maxHealth: 50
   hitColor: {r: 1, g: 0, b: 0, a: 1}
-  hitColorFlashCount: 2
+  hitColorFlashCount: 1
   hitFlashSpeed: 10
   hitColorFlashDuration: 0.2
-  invulnerableWhenHit: 0
+  invulnerableWhenHit: 1
+  materialRenderer: {fileID: 137430289796232830}
 --- !u!114 &114000012313861644
 MonoBehaviour:
   m_ObjectHideFlags: 1

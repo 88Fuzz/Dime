@@ -26,11 +26,12 @@ public class PlayerMovement : MonoBehaviour
         if(movement.magnitude > 1)
             movement = movement.normalized;
 
-        movement = movement * PlayerStats.movementSpeed * Time.deltaTime;
+        movement = movement * PlayerStats.GetCurrentValue(PlayerStats.Stat.MOVEMENT_SPEED) * Time.deltaTime;
 
         // Apply a force that attempts to reach our target velocity
         movement = (movement - playerRigidbody.velocity);
-        float maxClamp = PlayerStats.maxMovementSpeed * Time.deltaTime;
+        //TODO player movement speed is really weird. Why is thi being clamped here like this?
+        float maxClamp = PlayerStats.GetMaxValue(PlayerStats.Stat.MOVEMENT_SPEED) * Time.deltaTime;
         movement.x = Mathf.Clamp(movement.x, -1 * maxClamp, maxClamp);
         movement.z = Mathf.Clamp(movement.z, -1 * maxClamp, maxClamp);
         movement.y = 0;

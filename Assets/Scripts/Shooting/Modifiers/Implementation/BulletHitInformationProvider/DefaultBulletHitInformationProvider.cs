@@ -9,11 +9,11 @@ public class DefaultBulletHitInformationProvider : BulletHitInformationProvider
     {
         float random = RandomNumberGeneratorUtils.unityRNG.GetValueInRange(0f, 200f);
 
-        if (random < PlayerStats.shootCritChance)
+        if (random < PlayerStats.GetCurrentValue(PlayerStats.Stat.CRIT_DAMAGE_CHANCE))
             return GetDamageValue(DamageModifier.CRIT);
 
         random -= 100;
-        if (random >= 0 && random < PlayerStats.shootGlanceChance)
+        if (random >= 0 && random < PlayerStats.GetCurrentValue(PlayerStats.Stat.GLANCE_DAMAGE_CHANCE))
             return GetDamageValue(DamageModifier.GLANCE);
 
         return GetDamageValue(DamageModifier.NONE);

@@ -2,9 +2,8 @@
 
 public class DamageUpgrade : Upgrade
 {
-    public float damageIncreaseMultiplyer = 1;
     protected override void UpgradePickedUp(GameObject player)
     {
-        PlayerStats.shootDamageMultiplier += damageIncreaseMultiplyer;
+        PlayerStats.IncrementValue(PlayerStats.Stat.SHOOT_DAMAGE_MULTIPLIER);
     }
 }

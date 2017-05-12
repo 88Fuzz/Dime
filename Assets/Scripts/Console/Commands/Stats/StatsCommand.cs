@@ -32,6 +32,7 @@ public class StatsCommand : Command
         if (command.Length < 3)
             return;
 
-        PlayerStats.movementSpeed = int.Parse(command[2]);
+        //TODO fix this now that you changed how the PlayerStats are used.
+        //PlayerStats.movementSpeed = int.Parse(command[2]);
     }
 }

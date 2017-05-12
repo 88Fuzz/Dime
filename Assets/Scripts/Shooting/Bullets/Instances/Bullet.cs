@@ -18,10 +18,10 @@ public class Bullet : MonoBehaviour
     {
         hitListeners = new List<BulletHitListener>();
         hittableMask = LayerMask.GetMask("Object") | LayerMask.GetMask("Floor") | LayerMask.GetMask("Enemy");
-        SetRadius(PlayerStats.shootSize);
+        SetRadius(PlayerStats.GetCurrentValue(PlayerStats.Stat.BULLET_SIZE));
         previousPosition = transform.position;
         bulletRigidbody = GetComponent<Rigidbody>();
-        bulletRigidbody.velocity = transform.TransformDirection(Vector3.forward * PlayerStats.shootSpeed);
+        bulletRigidbody.velocity = transform.TransformDirection(Vector3.forward * PlayerStats.GetCurrentValue(PlayerStats.Stat.BULLLET_SPEED));
     }
 	
 	public void FixedUpdate()

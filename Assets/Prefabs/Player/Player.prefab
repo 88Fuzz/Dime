@@ -324,13 +324,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5311d6aacf308fe4c89a63edc997d849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomController: {fileID: 0}
+  killActions: []
+  hitActions: []
+  parentRoom: {fileID: 0}
   maxHealth: 100
   hitColor: {r: 1, g: 0, b: 0, a: 0}
   hitColorFlashCount: 3
   hitFlashSpeed: 10
   hitColorFlashDuration: 0.2
   invulnerableWhenHit: 1
+  materialRenderer: {fileID: 23110283802911042}
   healthSlider: {fileID: 0}
 --- !u!114 &114506858812940286
 MonoBehaviour:

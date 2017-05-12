@@ -11,7 +11,7 @@ public class PlayerHittable : Hittable
     {
         base.Awake();
 
-        maxHealth = PlayerStats.maxHealth;
+        maxHealth = PlayerStats.GetCurrentValue(PlayerStats.Stat.HEALTH);
     }
 
     protected override void HitAction()
@@ -23,7 +23,8 @@ public class PlayerHittable : Hittable
     //The PlayerStats singleton's maxHealth property should be updated somewhere else first before this method is called.
     public void UpdateMaxHealth()
     {
-        maxHealth = PlayerStats.maxHealth;
+        //TODO what is the player's health gets moved to 0. They should die or something. Fix that shit.
+        maxHealth = PlayerStats.GetCurrentValue(PlayerStats.Stat.HEALTH);
         Debug.Log("Health is increasing " + maxHealth);
     }
 }

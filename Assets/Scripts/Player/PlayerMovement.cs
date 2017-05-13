@@ -2,8 +2,6 @@
 
 public class PlayerMovement : MonoBehaviour
 {
-    //TODO does movement need to be declared up here? structs in C# are declared on the stack
-    private Vector3 movement;
     private Animator animator;
     private Rigidbody playerRigidbody;
     private LayerMask lookDirectionMask;
@@ -22,21 +20,12 @@ public class PlayerMovement : MonoBehaviour
 	
     private void Move(float x, float z, float rawX, float rawZ)
     {
-        movement.Set(rawX, 0, rawZ);
+        Vector3 movement = new Vector3(rawX, 0, rawZ);
         if(movement.magnitude > 1)
             movement = movement.normalized;
 
         movement = movement * PlayerStats.GetCurrentValue(PlayerStats.Stat.MOVEMENT_SPEED) * Time.deltaTime;
-
-        // Apply a force that attempts to reach our target velocity
-        movement = (movement - playerRigidbody.velocity);
-        //TODO player movement speed is really weird. Why is thi being clamped here like this?
-        float maxClamp = PlayerStats.GetMaxValue(PlayerStats.Stat.MOVEMENT_SPEED) * Time.deltaTime;
-        movement.x = Mathf.Clamp(movement.x, -1 * maxClamp, maxClamp);
-        movement.z = Mathf.Clamp(movement.z, -1 * maxClamp, maxClamp);
-        movement.y = 0;
-        playerRigidbody.AddForce(movement, ForceMode.VelocityChange);
-
+        playerRigidbody.velocity = movement;
         Turning();
     }
 

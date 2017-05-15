@@ -3,37 +3,37 @@
 public class RoomController : MonoBehaviour
 {
     public RandomSpawner[] spawners;
-    public UpgradeSpawner upgradeSpawner;
+    public PickupSpawner pickupSpawner;
     public GameObject enemy;
 
     private int aliveEnemies;
     private int levelCount;
     private bool upgradesActive;
 
-	public void Awake()
+    public void Awake()
     {
         upgradesActive = false;
         aliveEnemies = 0;
         levelCount = 0;
-        upgradeSpawner.DeactivateUpgrades();
-	}
-	
-	public void FixedUpdate()
+        pickupSpawner.DeactivateUpgrades();
+    }
+
+    public void FixedUpdate()
     {
         if (aliveEnemies == 0 && !upgradesActive)
         {
             upgradesActive = true;
-            upgradeSpawner.ActivateUpgrades();
+            pickupSpawner.ActivateUpgrades();
         }
         else if(upgradesActive)
         {
-            if(upgradeSpawner.Collected())
+            if(pickupSpawner.Collected())
             {
                 upgradesActive = false;
                 StartNewRound();
             }
         }
-	}
+    }
 
     public void StartNewRound()
     {

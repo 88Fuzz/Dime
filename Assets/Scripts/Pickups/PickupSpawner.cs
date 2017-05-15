@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UpgradeSpawner : MonoBehaviour
+public class PickupSpawner : MonoBehaviour
 {
-    public Upgrade[] upgrades;
+    public Pickup[] pickups;
     public float waitSpawnTime = .2f;
 
     private int playerLayer;
@@ -11,26 +11,26 @@ public class UpgradeSpawner : MonoBehaviour
     private bool upgradesActive;
     private bool playerInTheWay;
 
-	public void Awake()
+    public void Awake()
     {
         playerLayer = LayerMask.GetMask("Player");
         playerInTheWay = false;
-	}
-	
-	public void FixedUpdate()
+    }
+    
+    public void FixedUpdate()
     {
         if(upgradesActive)
         {
-            foreach(Upgrade upgrade in upgrades)
+            foreach(Pickup pickup in pickups)
             {
-                if(upgrade.pickedUp)
+                if(pickup.pickedUp)
                 {
                     DeactivateUpgrades();
                     break;
                 }
             }
         }
-	}
+    }
 
     public bool Collected()
     {
@@ -42,9 +42,10 @@ public class UpgradeSpawner : MonoBehaviour
         shouldActivateUpgrades = false;
         upgradesActive = false;
 
-        foreach (Upgrade upgrade in upgrades)
+        foreach (Pickup pickup in pickups)
         {
-            upgrade.Deactivate();
+            pickup.Deactivate();
+            Destroy(pickup.gameObject);
         }
     }
 
@@ -74,9 +75,9 @@ public class UpgradeSpawner : MonoBehaviour
     {
         upgradesActive = true;
         shouldActivateUpgrades = false;
-        foreach (Upgrade upgrade in upgrades)
+        foreach (Pickup pickup in pickups)
         {
-            upgrade.Activate();
+            pickup.Activate();
         }
     }
 

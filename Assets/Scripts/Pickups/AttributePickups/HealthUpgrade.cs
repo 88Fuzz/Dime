@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 
-public class HealthUpgrade : Upgrade
+/*
+ * Increases player's max health
+ */
+public class HealthUpgrade : Pickup
 {
-    protected override void UpgradePickedUp(GameObject player)
+    protected override void PickedUp(GameObject player)
     {
         PlayerStats.IncrementValue(PlayerStats.Stat.HEALTH);
         PlayerHittable playerHittable = player.GetComponent<PlayerHittable>();

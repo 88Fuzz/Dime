@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 /*
  * class used to hold PlayerStats like movement speed, damage, health, etc.
@@ -19,7 +20,8 @@ public class PlayerStats
         CRIT_DAMAGE_MULTIPLIER,
         GLANCE_DAMAGE_MULTIPLIER,
         CRIT_DAMAGE_CHANCE,
-        GLANCE_DAMAGE_CHANCE
+        GLANCE_DAMAGE_CHANCE,
+        NONE
     };
 
     private struct StateInformation
@@ -55,6 +57,9 @@ public class PlayerStats
         {Stat.GLANCE_DAMAGE_CHANCE, new StateInformation(100,0,5,5)},
     };
 
+    /*
+     * Get the max value for stat
+     */
     public static float GetMaxValue(Stat stat)
     {
         StateInformation stateInfo;
@@ -64,6 +69,9 @@ public class PlayerStats
         return stateInfo.maxValue;
     }
 
+    /*
+     * Get the minimum value for stat
+     */
     public static float GetMinValue(Stat stat)
     {
         StateInformation stateInfo;
@@ -73,6 +81,9 @@ public class PlayerStats
         return stateInfo.minValue;
     }
 
+    /*
+     * Get the current value for the stat
+     */
     public static float GetCurrentValue(Stat stat)
     {
         StateInformation stateInfo;
@@ -82,8 +93,12 @@ public class PlayerStats
         return stateInfo.currentValue;
     }
 
+    /*
+     * Increases the stat value by the default change
+     */
     public static void IncrementValue(Stat stat)
     {
+        Debug.Log("Incrementing value " + stat);
         StateInformation stateInfo;
         if (!STAT_MAP.TryGetValue(stat, out stateInfo))
             return;
@@ -93,8 +108,12 @@ public class PlayerStats
             stateInfo.currentValue = stateInfo.maxValue;
     }
 
+    /*
+     * Decreases the stat by the default change
+     */
     public static void DecrementValue(Stat stat)
     {
+        Debug.Log("Decrementing value " + stat);
         StateInformation stateInfo;
         if (!STAT_MAP.TryGetValue(stat, out stateInfo))
             return;
@@ -102,5 +121,17 @@ public class PlayerStats
         stateInfo.currentValue -= stateInfo.change;
         if (stateInfo.currentValue < stateInfo.minValue)
             stateInfo.currentValue = stateInfo.minValue;
+    }
+
+    /*
+     * Returns currentValue / maxValue
+     */
+    public static float GetPercentOfMax(Stat stat)
+    {
+        StateInformation stateInfo;
+        if (!STAT_MAP.TryGetValue(stat, out stateInfo))
+            return VALUE_NOT_FOUND;
+
+        return stateInfo.currentValue / stateInfo.maxValue;
     }
 }

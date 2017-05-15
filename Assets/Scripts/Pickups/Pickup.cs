@@ -1,22 +1,23 @@
 ﻿using UnityEngine;
 
-public abstract class Upgrade : MonoBehaviour
+public abstract class Pickup : MonoBehaviour
 {
     public bool pickedUp;
 
     private int playerLayer;
 
-	public void Awake()
+    public void Awake()
     {
         playerLayer = LayerMask.GetMask("Player");
         pickedUp = false;
-	}
+    }
 
     public void OnTriggerEnter(Collider collider)
     {
+        //TODO I don't think this check should be here anymore, now that I know how to change the physics collisions of layers
         if(LayerUtils.CompareLayerWithLayerMask(collider.gameObject.layer, playerLayer))
         {
-            UpgradePickedUp(collider.gameObject);
+            PickedUp(collider.gameObject);
             pickedUp = true;
         }
     }
@@ -36,5 +37,5 @@ public abstract class Upgrade : MonoBehaviour
     /*
      * Method called when the player picks up the current pickup.
      */
-    protected abstract void UpgradePickedUp(GameObject player);
+    protected abstract void PickedUp(GameObject player);
 }

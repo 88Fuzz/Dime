@@ -548,7 +548,7 @@ Transform:
   - {fileID: 4221652111480310}
   - {fileID: 4235314834497324}
   m_Father: {fileID: 4967079292259820}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4094639906550640
 Transform:
@@ -802,7 +802,7 @@ Transform:
   - {fileID: 4094639906550640}
   - {fileID: 4438053423949856}
   m_Father: {fileID: 4967079292259820}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4698025323569416
 Transform:
@@ -889,13 +889,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1617814542410028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.734016, y: 54.875957, z: -55.122105}
+  m_LocalPosition: {x: 18.465363, y: 0.23030686, z: 17.131132}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4261632959765282}
   - {fileID: 4512834335691252}
-  - {fileID: 4090220397849130}
   - {fileID: 4690688482876122}
+  - {fileID: 4090220397849130}
   - {fileID: 4433488198216856}
   - {fileID: 4928075213769340}
   m_Father: {fileID: 0}
@@ -1223,6 +1223,7 @@ MonoBehaviour:
   - {fileID: 114841572858010130}
   - {fileID: 114005277522200406}
   spawners: []
+  enemies: []
   spawnPosition: {fileID: 4433488198216856}
   nextRoom: {fileID: 0}
 --- !u!114 &114841572858010130

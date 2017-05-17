@@ -15,7 +15,7 @@ public class PlayerStats
         INVINCIBILITY_COUNT,
         SHOOT_DELAY,
         SHOOT_DAMAGE_MULTIPLIER,
-        BULLLET_SPEED,
+        BULLET_SPEED,
         BULLET_SIZE,
         CRIT_DAMAGE_MULTIPLIER,
         GLANCE_DAMAGE_MULTIPLIER,
@@ -49,7 +49,7 @@ public class PlayerStats
         {Stat.INVINCIBILITY_COUNT, new StateInformation(10,1,3,1)},
         {Stat.SHOOT_DELAY, new StateInformation(.8f,.15f,.5f,.08f)},//seconds
         {Stat.SHOOT_DAMAGE_MULTIPLIER, new StateInformation(2,.5f,1,.15f)},
-        {Stat.BULLLET_SPEED, new StateInformation(40,5,20,5)},//TODO what are the units?
+        {Stat.BULLET_SPEED, new StateInformation(40,5,20,5)},//TODO what are the units?
         {Stat.BULLET_SIZE, new StateInformation(2,.05f,.25f,.2f)},//TODO what are the units?
         {Stat.CRIT_DAMAGE_MULTIPLIER, new StateInformation(2.3f,1.7f,2,.15f)},
         {Stat.GLANCE_DAMAGE_MULTIPLIER, new StateInformation(.7f,.2f,.5f,.15f)},

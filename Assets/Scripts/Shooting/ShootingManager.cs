@@ -23,11 +23,11 @@ public class ShootingManager : MonoBehaviour
         ActionManager actionManager = Singleton<ActionManager>.Instance;
         actionManager.RegisterContinuousButtonListener(InputButton.PRIMARY_ATTACK, FireBullet);
     }
-	
-	public void FixedUpdate()
+    
+    public void FixedUpdate()
     {
         timer += Time.deltaTime;
-	}
+    }
 
     public void FireBullet(InputButton button)
     {
@@ -37,18 +37,54 @@ public class ShootingManager : MonoBehaviour
             Bullet[] spawnBullets = bulletManager.GetBullets();
             foreach(Bullet bullet in spawnBullets)
             {
-                Transform nextBulletPositionTransform = GetNextSpawnPosition();
-                Bullet spawnedBullet = Instantiate(bullet, nextBulletPositionTransform.position, nextBulletPositionTransform.rotation) as Bullet;
-                spawnedBullet.bulletManager = bulletManager;
-                spawnedBullet.damage = bulletManager.hitInformationProvider.GetHitInformation();
-                spawnedBullet.SetBulletVelocityModifier(bulletManager.bulletVelocityModifier);
-                spawnedBullet.SetBulletSizeModifier(bulletManager.bulletSizeModifier);
-                spawnedBullet.AddBulletHitListeners(bulletManager.hitListeners);
-                foreach(BulletSpawnListener spawnListener in bulletManager.bulletSpawnListeners)
-                {
-                    spawnListener.OnBulletSpawn(spawnedBullet);
-                }
+                //TODO some kind of object pooling
+                SpawnNewBullet(bullet);
             }
+        }
+    }
+
+    /*
+     * Spawns a new bullet with new configurations based on the BulletManager. New bullet is returned.
+     */
+    public Bullet SpawnNewBullet(Bullet bullet)
+    {
+        Transform nextBulletPositionTransform = GetNextSpawnPosition();
+        //TODO some kind of object pooling
+        Bullet spawnedBullet = Instantiate(bullet, nextBulletPositionTransform.position, nextBulletPositionTransform.rotation) as Bullet;
+        spawnedBullet.shootingManager = this;
+        spawnedBullet.bulletManager = bulletManager;
+        spawnedBullet.damage = bulletManager.hitInformationProvider.GetHitInformation();
+        spawnedBullet.SetBulletVelocityModifier(bulletManager.bulletVelocityModifier);
+        spawnedBullet.SetBulletSizeModifier(bulletManager.bulletSizeModifier);
+        spawnedBullet.AddBulletHitListeners(bulletManager.hitListeners);
+        ApplyBulletSpawnListeners(spawnedBullet);
+
+        return spawnedBullet;
+    }
+
+    /*
+     * Spawns an exact copy of the bullet passed in. Bullet returned is the new bullet.
+     */
+    public Bullet SpawnBulletCopy(Bullet bullet)
+    {
+        //TODO some kind of object pooling
+        Bullet spawnedBullet = Instantiate(bullet, bullet.transform.position, bullet.transform.rotation) as Bullet;
+        spawnedBullet.shootingManager = this;
+        spawnedBullet.bulletManager = bullet.bulletManager;
+        spawnedBullet.damage = bullet.damage;
+        spawnedBullet.velocityModifier = bullet.velocityModifier;
+        spawnedBullet.sizeModifier = bullet.sizeModifier;
+        spawnedBullet.hitListeners = bullet.hitListeners;
+        ApplyBulletSpawnListeners(spawnedBullet);
+
+        return spawnedBullet;
+    }
+
+    private void ApplyBulletSpawnListeners(Bullet spawnedBullet)
+    {
+        foreach (BulletSpawnListener spawnListener in bulletManager.bulletSpawnListeners)
+        {
+            spawnListener.OnBulletSpawn(spawnedBullet);
         }
     }
 

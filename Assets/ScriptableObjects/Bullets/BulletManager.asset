@@ -24,5 +24,6 @@ MonoBehaviour:
   hitListeners:
   - {fileID: 11400000, guid: 86c6caefa8bac6643af06cb9d9ed53aa, type: 2}
   - {fileID: 11400000, guid: 07e2ac394781b5e4abadb0106939216e, type: 2}
+  - {fileID: 11400000, guid: 76f718efe5f95304b9522cf56906d8cc, type: 2}
   bulletSpawnListeners:
   - {fileID: 11400000, guid: eecb02350d382e4459a56620f78c9251, type: 2}

@@ -4,6 +4,7 @@ using UnityEngine;
 //TODO, bullets should have a max amount of time to live
 public class Bullet : MonoBehaviour
 {
+    public ShootingManager shootingManager;
     public BulletManager bulletManager;
     public BulletVelocityModifier velocityModifier;
     public BulletSizeModifier sizeModifier;
@@ -21,7 +22,7 @@ public class Bullet : MonoBehaviour
         SetRadius(PlayerStats.GetCurrentValue(PlayerStats.Stat.BULLET_SIZE));
         previousPosition = transform.position;
         bulletRigidbody = GetComponent<Rigidbody>();
-        bulletRigidbody.velocity = transform.TransformDirection(Vector3.forward * PlayerStats.GetCurrentValue(PlayerStats.Stat.BULLLET_SPEED));
+        CalculateForwardVelocity();
     }
 	
 	public void FixedUpdate()
@@ -50,6 +51,14 @@ public class Bullet : MonoBehaviour
         if(newRadius != previousRadius)
             SetRadius(newRadius);
 	}
+
+    /*
+     * Sets the velocity of the bullet in the local z direction
+     */
+    public void CalculateForwardVelocity()
+    {
+        bulletRigidbody.velocity = transform.TransformDirection(Vector3.forward * PlayerStats.GetCurrentValue(PlayerStats.Stat.BULLET_SPEED));
+    }
 
     public void SetBulletVelocityModifier(BulletVelocityModifier modifier)
     {

@@ -44,7 +44,7 @@ public class ChainShot : BulletHitListener
 
     private void PossiblyCreateBullet(Bullet bullet, GameObject hitGameObject)
     {
-        float percent = RandomNumberGeneratorUtils.unityRNG.GetValueInRange(0, 100);
+        float percent = RandomNumberGeneratorUtils.unityRNG.GetRandomPercent();
         if (percent < spawnPercent)
         {
             Hittable hittable = FindEnemy(bullet.transform, hitGameObject);

@@ -8,6 +8,14 @@ public class RandomNumberGeneratorUtils
     public static readonly RandomNumberGeneratorUtils unityRNG = new RandomNumberGeneratorUtils();
 
     /*
+     * Returns a random percent. Equivalent to GetValueInRange(0,100)
+     */
+    public float GetRandomPercent()
+    {
+        return GetValueInRange(0, 100);
+    }
+
+    /*
      * Return a random number in the range [min, max). If min > max, max is returned
      */
     public float GetValueInRange(Range range)

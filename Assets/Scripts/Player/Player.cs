@@ -13,5 +13,6 @@ public class Player : MonoBehaviour
     public void Awake()
     {
         specialManager = ScriptableObject.CreateInstance<SpecialManager>();
+        specialManager.player = this;
     }
 }

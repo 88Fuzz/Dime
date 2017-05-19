@@ -33,15 +33,20 @@ public class Hittable : MonoBehaviour
             return;
 
         HealAction();
-
         currentHealth += heal;
 
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
     }
 
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
     protected virtual void HealAction()
     {
+        //TODO there should probably be Heal Listeners to go along with the development practices of this game
         //Do nothing by default
     }
 	

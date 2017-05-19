@@ -23,7 +23,7 @@ public class NickelADozen : BulletHitListener
         {
             //TODO should there be a sound or visual note that the effect was triggered?
             killCount = 0;
-            bullet.bulletManager.hitInformationProvider.AddGuarantee(BulletHitInformationProvider.DamageModifier.CRIT, CRIT_BONUS);
+            bullet.player.bulletManager.hitInformationProvider.AddGuarantee(BulletHitInformationProvider.DamageModifier.CRIT, CRIT_BONUS);
         }
         return true;
     }

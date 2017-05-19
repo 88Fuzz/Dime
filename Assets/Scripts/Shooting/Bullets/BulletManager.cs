@@ -17,6 +17,7 @@ public class BulletManager : ScriptableObject
         public Range range;
         public Bullet bullet;
     }
+    public Player player;
     public List<BulletChanceInformation> bulletTypes;
     public BulletSpawnNumberDecider bulletSpawnNumberDecider;
 

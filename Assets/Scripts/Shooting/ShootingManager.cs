@@ -8,7 +8,7 @@ public class ShootingManager : MonoBehaviour
 {
     //There should also be a BulletSpawnPositionManager that will return the number of transforms to spawn bullets
     public List<Transform> bulletSpawnPositions;
-    public BulletManager bulletManager;
+    public Player player;
     public float shootDelay;
 
     private float timer;
@@ -31,10 +31,10 @@ public class ShootingManager : MonoBehaviour
 
     public void FireBullet(InputButton button)
     {
-        if(button == InputButton.PRIMARY_ATTACK && timer > shootDelay)
+        if(timer > shootDelay)
         {
             timer = 0;
-            Bullet[] spawnBullets = bulletManager.GetBullets();
+            Bullet[] spawnBullets = player.bulletManager.GetBullets();
             foreach(Bullet bullet in spawnBullets)
             {
                 //TODO some kind of object pooling
@@ -51,8 +51,9 @@ public class ShootingManager : MonoBehaviour
         Transform nextBulletPositionTransform = GetNextSpawnPosition();
         //TODO some kind of object pooling
         Bullet spawnedBullet = Instantiate(bullet, nextBulletPositionTransform.position, nextBulletPositionTransform.rotation) as Bullet;
-        spawnedBullet.shootingManager = this;
-        spawnedBullet.bulletManager = bulletManager;
+
+        BulletManager bulletManager = player.bulletManager;
+        spawnedBullet.player = player;
         spawnedBullet.damage = bulletManager.hitInformationProvider.GetHitInformation();
         spawnedBullet.SetBulletVelocityModifier(bulletManager.bulletVelocityModifier);
         spawnedBullet.SetBulletSizeModifier(bulletManager.bulletSizeModifier);
@@ -69,8 +70,7 @@ public class ShootingManager : MonoBehaviour
     {
         //TODO some kind of object pooling
         Bullet spawnedBullet = Instantiate(bullet, bullet.transform.position, bullet.transform.rotation) as Bullet;
-        spawnedBullet.shootingManager = this;
-        spawnedBullet.bulletManager = bullet.bulletManager;
+        spawnedBullet.player = bullet.player;
         spawnedBullet.damage = bullet.damage;
         spawnedBullet.velocityModifier = bullet.velocityModifier;
         spawnedBullet.sizeModifier = bullet.sizeModifier;
@@ -82,7 +82,7 @@ public class ShootingManager : MonoBehaviour
 
     private void ApplyBulletSpawnListeners(Bullet spawnedBullet)
     {
-        foreach (BulletSpawnListener spawnListener in bulletManager.bulletSpawnListeners)
+        foreach (BulletSpawnListener spawnListener in player.bulletManager.bulletSpawnListeners)
         {
             spawnListener.OnBulletSpawn(spawnedBullet);
         }

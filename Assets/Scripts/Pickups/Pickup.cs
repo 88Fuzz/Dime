@@ -17,7 +17,7 @@ public abstract class Pickup : MonoBehaviour
         //TODO I don't think this check should be here anymore, now that I know how to change the physics collisions of layers
         if(LayerUtils.CompareLayerWithLayerMask(collider.gameObject.layer, playerLayer))
         {
-            PickedUp(collider.gameObject);
+            PickedUp(collider.gameObject.GetComponent<Player>());
             pickedUp = true;
         }
     }
@@ -37,5 +37,5 @@ public abstract class Pickup : MonoBehaviour
     /*
      * Method called when the player picks up the current pickup.
      */
-    protected abstract void PickedUp(GameObject player);
+    protected abstract void PickedUp(Player player);
 }

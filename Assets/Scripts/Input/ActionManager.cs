@@ -61,8 +61,6 @@ public class ActionManager : MonoBehaviour
         mouseMovementListener = null;
     }
 
-    //TODO, start here and test the shit out this code with unit tests. After you are done with that shit,
-        //Continue moving things out of the Update loop and into the FixedUpdate loop
     public void Update()
     {
         CheckForButtonPresses();
@@ -123,19 +121,15 @@ public class ActionManager : MonoBehaviour
             {
                 case ButtonChangeType.ADD:
                     pendingButtons.Remove(buttonChange.InputButton);
+                    pressedButtons.Add(buttonChange.InputButton);
                     if (startButtonListeners.TryGetValue(buttonChange.InputButton.Id, out buttonListener))
-                    {
                         buttonListener(buttonChange.InputButton);
-                        pressedButtons.Add(buttonChange.InputButton);
-                    }
                     break;
                 case ButtonChangeType.REMOVE:
                     pressedButtons.Remove(buttonChange.InputButton);
+                    pendingButtons.Add(buttonChange.InputButton);
                     if (endButtonListeners.TryGetValue(buttonChange.InputButton.Id, out buttonListener))
-                    {
                         buttonListener(buttonChange.InputButton);
-                        pendingButtons.Add(buttonChange.InputButton);
-                    }
                     break;
                 default:
                     //Do nothing

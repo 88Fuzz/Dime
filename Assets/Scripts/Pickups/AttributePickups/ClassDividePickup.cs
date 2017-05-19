@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 /*
  * Finds the best two attributes for the player and increases the values.
@@ -17,7 +16,7 @@ public class ClassDividePickup : Pickup
         PlayerStats.Stat.INVINCIBILITY_COUNT
     };
 
-    protected override void PickedUp(GameObject player)
+    protected override void PickedUp(Player player)
     {
         PlayerStats.Stat[] maxStats = new PlayerStats.Stat[] { PlayerStats.Stat.NONE, PlayerStats.Stat.NONE};
         PlayerStats.Stat[] minStats = new PlayerStats.Stat[] { PlayerStats.Stat.NONE, PlayerStats.Stat.NONE};
@@ -30,7 +29,6 @@ public class ClassDividePickup : Pickup
                 continue;
 
             float percent = PlayerStats.GetPercentOfMax(stat);
-            Debug.Log("Stat " + stat + " has value " + percent);
             if (percent == PlayerStats.VALUE_NOT_FOUND)
                 continue;
 
@@ -60,7 +58,6 @@ public class ClassDividePickup : Pickup
             }
         }
 
-        Debug.Log("\nNow chaning attributes\n");
         PlayerStats.IncrementValue(maxStats[0]);
         PlayerStats.IncrementValue(maxStats[1]);
         PlayerStats.DecrementValue(minStats[0]);

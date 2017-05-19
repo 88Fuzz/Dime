@@ -73,7 +73,7 @@ public class ChainShot : BulletHitListener
 
     private void CreateBullet(Bullet bullet, Hittable hittable)
     {
-        Bullet spawnedBullet = bullet.shootingManager.SpawnBulletCopy(bullet);
+        Bullet spawnedBullet = bullet.player.shootingManager.SpawnBulletCopy(bullet);
         Ray ray = new Ray(spawnedBullet.transform.position, Vector3.down);
         int hit = Physics.RaycastNonAlloc(ray, rayCastResults, verticalOffsetFromFloor, floorLayer, QueryTriggerInteraction.Ignore);
         if(hit != 0)

@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 114018852379964754}
   - component: {fileID: 114448693578207100}
   - component: {fileID: 114845205115123662}
+  - component: {fileID: 114912477739684016}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -377,8 +378,23 @@ MonoBehaviour:
   bulletSpawnPositions:
   - {fileID: 4932494244053892}
   - {fileID: 4814268068442068}
-  bulletManager: {fileID: 11400000, guid: 5014e74616b6ca842933e69b565c20e5, type: 2}
+  player: {fileID: 114912477739684016}
   shootDelay: 0.5
+--- !u!114 &114912477739684016
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1684112697035524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52607af548caca46b0fbd721c58cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootingManager: {fileID: 114845205115123662}
+  bulletManager: {fileID: 11400000, guid: 5014e74616b6ca842933e69b565c20e5, type: 2}
+  specialManager: {fileID: 11400000, guid: 2f45179f2d2150149a449b2810e2f8cd, type: 2}
+  hittable: {fileID: 114448693578207100}
 --- !u!120 &120135891949394362
 LineRenderer:
   m_ObjectHideFlags: 1

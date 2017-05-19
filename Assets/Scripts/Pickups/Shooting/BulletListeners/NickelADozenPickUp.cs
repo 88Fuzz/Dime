@@ -3,16 +3,12 @@
 /*
  * Adds the NickelADozen to the player's BulletManager
  */
-public class NickelADozenPickUp : Pickup
+public class NickelADozenPickup : Pickup
 {
     NickelADozen nickelADozen;
 
-    protected override void PickedUp(GameObject player)
+    protected override void PickedUp(Player player)
     {
-        ShootingManager shootingManager = player.GetComponent<ShootingManager>();
-        if(shootingManager)
-        {
-            shootingManager.bulletManager.hitListeners.Add(nickelADozen);
-        }
+        player.bulletManager.hitListeners.Add(nickelADozen);
     }
 }

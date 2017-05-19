@@ -5,11 +5,9 @@
  */
 public class HealthUpgrade : Pickup
 {
-    protected override void PickedUp(GameObject player)
+    protected override void PickedUp(Player player)
     {
         PlayerStats.IncrementValue(PlayerStats.Stat.HEALTH);
-        PlayerHittable playerHittable = player.GetComponent<PlayerHittable>();
-        if (playerHittable)
-            playerHittable.UpdateMaxHealth();
+        player.hittable.UpdateMaxHealth();
     }
 }

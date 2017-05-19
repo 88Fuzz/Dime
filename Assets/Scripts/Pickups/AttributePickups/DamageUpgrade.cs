@@ -5,7 +5,7 @@
  */
 public class DamageUpgrade : Pickup
 {
-    protected override void PickedUp(GameObject player)
+    protected override void PickedUp(Player player)
     {
         PlayerStats.IncrementValue(PlayerStats.Stat.SHOOT_DAMAGE_MULTIPLIER);
     }

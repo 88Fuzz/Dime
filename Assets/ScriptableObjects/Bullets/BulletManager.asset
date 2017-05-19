@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 995b55bb29e3f5f48998d9000b2a5655, type: 3}
   m_Name: BulletManager
   m_EditorClassIdentifier: 
+  player: {fileID: 114912477739684016, guid: 339096d91d6e21945b6f07b70ea2b515, type: 2}
   bulletTypes:
   - bullet: {fileID: 114842701878661580, guid: bc46b1ff149875f4db3285d5fad78365, type: 2}
     chance: 10

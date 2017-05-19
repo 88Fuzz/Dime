@@ -1,7 +1,7 @@
 ﻿/*
  * Wrapper class around the Input keys.
  */ 
-public class InputButton
+public struct InputButton
 {
     private static object objectLock = new object();
     private static int count = 0;
@@ -25,6 +25,27 @@ public class InputButton
     public string Action
     {
         get { return action; }
+    }
+
+    public static bool operator ==(InputButton button1,InputButton button2)
+    {
+        return button1.Equals(button2);
+    }
+
+    public static bool operator !=(InputButton button1, InputButton button2)
+    {
+        return !button1.Equals(button2);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null)
+            return false;
+        else if (!(obj is InputButton))
+            return false;
+
+        InputButton other = (InputButton)obj;
+        return id == other.id;
     }
 
     //Attacks

@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
 
 	public void Awake()
     {
-        hitListeners = new List<BulletHitListener>();
+        hitListeners = new List<BulletHitListener>(10);
         hittableMask = LayerMask.GetMask("Object") | LayerMask.GetMask("Floor") | LayerMask.GetMask("Enemy");
         SetRadius(PlayerStats.GetCurrentValue(PlayerStats.Stat.BULLET_SIZE));
         previousPosition = transform.position;
@@ -83,32 +83,78 @@ public class Bullet : MonoBehaviour
     private void ColliderHit(Collider collider)
     {
         Hittable hittable = collider.GetComponent<Hittable>();
+        bool shouldDelete = true;
         if (hittable)
         {
             bool hitKilled = hittable.Hit(damage);
-            OnEnemyHit(hittable);
             if (hitKilled)
-                OnEnemyKill(hittable);
+                shouldDelete = OnEnemyKill(hittable);
+            else 
+                shouldDelete = OnEnemyHit(hittable);
         }
         else
+        {
             OnObjectHit(collider);
-        Destroy(gameObject);
+        }
+
+        if(shouldDelete)
+            Destroy(gameObject);
     }
 
-    private void OnEnemyHit(Hittable hittable)
+    private bool OnEnemyHit(Hittable hittable)
     {
+        bool shouldDelete = CommonOnEnemyHit(hittable);
         foreach(BulletHitListener hitListener in hitListeners)
         {
-            hitListener.OnEnemyHit(this, hittable);
+            bool shouldDeleteResponse = hitListener.OnEnemyHit(this, hittable);
+            //If there's a listener that says the bullet should not be deleted, that should trump all other responses.
+            if (shouldDelete)
+                shouldDelete = shouldDeleteResponse;
         }
+
+        return shouldDelete;
     }
 
-    private void OnEnemyKill(Hittable hittable)
+    private bool CommonOnEnemyHit(Hittable hittable)
     {
+        bool shouldDelete = true;
+        foreach(BulletHitListener hitListener in player.bulletManager.commonBulletModifiers.commonHitListeners)
+        {
+            bool shouldDeleteResponse = hitListener.OnEnemyHit(this, hittable);
+            //If there's a listener that says the bullet should not be deleted, that should trump all other responses.
+            if (shouldDelete)
+                shouldDelete = shouldDeleteResponse;
+        }
+
+        return shouldDelete;
+    }
+
+    private bool OnEnemyKill(Hittable hittable)
+    {
+        bool shouldDelete = CommonOnEnemyKill(hittable);
         foreach(BulletHitListener hitListener in hitListeners)
         {
-            hitListener.OnEnemyKill(this, hittable);
+            bool shouldDeleteResponse = hitListener.OnEnemyKill(this, hittable);
+            //If there's a listener that says the bullet should not be deleted, that should trump all other responses.
+            if (shouldDelete)
+                shouldDelete = shouldDeleteResponse;
         }
+
+        return shouldDelete;
+    }
+
+    private bool CommonOnEnemyKill(Hittable hittable)
+    {
+        bool shouldDelete = true;
+        foreach(BulletHitListener hitListener in player.bulletManager.commonBulletModifiers.commonHitListeners)
+        {
+            bool shouldDeleteResponse = hitListener.OnEnemyKill(this, hittable);
+            //If there's a listener that says the bullet should not be deleted, that should trump all other responses.
+            if (shouldDelete)
+                shouldDelete = shouldDeleteResponse;
+        }
+
+        return shouldDelete;
     }
 
     private void OnObjectHit(Collider collider)

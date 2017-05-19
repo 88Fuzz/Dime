@@ -7,6 +7,7 @@ public class Hittable : MonoBehaviour
     public HittableHitAction[] hitActions;
     public Room parentRoom = null;
     public float maxHealth;
+    public float specialCharge;
     public Color hitColor = Color.red;
     public int hitColorFlashCount;
     public float hitFlashSpeed;

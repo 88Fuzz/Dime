@@ -21,6 +21,7 @@ public class BulletManager : ScriptableObject
     public List<BulletChanceInformation> bulletTypes;
     public BulletSpawnNumberDecider bulletSpawnNumberDecider;
 
+    public CommonBulletModifiers commonBulletModifiers;
     public BulletHitInformationProvider hitInformationProvider;
     public BulletVelocityModifier bulletVelocityModifier;
     public BulletSizeModifier bulletSizeModifier;

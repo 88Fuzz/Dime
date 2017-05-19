@@ -14,13 +14,13 @@ public class SpecialManager : ScriptableObject
     public List<SpecialFullListener> specialFullListeners;
     public SpecialAction specialAction = null;
 
-    private float currentValue;
+    private float currentCharge;
 
     public void OnEnable()
     {
         specialUsedListeners = new List<SpecialUsedListener>(30);
         specialFullListeners = new List<SpecialFullListener>(30);
-        currentValue = MAX_VALUE;
+        currentCharge = MAX_VALUE;
         ActionManager actionManager = Singleton<ActionManager>.Instance;
         actionManager.RegisterStartButtonListener(InputButton.SECONDARY_ATTACK, ActivateSpecial);
     }
@@ -28,12 +28,12 @@ public class SpecialManager : ScriptableObject
     /*
      * Increases the value by increase
      */ 
-    public void IncreaseValue(float increase)
+    public void IncreaseCharge(float increase)
     {
         if (increase <= 0)
             return;
 
-        SetCurrentValue(currentValue + increase);
+        SetCurrentCharge(currentCharge + increase);
     }
 
     /*
@@ -41,7 +41,7 @@ public class SpecialManager : ScriptableObject
      */
     public void ActivateSpecial(InputButton inputButton)
     {
-        if (currentValue != MAX_VALUE)
+        if (currentCharge != MAX_VALUE)
             return;
 
         if (specialAction != null)
@@ -51,19 +51,20 @@ public class SpecialManager : ScriptableObject
         }
     }
 
-    private void SetCurrentValue(float currentValue)
+    private void SetCurrentCharge(float newValue)
     {
-        if (currentValue < 0)
+        if (newValue < 0)
         {
-            currentValue = 0;
+            newValue = 0;
         }
-        else if (currentValue >= MAX_VALUE)
+        else if (newValue >= MAX_VALUE)
         {
-            currentValue = MAX_VALUE;
-            NotifySpecialFullListeners();
+            newValue = MAX_VALUE;
+            if(currentCharge != MAX_VALUE)
+                NotifySpecialFullListeners();
         }
 
-        this.currentValue = currentValue;
+        currentCharge = newValue;
     }
 
     private void NotifySpecialUsedListeners()

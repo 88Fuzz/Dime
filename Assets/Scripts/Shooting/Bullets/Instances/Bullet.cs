@@ -51,6 +51,11 @@ public class Bullet : MonoBehaviour
             SetRadius(newRadius);
 	}
 
+    public void SetGravity(bool gravity)
+    {
+        bulletRigidbody.useGravity = gravity;
+    }
+
     /*
      * Sets the velocity of the bullet in the local z direction
      */

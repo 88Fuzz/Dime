@@ -426,6 +426,7 @@ MonoBehaviour:
   hitActions: []
   parentRoom: {fileID: 0}
   maxHealth: 50
+  specialCharge: 3
   hitColor: {r: 1, g: 0, b: 0, a: 1}
   hitColorFlashCount: 1
   hitFlashSpeed: 10

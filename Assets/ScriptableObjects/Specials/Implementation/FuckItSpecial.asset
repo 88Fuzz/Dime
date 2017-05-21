@@ -11,3 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c2151086834a7c4ba7dcf443a8e286f, type: 3}
   m_Name: FuckItSpecial
   m_EditorClassIdentifier: 
+  percentChance: 100

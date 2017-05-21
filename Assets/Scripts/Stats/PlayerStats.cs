@@ -47,7 +47,7 @@ public class PlayerStats
         {Stat.MOVEMENT_SPEED, new StateInformation(2000,400,600,200)},//units per second
         {Stat.HEALTH, new StateInformation(100,0,50,10)},
         {Stat.INVINCIBILITY_COUNT, new StateInformation(10,1,3,1)},
-        {Stat.SHOOT_DELAY, new StateInformation(.8f,.15f,.5f,.08f)},//seconds
+        {Stat.SHOOT_DELAY, new StateInformation(.9f,.15f,.5f,.08f)},//seconds
         {Stat.SHOOT_DAMAGE_MULTIPLIER, new StateInformation(2,.5f,1,.15f)},
         {Stat.BULLET_SPEED, new StateInformation(40,5,20,5)},//TODO what are the units?
         {Stat.BULLET_SIZE, new StateInformation(2,.05f,.25f,.2f)},//TODO what are the units?

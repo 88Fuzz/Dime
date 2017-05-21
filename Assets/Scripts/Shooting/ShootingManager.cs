@@ -9,7 +9,6 @@ public class ShootingManager : MonoBehaviour
     //There should also be a BulletSpawnPositionManager that will return the number of transforms to spawn bullets
     public List<Transform> bulletSpawnPositions;
     public Player player;
-    public float shootDelay;
 
     private float timer;
     private int bulletSpawnSelector;
@@ -31,7 +30,7 @@ public class ShootingManager : MonoBehaviour
 
     public void FireBullet(InputButton button)
     {
-        if(timer > shootDelay)
+        if (timer > PlayerStats.GetCurrentValue(PlayerStats.Stat.SHOOT_DELAY))
         {
             timer = 0;
             Bullet[] spawnBullets = player.bulletManager.GetBullets();

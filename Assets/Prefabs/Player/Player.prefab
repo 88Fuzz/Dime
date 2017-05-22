@@ -329,6 +329,7 @@ MonoBehaviour:
   hitActions: []
   parentRoom: {fileID: 0}
   maxHealth: 100
+  specialCharge: 0
   hitColor: {r: 1, g: 0, b: 0, a: 0}
   hitColorFlashCount: 3
   hitFlashSpeed: 10
@@ -378,8 +379,8 @@ MonoBehaviour:
   bulletSpawnPositions:
   - {fileID: 4932494244053892}
   - {fileID: 4814268068442068}
+  shootDelayModifier: {fileID: 11400000, guid: 43edc256e27673e42a714e1ce98c11fa, type: 2}
   player: {fileID: 114912477739684016}
-  shootDelay: 0.5
 --- !u!114 &114912477739684016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -393,7 +394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootingManager: {fileID: 114845205115123662}
   bulletManager: {fileID: 11400000, guid: 5014e74616b6ca842933e69b565c20e5, type: 2}
-  specialManager: {fileID: 11400000, guid: 2f45179f2d2150149a449b2810e2f8cd, type: 2}
+  specialManager: {fileID: 0}
   hittable: {fileID: 114448693578207100}
 --- !u!120 &120135891949394362
 LineRenderer:

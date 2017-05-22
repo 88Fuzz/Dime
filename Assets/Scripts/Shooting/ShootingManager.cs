@@ -12,6 +12,7 @@ public class ShootingManager : MonoBehaviour
     public Player player;
 
     private float timer;
+    private float shootDelay;
     private int bulletSpawnSelector;
 
     public void Awake()
@@ -22,6 +23,8 @@ public class ShootingManager : MonoBehaviour
         //TODO, I like the idea of different ActionManagerss existing, So one may act on button clicks, while another acts on a X second tick
         ActionManager actionManager = Singleton<ActionManager>.Instance;
         actionManager.RegisterContinuousButtonListener(InputButton.PRIMARY_ATTACK, FireBullet);
+        shootDelayModifier.InitModifier();
+        shootDelay = shootDelayModifier.GetShootDelay(this);
     }
     
     public void FixedUpdate()
@@ -31,9 +34,11 @@ public class ShootingManager : MonoBehaviour
 
     public void FireBullet(InputButton button)
     {
-        if (timer > shootDelayModifier.GetShootDelay(this))
+        if (timer > shootDelay)
         {
             timer = 0;
+            shootDelay = shootDelayModifier.GetShootDelay(this);
+
             Bullet[] spawnBullets = player.bulletManager.GetBullets();
             foreach(Bullet bullet in spawnBullets)
             {

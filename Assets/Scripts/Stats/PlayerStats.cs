@@ -94,6 +94,18 @@ public class PlayerStats
     }
 
     /*
+     * Gets the change in value that is applied when calling IncrementValue/DecrementValue
+     */
+    public static float GetChangeValue(Stat stat)
+    {
+        StateInformation stateInfo;
+        if (!STAT_MAP.TryGetValue(stat, out stateInfo))
+            return VALUE_NOT_FOUND;
+
+        return stateInfo.change;
+    }
+
+    /*
      * Increases the stat value by the default change
      */
     public static void IncrementValue(Stat stat)

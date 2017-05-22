@@ -13,6 +13,7 @@ using System.Collections.Generic;
  */
 public class ActionManager : MonoBehaviour
 {
+    private static readonly int DEFAULT_SIZE = 5;
     private enum ButtonChangeType
     {
         ADD,
@@ -41,18 +42,18 @@ public class ActionManager : MonoBehaviour
     private MovementListener movementListener;
     private MouseMovementListener mouseMovementListener;
 
-    private IDictionary<int, ButtonListener> startButtonListeners;
-    private IDictionary<int, ButtonListener> endButtonListeners;
-    private IDictionary<int, ButtonListener> continuousButtonListeners;
+    private IDictionary<int, List<ButtonListener>> startButtonListeners;
+    private IDictionary<int, List<ButtonListener>> endButtonListeners;
+    private IDictionary<int, List<ButtonListener>> continuousButtonListeners;
     private HashSet<InputButton> pendingButtons;
     private HashSet<InputButton> pressedButtons;
     private Queue<ButtonChange> pendingButtonChanges;
 
     public void Awake()
     {
-        startButtonListeners = new Dictionary<int, ButtonListener>();
-        endButtonListeners = new Dictionary<int, ButtonListener>();
-        continuousButtonListeners = new Dictionary<int, ButtonListener>();
+        startButtonListeners = new Dictionary<int, List<ButtonListener>>();
+        endButtonListeners = new Dictionary<int, List<ButtonListener>>();
+        continuousButtonListeners = new Dictionary<int, List<ButtonListener>>();
         pendingButtons = new HashSet<InputButton>();
         pressedButtons = new HashSet<InputButton>();
         pendingButtonChanges = new Queue<ButtonChange>();
@@ -94,21 +95,35 @@ public class ActionManager : MonoBehaviour
     public void RegisterStartButtonListener(InputButton inputButton, ButtonListener buttonListener)
     {
         pendingButtons.Add(inputButton);
-        startButtonListeners[inputButton.Id] = buttonListener;
+        List<ButtonListener> buttonListeners = GetListFromMap(startButtonListeners, inputButton.Id);
+        buttonListeners.Add(buttonListener);
     }
 
     public void RegisterEndButtonListener(InputButton inputButton, ButtonListener buttonListener)
     {
         pendingButtons.Add(inputButton);
-        endButtonListeners[inputButton.Id] = buttonListener;
+        List<ButtonListener> buttonListeners = GetListFromMap(endButtonListeners, inputButton.Id);
+        buttonListeners.Add(buttonListener);
     }
 
     public void RegisterContinuousButtonListener(InputButton inputButton, ButtonListener buttonListener)
     {
-        pendingButtons.Add(inputButton);
-        startButtonListeners[inputButton.Id] = buttonListener;
-        continuousButtonListeners[inputButton.Id] = buttonListener;
-        endButtonListeners[inputButton.Id] = buttonListener;
+        RegisterStartButtonListener(inputButton, buttonListener);
+        RegisterEndButtonListener(inputButton, buttonListener);
+        List<ButtonListener> buttonListeners = GetListFromMap(continuousButtonListeners, inputButton.Id);
+        buttonListeners.Add(buttonListener);
+    }
+
+    private List<ButtonListener> GetListFromMap(IDictionary<int, List<ButtonListener>> dictionary, int key)
+    {
+        List<ButtonListener> returnValue;
+        if (!dictionary.TryGetValue(key, out returnValue))
+        {
+            returnValue = new List<ButtonListener>(DEFAULT_SIZE);
+            dictionary.Add(key, returnValue);
+        }
+
+        return returnValue;
     }
 
     private void ProcessPendingButtonChanges()
@@ -116,20 +131,30 @@ public class ActionManager : MonoBehaviour
         while(pendingButtonChanges.Count > 0)
         {
             ButtonChange buttonChange = pendingButtonChanges.Dequeue();
-            ButtonListener buttonListener;
+            List<ButtonListener> buttonListeners;
             switch(buttonChange.ButtonChangeType)
             {
                 case ButtonChangeType.ADD:
                     pendingButtons.Remove(buttonChange.InputButton);
                     pressedButtons.Add(buttonChange.InputButton);
-                    if (startButtonListeners.TryGetValue(buttonChange.InputButton.Id, out buttonListener))
-                        buttonListener(buttonChange.InputButton);
+                    if (startButtonListeners.TryGetValue(buttonChange.InputButton.Id, out buttonListeners))
+                    {
+                        foreach (ButtonListener buttonListener in buttonListeners)
+                        {
+                            buttonListener(buttonChange.InputButton);
+                        }
+                    }
                     break;
                 case ButtonChangeType.REMOVE:
                     pressedButtons.Remove(buttonChange.InputButton);
                     pendingButtons.Add(buttonChange.InputButton);
-                    if (endButtonListeners.TryGetValue(buttonChange.InputButton.Id, out buttonListener))
-                        buttonListener(buttonChange.InputButton);
+                    if (endButtonListeners.TryGetValue(buttonChange.InputButton.Id, out buttonListeners))
+                    {
+                        foreach (ButtonListener buttonListener in buttonListeners)
+                        {
+                            buttonListener(buttonChange.InputButton);
+                        }
+                    }
                     break;
                 default:
                     //Do nothing
@@ -142,9 +167,14 @@ public class ActionManager : MonoBehaviour
     {
         foreach (InputButton pressedButton in pressedButtons)
         {
-            ButtonListener buttonListener;
-            if (continuousButtonListeners.TryGetValue(pressedButton.Id, out buttonListener))
-                buttonListener(pressedButton);
+            List<ButtonListener> buttonListeners;
+            if (continuousButtonListeners.TryGetValue(pressedButton.Id, out buttonListeners))
+            {
+                foreach (ButtonListener buttonListener in buttonListeners)
+                {
+                    buttonListener(pressedButton);
+                }
+            }
         }
     }
 

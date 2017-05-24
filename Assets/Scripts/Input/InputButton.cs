@@ -27,7 +27,7 @@ public struct InputButton
         get { return action; }
     }
 
-    public static bool operator ==(InputButton button1,InputButton button2)
+    /*public static bool operator ==(InputButton button1,InputButton button2)
     {
         return button1.Equals(button2);
     }
@@ -46,7 +46,7 @@ public struct InputButton
 
         InputButton other = (InputButton)obj;
         return id == other.id;
-    }
+    }*/
 
     //Attacks
     public static readonly InputButton PRIMARY_ATTACK = new InputButton("Fire1");

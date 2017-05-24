@@ -17,13 +17,17 @@ public class MyMonoBehaviourManager : MonoBehaviour
     {
         globalTimeScaleModifiers = new List<TimeScaleModifier>(4);
         myMoboBehaviorTimeScaleModifiers = new List<MyMonoBehaviorTimeScaleModifier>(4);
+        first = null;
+        last = null;
+        blah = 1;
+    }
+
+    public void Start()
+    {
         //TODO remove this temp code please
         ActionManager manager = Singleton<ActionManager>.Instance;
         manager.RegisterStartButtonListener(InputButton.JUMP, TempDown);
         manager.RegisterEndButtonListener(InputButton.JUMP, TempUp);
-        first = null;
-        last = null;
-        blah = 1;
     }
 
     private void TempDown(InputButton inputButton)

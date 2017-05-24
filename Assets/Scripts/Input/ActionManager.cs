@@ -11,7 +11,7 @@ using System.Collections.Generic;
  * 4) Calling a ButtonListener method when a key remains pressed
  * 5) Calling a ButtonListener method when a key is released.
  */
-public class ActionManager : MonoBehaviour
+public class ActionManager : MyMonoBehaviour
 {
     private static readonly int DEFAULT_SIZE = 5;
     private enum ButtonChangeType
@@ -49,7 +49,7 @@ public class ActionManager : MonoBehaviour
     private HashSet<InputButton> pressedButtons;
     private Queue<ButtonChange> pendingButtonChanges;
 
-    public void Awake()
+    protected override void MyAwake()
     {
         startButtonListeners = new Dictionary<int, List<ButtonListener>>();
         endButtonListeners = new Dictionary<int, List<ButtonListener>>();
@@ -68,18 +68,18 @@ public class ActionManager : MonoBehaviour
         CheckForButtonReleases();
     }
 
-    public void FixedUpdate()
+    protected override void MyFixedUpdateWithDeltaTime(float myDeltaTime)
     {
         ProcessPendingButtonChanges();
         ProcessPressedButtons();
 
         if (movementListener != null)
             movementListener(Input.GetAxis(InputButton.HORIZONTAL.Action), Input.GetAxis(InputButton.FORWARD.Action),
-                Input.GetAxisRaw(InputButton.HORIZONTAL.Action), Input.GetAxisRaw(InputButton.FORWARD.Action));
+                Input.GetAxisRaw(InputButton.HORIZONTAL.Action), Input.GetAxisRaw(InputButton.FORWARD.Action), myDeltaTime);
 
         if (mouseMovementListener != null)
             mouseMovementListener(Input.GetAxis(InputButton.MOUSE_X.Action), Input.GetAxis(InputButton.MOUSE_Y.Action),
-                Input.GetAxisRaw(InputButton.MOUSE_X.Action), Input.GetAxisRaw(InputButton.MOUSE_Y.Action));
+                Input.GetAxisRaw(InputButton.MOUSE_X.Action), Input.GetAxisRaw(InputButton.MOUSE_Y.Action), myDeltaTime);
     }
 
     public void RegisterMovementListener(MovementListener movementListener)

@@ -18,13 +18,13 @@ public class PlayerMovement : MonoBehaviour
         actionManager.RegisterMovementListener(Move);
     }
 	
-    private void Move(float x, float z, float rawX, float rawZ)
+    private void Move(float x, float z, float rawX, float rawZ, float deltaTime)
     {
         Vector3 movement = new Vector3(rawX, 0, rawZ);
         if(movement.magnitude > 1)
             movement = movement.normalized;
 
-        movement = movement * PlayerStats.GetCurrentValue(PlayerStats.Stat.MOVEMENT_SPEED) * Time.deltaTime;
+        movement = movement * PlayerStats.GetCurrentValue(PlayerStats.Stat.MOVEMENT_SPEED) * deltaTime;
         playerRigidbody.velocity = movement;
         Turning();
     }

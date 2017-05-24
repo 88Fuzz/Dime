@@ -2,7 +2,7 @@
 using UnityEngine;
 
 //TODO, bullets should have a max amount of time to live
-public class Bullet : MonoBehaviour
+public class Bullet : MyMonoBehaviour
 {
     public Player player;
     public BulletVelocityModifier velocityModifier;
@@ -10,21 +10,26 @@ public class Bullet : MonoBehaviour
     public List<BulletHitListener> hitListeners;
     public float damage;
 
+    private bool useGravity;
     private Rigidbody bulletRigidbody;
     private int hittableMask;
     private Vector3 previousPosition;
+    private Vector3 velocity;
 
-	public void Awake()
+	protected override void MyAwake()
     {
+        gameObject.name = System.Guid.NewGuid().ToString();
         hitListeners = new List<BulletHitListener>(10);
         hittableMask = LayerMask.GetMask("Object") | LayerMask.GetMask("Floor") | LayerMask.GetMask("Enemy");
         SetRadius(PlayerStats.GetCurrentValue(PlayerStats.Stat.BULLET_SIZE));
         previousPosition = transform.position;
         bulletRigidbody = GetComponent<Rigidbody>();
-        CalculateForwardVelocity();
+        bulletRigidbody.useGravity = false;
+        useGravity = true;
+        velocity = CalculateForwardVelocity();
     }
 	
-	public void FixedUpdate()
+    protected override void MyFixedUpdateWithDeltaTime(float myDeltaTime)
     {
         RaycastHit hitInfo;
         float maxDistance = Vector3.Distance(previousPosition, transform.position);
@@ -44,7 +49,13 @@ public class Bullet : MonoBehaviour
         }
 
         previousPosition = transform.position;
-        bulletRigidbody.velocity = velocityModifier.ChangeVelocity(bulletRigidbody.velocity);
+        velocity = velocityModifier.ChangeVelocity(velocity);
+        Vector3 moveDistance = velocity * myDeltaTime;
+        //TODO this gravity seems weird. Is it wrong?
+        if (useGravity)
+            moveDistance += Physics.gravity * myDeltaTime;
+        bulletRigidbody.MovePosition(bulletRigidbody.position + moveDistance);
+
         float previousRadius = GetRadius();
         float newRadius = sizeModifier.ChangeSize(previousRadius);
         if(newRadius != previousRadius)
@@ -53,15 +64,15 @@ public class Bullet : MonoBehaviour
 
     public void SetGravity(bool gravity)
     {
-        bulletRigidbody.useGravity = gravity;
+        useGravity = gravity;
     }
 
     /*
      * Sets the velocity of the bullet in the local z direction
      */
-    public void CalculateForwardVelocity()
+    public Vector3 CalculateForwardVelocity()
     {
-        bulletRigidbody.velocity = transform.TransformDirection(Vector3.forward * PlayerStats.GetCurrentValue(PlayerStats.Stat.BULLET_SPEED));
+        return transform.TransformDirection(Vector3.forward * PlayerStats.GetCurrentValue(PlayerStats.Stat.BULLET_SPEED));
     }
 
     public void SetBulletVelocityModifier(BulletVelocityModifier modifier)
@@ -103,7 +114,7 @@ public class Bullet : MonoBehaviour
         }
 
         if(shouldDelete)
-            Destroy(gameObject);
+            MyDestroy();
     }
 
     private bool OnEnemyHit(Hittable hittable)

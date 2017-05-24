@@ -4,7 +4,7 @@ using UnityEngine;
 /*
  * Responsible for spawning bullets when asked.
  */
-public class ShootingManager : MonoBehaviour
+public class ShootingManager : MyMonoBehaviour
 {
     //There should also be a BulletSpawnPositionManager that will return the number of transforms to spawn bullets
     public List<Transform> bulletSpawnPositions;
@@ -15,21 +15,21 @@ public class ShootingManager : MonoBehaviour
     private float shootDelay;
     private int bulletSpawnSelector;
 
-    public void Awake()
+    protected override void MyAwake()
     {
         timer = 0;
         bulletSpawnSelector = 0;
 
-        //TODO, I like the idea of different ActionManagerss existing, So one may act on button clicks, while another acts on a X second tick
+        //TODO, I like the idea of different ActionManagerss existing, So one may act on button clicks, while another acts on a X second tick to fire bullets
         ActionManager actionManager = Singleton<ActionManager>.Instance;
         actionManager.RegisterContinuousButtonListener(InputButton.PRIMARY_ATTACK, FireBullet);
         shootDelayModifier.InitModifier();
         shootDelay = shootDelayModifier.GetShootDelay(this);
     }
     
-    public void FixedUpdate()
+    protected override void MyFixedUpdateWithDeltaTime(float myDeltaTime)
     {
-        timer += Time.deltaTime;
+        timer += myDeltaTime;
     }
 
     public void FireBullet(InputButton button)

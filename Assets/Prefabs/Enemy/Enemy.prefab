@@ -32,22 +32,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1000012562717290
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4000011537699050}
-  - component: {fileID: 135000012872267748}
-  m_Layer: 0
-  m_Name: AgroField
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1000012717656112
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,19 +171,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4000011537699050
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012562717290}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4000011987222176}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000011987222176
 Transform:
   m_ObjectHideFlags: 1
@@ -211,7 +182,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4000013043969052}
-  - {fileID: 4000011537699050}
   - {fileID: 4744167687500726}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -310,7 +280,7 @@ Transform:
   - {fileID: 4642401193751374}
   - {fileID: 4680853473705972}
   m_Father: {fileID: 4000011987222176}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4843269934242902
 Transform:
@@ -452,6 +422,7 @@ MonoBehaviour:
     min: 0.75
     max: 2
   moveTimeout: 2
+  targetCheckRadius: 20
   anticipationMovePercent: 0.5
   maxSpeed: 0
   maxAcceleration: 0
@@ -470,18 +441,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   attackDamage: 10
---- !u!135 &135000012872267748
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012562717290}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 15
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136000012526888626
 CapsuleCollider:
   m_ObjectHideFlags: 1

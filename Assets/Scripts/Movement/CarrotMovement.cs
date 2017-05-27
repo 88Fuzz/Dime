@@ -23,16 +23,15 @@ public class CarrotMovement : MyMonoBehaviour
     public Range moveWaitTime;
     //TODO Maybe do this better, if It's impossible to get to the destination. Maybe detect it by some other means instead of waiting.
     public float moveTimeout;
+    public float targetCheckRadius;
     [Range(0,1)]
     public float anticipationMovePercent;
 
     private Animator animator;
-    private GameObject target;
     private SphereCollider sphereCollider;
     private UnityEngine.AI.NavMeshAgent navMeshAgent;
     public float maxSpeed;
     public float maxAcceleration;
-    private float maxMoveDistance;
     private float timer;
     private float anticipationMoveWaitTime;
     private float waitTime;
@@ -40,13 +39,15 @@ public class CarrotMovement : MyMonoBehaviour
     private float targetJumpHeight;
     private float jumpHeight;
     private AnimatorPropertyChanger animatorPropertyChanger;
+    private Collider[] overlapTargets;
 
     protected override void MyAwake()
     {
+        //TODO any kind of object pooling here?
+        overlapTargets = new Collider[1];
         animator = GetComponentInChildren<Animator>();
         navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         sphereCollider = GetComponentInChildren<SphereCollider>();
-        maxMoveDistance = sphereCollider.radius;
         animatorChangeRate = 1 / anticipationMovePercent;
         animatorPropertyChanger = DoNothingChanger;
         SetJumpHeight(0);
@@ -159,36 +160,16 @@ public class CarrotMovement : MyMonoBehaviour
         animator.SetFloat(JUMP_HEIGHT_HASH, value);
     }
 
-    //TODO: Bug alert! if this is ever multiplayer, if 2 players enter the sphere and the first is selected as the target. Then leaves. The second player will never be considered a target.
-    //TODO just do a sphere cast here?
-    public void OnTriggerEnter(Collider collider)
-    {
-        if(LayerUtils.CompareLayerWithLayerMask(collider.gameObject.layer, targetLayer))
-        {
-            target = collider.gameObject;
-        }
-    }
-
-    public void OnTriggerExit(Collider collider)
-    {
-        if(collider.gameObject == target)
-        {
-            target = null;
-        }
-    }
-
     private Vector3 GetTargetTransform()
     {
-        if (target)
-        {
-            return target.transform.position;
-        }
+        if (Physics.OverlapSphereNonAlloc(transform.position, targetCheckRadius, overlapTargets, targetLayer, QueryTriggerInteraction.Ignore) > 0)
+            return overlapTargets[0].transform.position;
 
         return new Vector3(transform.position.x + GetSinglePosition(), transform.position.y, transform.position.z + GetSinglePosition());
     }
 
     private float GetSinglePosition()
     {
-        return RandomNumberGeneratorUtils.unityRNG.GetValueInRange(-1 * maxMoveDistance, maxMoveDistance);
+        return RandomNumberGeneratorUtils.unityRNG.GetValueInRange(-1 * targetCheckRadius, targetCheckRadius);
     }
 }

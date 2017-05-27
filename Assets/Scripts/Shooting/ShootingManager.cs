@@ -26,8 +26,8 @@ public class ShootingManager : MyMonoBehaviour
         shootDelayModifier.InitModifier();
         shootDelay = shootDelayModifier.GetShootDelay(this);
     }
-    
-    protected override void MyFixedUpdateWithDeltaTime(float myDeltaTime)
+
+    protected override void MyFixedUpdateWithDeltaTime(float myDeltaTime, float timeScale)
     {
         timer += myDeltaTime;
     }

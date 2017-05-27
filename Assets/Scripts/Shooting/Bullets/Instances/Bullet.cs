@@ -29,7 +29,7 @@ public class Bullet : MyMonoBehaviour
         velocity = CalculateForwardVelocity();
     }
 	
-    protected override void MyFixedUpdateWithDeltaTime(float myDeltaTime)
+    protected override void MyFixedUpdateWithDeltaTime(float myDeltaTime, float timeScale)
     {
         RaycastHit hitInfo;
         float maxDistance = Vector3.Distance(previousPosition, transform.position);

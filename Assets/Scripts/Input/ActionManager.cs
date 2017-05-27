@@ -68,7 +68,7 @@ public class ActionManager : MyMonoBehaviour
         CheckForButtonReleases();
     }
 
-    protected override void MyFixedUpdateWithDeltaTime(float myDeltaTime)
+    protected override void MyFixedUpdateWithDeltaTime(float myDeltaTime, float timeScale)
     {
         ProcessPendingButtonChanges();
         ProcessPressedButtons();

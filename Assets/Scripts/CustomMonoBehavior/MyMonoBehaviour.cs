@@ -42,7 +42,7 @@ public abstract class MyMonoBehaviour : MonoBehaviour
         foreach (TimeScaleModifier timeScaleModifier in timeScaleModifiers)
             localTimeScale = timeScaleModifier.ModifyTimeScale(localTimeScale);
 
-        MyFixedUpdateWithDeltaTime(Time.deltaTime * timeScale);
+        MyFixedUpdateWithDeltaTime(Time.deltaTime * timeScale, timeScale);
     }
 
     public void MyDestroy()
@@ -59,7 +59,7 @@ public abstract class MyMonoBehaviour : MonoBehaviour
 
     /*
      * This should be used instead of FixedUpdate. The input myDeltaTime is the engine's 
-     * deltaTime with some magic added to it.
+     * deltaTime multiplied by the timeScale:
      */
-    protected abstract void MyFixedUpdateWithDeltaTime(float myDeltaTime);
+    protected abstract void MyFixedUpdateWithDeltaTime(float myDeltaTime, float timeScale);
 }

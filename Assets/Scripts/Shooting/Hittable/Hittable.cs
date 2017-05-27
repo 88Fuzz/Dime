@@ -19,13 +19,15 @@ public class Hittable : MonoBehaviour
     protected float currentHealth;
     protected LayerMask enemyLayer;
     private Color baseColor;
+    private MyMonoBehaviour myMonoBehaviour;
 
-	public void Awake()
+    public void Awake()
     {
         invulnerable = false;
         currentHealth = maxHealth;
         enemyLayer = LayerMask.GetMask("Enemy");
-	}
+        myMonoBehaviour = GetComponent<MyMonoBehaviour>();
+    }
 
     public void Heal(float heal)
     {
@@ -49,7 +51,7 @@ public class Hittable : MonoBehaviour
         //TODO there should probably be Heal Listeners to go along with the development practices of this game
         //Do nothing by default
     }
-	
+    
     /*
      * Returns true if the Hittable was killed by this attack. Else the Hittable is stil alive.
      */
@@ -93,7 +95,10 @@ public class Hittable : MonoBehaviour
             action.HittableHasBeenKilled(this);
         }
 
-        Destroy(gameObject);
+        if(myMonoBehaviour)
+            myMonoBehaviour.MyDestroy();
+        else
+            Destroy(gameObject);
     }
 
     private IEnumerator HitColorCoroutine()

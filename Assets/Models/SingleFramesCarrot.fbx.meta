@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 41d79acbb2ee60e459fa293b14a8a50a
-timeCreated: 1485854244
+guid: 511af055d87d80b41b708ce7399b79ac
+timeCreated: 1495772468
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -11,23 +11,25 @@ ModelImporter:
     100006: Bone.002
     100008: Bone.003
     100010: Bone.003_end
-    100012: //RootNode
-    100014: Cone
+    100012: Cone
+    100014: //RootNode
     400000: Armature
     400002: Bone
     400004: Bone.001
     400006: Bone.002
     400008: Bone.003
     400010: Bone.003_end
-    400012: //RootNode
-    400014: Cone
+    400012: Cone
+    400014: //RootNode
     4300000: Cone
-    7400000: Armature|ArmatureAction
-    7400002: Armature|ConeAction
-    7400004: Armature|Idle
-    7400006: Armature|Jump
-    7400008: Armature|PostJump
-    7400010: Armature|PreJump
+    7400000: Armature|ConeAction
+    7400002: Armature|Idle
+    7400004: Armature|Jump
+    7400006: Armature|PostJump
+    7400008: Armature|PreJump
+    7400010: Armature|SingleIdle
+    7400012: Armature|SinglePostJump
+    7400014: Armature|SinglePreJump
     9500000: //RootNode
     13700000: Cone
   materials:
@@ -40,6 +42,8 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 

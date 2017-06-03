@@ -11,6 +11,6 @@ public class NoGravityBullet : BulletSpawnListener
      */
     public override void OnBulletSpawn(Bullet bullet)
     {
-        bullet.SetGravity(false);
+        bullet.useGravity = false;
     }
 }

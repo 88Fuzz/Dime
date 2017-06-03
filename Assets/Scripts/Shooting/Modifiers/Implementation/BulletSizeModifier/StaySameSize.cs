@@ -11,8 +11,13 @@ public class StaySameSize : BulletSizeModifier
         return true;
     }
 
-    public override float ChangeSize(float currentSize)
+    public override float ChangeSize(BasicBullet basicBullet, float deltaTime, float timeScale)
     {
-        return currentSize;
+        return basicBullet.GetRadius();
+    }
+
+    public override bool IsDoneModifying(BasicBullet basicBullet)
+    {
+        return false;
     }
 }

@@ -7,6 +7,8 @@ public class Hittable : MonoBehaviour
     public HittableHitAction[] hitActions;
     public Room parentRoom = null;
     public float maxHealth;
+    public float ySpawnOffset;
+    //The special charge is the amount it will charge the player's special meter when the hittable is killed
     public float specialCharge;
     public Color hitColor = Color.red;
     public int hitColorFlashCount;

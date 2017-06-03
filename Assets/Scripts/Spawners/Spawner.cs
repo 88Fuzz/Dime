@@ -36,7 +36,7 @@ public class Spawner : EditorDebug
     {
         if (active)
         {
-            Vector3 randomPosition = GetRandomPosition();
+            Vector3 randomPosition = GetRandomPosition(hittable);
             GameObject newObject = Instantiate(hittable.gameObject, randomPosition, Quaternion.identity, null) as GameObject;
             Hittable newHittable = newObject.GetComponent<Hittable>();
             parentRoom.activeEnemies.Add(newHittable);
@@ -47,15 +47,15 @@ public class Spawner : EditorDebug
         return active;
     }
 
-    private Vector3 GetRandomPosition()
+    private Vector3 GetRandomPosition(Hittable hittable)
     {
-        //TODO figure out what to do with this y position
-        return new Vector3(GetSpawnPosition(xRange), .5f,
+        return new Vector3(GetSpawnPosition(xRange), hittable.ySpawnOffset,
             GetSpawnPosition(zRange));
     }
 
     private float GetSpawnPosition(Range range)
     {
+        //TODO this shouldn't be using the levelRNG, but instead the any use RNG?
         return LevelRandomNumberGenerator.levelRNG.GetValueInRange(range);
     }
 

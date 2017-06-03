@@ -8,7 +8,12 @@ public abstract class BulletSizeModifier : ScriptableObject
     /*
      * Called every update tick to change the size of the bullet. All bullets are treated as a sphere.
      */
-    public abstract float ChangeSize(float currentSize);
+    public abstract float ChangeSize(BasicBullet basicBullet, float deltaTime, float timeScale);
+
+    /*
+     * Return true if size changing is done for the bullet.
+     */
+    public abstract bool IsDoneModifying(BasicBullet basicBullet);
 
     /*
      * Some bullets can have a bulletSizeModifier that can be overridden by the BulletManager's BulletSizeModifier.

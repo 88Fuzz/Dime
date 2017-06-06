@@ -329,6 +329,7 @@ MonoBehaviour:
   hitActions: []
   parentRoom: {fileID: 0}
   maxHealth: 100
+  ySpawnOffset: 0
   specialCharge: 0
   hitColor: {r: 1, g: 0, b: 0, a: 0}
   hitColorFlashCount: 3
@@ -376,6 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ab478d4f1a64f469bb70662a201f3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeScaleModifiers: []
   bulletSpawnPositions:
   - {fileID: 4932494244053892}
   - {fileID: 4814268068442068}
@@ -396,6 +398,9 @@ MonoBehaviour:
   bulletManager: {fileID: 11400000, guid: 5014e74616b6ca842933e69b565c20e5, type: 2}
   specialManager: {fileID: 0}
   hittable: {fileID: 114448693578207100}
+  testingSpecialAction: {fileID: 11400000, guid: 42dcdaa5f49099f4bbaae6459f1cdb32,
+    type: 2}
+  testingModifier: {fileID: 11400000, guid: 2ab361ca239b0f7468d9527054700304, type: 2}
 --- !u!120 &120135891949394362
 LineRenderer:
   m_ObjectHideFlags: 1

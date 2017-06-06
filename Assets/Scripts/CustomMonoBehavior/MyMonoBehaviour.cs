@@ -13,6 +13,7 @@ public abstract class MyMonoBehaviour : MonoBehaviour
 
     private MyMonoBehaviour previous;
     private MyMonoBehaviour next;
+    private MyMonoBehaviourManager manager;
 
     public MyMonoBehaviour Previous
     {
@@ -31,7 +32,7 @@ public abstract class MyMonoBehaviour : MonoBehaviour
         previous = null;
         next = null;
         timeScaleModifiers = new List<TimeScaleModifier>(3);
-        MyMonoBehaviourManager manager = Singleton<MyMonoBehaviourManager>.Instance;
+        manager = Singleton<MyMonoBehaviourManager>.Instance;
         manager.RegisterMyMonoBehavior(this);
         MyAwake();
     }
@@ -48,8 +49,13 @@ public abstract class MyMonoBehaviour : MonoBehaviour
     public void MyDestroy()
     {
         //TODO is there a performance hit getting the Instance every time? I wouldn't think so
-        Singleton<MyMonoBehaviourManager>.Instance.DeregisterMyMonoBehavior(this);
+        manager.DeregisterMyMonoBehavior(this);
         Destroy(gameObject);
+    }
+
+    public virtual Vector3 GetPosition()
+    {
+        return transform.position;
     }
 
     /*

@@ -6,8 +6,9 @@
 public class RandomWaitTimeShooter: MyMonoBehaviour
 {
     public Range waitTimeRange;
-    public Transform bulletSpawnPosition;
-    public BasicBullet bullet;
+    public Transform attackPosition;
+    //public BasicBullet bullet;
+    public AttackManager attackManager;
 
     private float waitTime;
     private float timer;
@@ -34,7 +35,7 @@ public class RandomWaitTimeShooter: MyMonoBehaviour
     private void FireBullet()
     {
         //TODO some kind of object pooling
-        Instantiate(bullet, bulletSpawnPosition.transform.position, bulletSpawnPosition.rotation, null);
+        attackManager.StartAttack(attackPosition);
     }
 
     private float GetWaitTime()

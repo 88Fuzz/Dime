@@ -110,7 +110,6 @@ public class PlayerStats
      */
     public static void IncrementValue(Stat stat)
     {
-        Debug.Log("Incrementing value " + stat);
         StateInformation stateInfo;
         if (!STAT_MAP.TryGetValue(stat, out stateInfo))
             return;
@@ -125,7 +124,6 @@ public class PlayerStats
      */
     public static void DecrementValue(Stat stat)
     {
-        Debug.Log("Decrementing value " + stat);
         StateInformation stateInfo;
         if (!STAT_MAP.TryGetValue(stat, out stateInfo))
             return;

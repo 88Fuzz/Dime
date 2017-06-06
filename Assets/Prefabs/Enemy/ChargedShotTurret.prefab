@@ -140,8 +140,8 @@ MonoBehaviour:
   waitTimeRange:
     min: 3
     max: 7
-  bulletSpawnPosition: {fileID: 4380035672628726}
-  bullet: {fileID: 114115010074285082, guid: 48c4c593e49dd6a4dbc67167de9bff86, type: 2}
+  attackPosition: {fileID: 4380035672628726}
+  attackManager: {fileID: 11400000, guid: 892f13a12d07dad4193da6bae42b4e10, type: 2}
 --- !u!114 &114424087140205506
 MonoBehaviour:
   m_ObjectHideFlags: 1

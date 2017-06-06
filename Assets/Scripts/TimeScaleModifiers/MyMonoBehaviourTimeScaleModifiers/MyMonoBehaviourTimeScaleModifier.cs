@@ -3,7 +3,7 @@
 /*
  * Modifies the timeScale based on the MyMonoBehavior
  */
-public abstract class MyMonoBehaviorTimeScaleModifier : ScriptableObject
+public abstract class MyMonoBehaviourTimeScaleModifier : ScriptableObject
 {
     /*
      * Modifies the timeScale based on the MyMonoBehavior

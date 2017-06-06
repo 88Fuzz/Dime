@@ -2,6 +2,7 @@
 
 public class PlayerMovement : MonoBehaviour
 {
+    private static readonly float MINIMUM_DELTA_TIME = .004f;
     private Animator animator;
     private Rigidbody playerRigidbody;
     private LayerMask lookDirectionMask;
@@ -15,11 +16,15 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         playerRigidbody = GetComponent<Rigidbody>();
         ActionManager actionManager = Singleton<ActionManager>.Instance;
-        actionManager.RegisterMovementListener(Move);
+        actionManager.RegisterMovementListener(Move, GetComponent<Player>());
     }
 	
     private void Move(float x, float z, float rawX, float rawZ, float deltaTime)
     {
+        //TODO I'm not sure I like the idea of a minimum delta time here. Is it actually bad?
+        if (deltaTime < MINIMUM_DELTA_TIME)
+            deltaTime = MINIMUM_DELTA_TIME;
+
         Vector3 movement = new Vector3(rawX, 0, rawZ);
         if(movement.magnitude > 1)
             movement = movement.normalized;

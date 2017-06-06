@@ -48,6 +48,7 @@ public class ActionManager : MyMonoBehaviour
     private HashSet<InputButton> pendingButtons;
     private HashSet<InputButton> pressedButtons;
     private Queue<ButtonChange> pendingButtonChanges;
+    private Player player;
 
     protected override void MyAwake()
     {
@@ -68,6 +69,11 @@ public class ActionManager : MyMonoBehaviour
         CheckForButtonReleases();
     }
 
+    public override Vector3 GetPosition()
+    {
+        return player.transform.position;
+    }
+
     protected override void MyFixedUpdateWithDeltaTime(float myDeltaTime, float timeScale)
     {
         ProcessPendingButtonChanges();
@@ -82,9 +88,10 @@ public class ActionManager : MyMonoBehaviour
                 Input.GetAxisRaw(InputButton.MOUSE_X.Action), Input.GetAxisRaw(InputButton.MOUSE_Y.Action), myDeltaTime);
     }
 
-    public void RegisterMovementListener(MovementListener movementListener)
+    public void RegisterMovementListener(MovementListener movementListener, Player player)
     {
         this.movementListener = movementListener;
+        this.player = player;
     }
 
     public void RegisterMouseMovementListener(MouseMovementListener mouseMovementListener)

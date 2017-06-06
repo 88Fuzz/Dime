@@ -7,16 +7,16 @@ using UnityEngine;
 public class MyMonoBehaviourManager : MonoBehaviour
 {
     private List<TimeScaleModifier> globalTimeScaleModifiers;
-    private List<MyMonoBehaviorTimeScaleModifier> myMoboBehaviorTimeScaleModifiers;
-    private float timeScale;
+    private List<MyMonoBehaviourTimeScaleModifier> myMonoBehaviourTimeScaleModifiers;
     private MyMonoBehaviour first;
     private MyMonoBehaviour last;
     private float blah;
 
     public void Awake()
     {
+        //TODO object pooling
         globalTimeScaleModifiers = new List<TimeScaleModifier>(4);
-        myMoboBehaviorTimeScaleModifiers = new List<MyMonoBehaviorTimeScaleModifier>(4);
+        myMonoBehaviourTimeScaleModifiers = new List<MyMonoBehaviourTimeScaleModifier>(4);
         first = null;
         last = null;
         blah = 1;
@@ -24,7 +24,7 @@ public class MyMonoBehaviourManager : MonoBehaviour
 
     public void Start()
     {
-        //TODO remove this temp code please
+        //TODO remove this temp code regarding the JUMP button pressed. please
         ActionManager manager = Singleton<ActionManager>.Instance;
         manager.RegisterStartButtonListener(InputButton.JUMP, TempDown);
         manager.RegisterEndButtonListener(InputButton.JUMP, TempUp);
@@ -47,9 +47,9 @@ public class MyMonoBehaviourManager : MonoBehaviour
         while(current != null)
         {
             float currentTimeScale = GetMyMonoBehaviorBasedTimeScale(current, timeScale);
-            //Dont forget to remove the random lines you have commented out
+            //TODO Dont forget to remove the random lines you have commented out
             //current.MyFixedUpdate(currentTimeScale);
-            current.MyFixedUpdate(blah);
+            current.MyFixedUpdate(currentTimeScale * blah);
             current = current.Next;
         }
     }
@@ -59,7 +59,6 @@ public class MyMonoBehaviourManager : MonoBehaviour
      */
     public void RegisterMyMonoBehavior(MyMonoBehaviour entity)
     {
-        //Actually, It looks like this is the place with the bug?
         if(first == null)
         {
             first = entity;
@@ -101,9 +100,14 @@ public class MyMonoBehaviourManager : MonoBehaviour
         ClearLinks(entity);
     }
 
-    private string GetName(GameObject gobject)
+    public void RegisterMyMonoBehaviourTimeScaleModifier(MyMonoBehaviourTimeScaleModifier modifier)
     {
-        return gobject.name;
+        myMonoBehaviourTimeScaleModifiers.Add(modifier);
+    }
+
+    public void DeregisterMyMonoBehaviourTimeScaleModifier(MyMonoBehaviourTimeScaleModifier modifier)
+    {
+        myMonoBehaviourTimeScaleModifiers.Remove(modifier);
     }
 
     private void ClearLinks(MyMonoBehaviour entity)
@@ -114,7 +118,7 @@ public class MyMonoBehaviourManager : MonoBehaviour
 
     private float GetTimeScale()
     {
-        float timeScale = Time.deltaTime;
+        float timeScale = 1;
         foreach (TimeScaleModifier timeScaleModifier in globalTimeScaleModifiers)
             timeScale = timeScaleModifier.ModifyTimeScale(timeScale);
 
@@ -123,7 +127,7 @@ public class MyMonoBehaviourManager : MonoBehaviour
 
     private float GetMyMonoBehaviorBasedTimeScale(MyMonoBehaviour entity, float timeScale)
     {
-        foreach (MyMonoBehaviorTimeScaleModifier timeScaleModifier in myMoboBehaviorTimeScaleModifiers)
+        foreach (MyMonoBehaviourTimeScaleModifier timeScaleModifier in myMonoBehaviourTimeScaleModifiers)
             timeScale = timeScaleModifier.ModifyTimeScale(entity, timeScale);
 
         return timeScale;

@@ -129,7 +129,6 @@ public class ChargedExplodingBullet : BasicBullet
             Rigidbody targetRigidbody = collider.GetComponent<Rigidbody>();
             if(!targetRigidbody)
             {
-                //Debug.Log("No rigidbody");
                 StartExplosion();
                 return;
             }
@@ -137,13 +136,10 @@ public class ChargedExplodingBullet : BasicBullet
             interceptData = PhysicsUtils.FindInterceptingData(transform.position, initialVelocity, targetPosition, targetRigidbody.velocity);
             if(!interceptData.CanHit)
             {
-                //Debug.Log("No hitPoint");
                 StartExplosion();
                 return;
             }
 
-            //Debug.Log("Everything is good to go! expected hit point " + interceptData.HitPosition + " bullet velocity " + interceptData.Velocity);
-            //Debug.Log("\tcurrent target position " + targetPosition + " with a velocity " + targetRigidbody.velocity);
             //TODO do a raycast to see if anything is in the way of hitting the player?
             ActuallyStartMoving();
             return;

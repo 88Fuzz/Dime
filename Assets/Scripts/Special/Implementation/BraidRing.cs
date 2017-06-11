@@ -9,17 +9,11 @@ public class BraidRing : MonoBehaviour
     public float maxEnabledTime;
 
     private float timer;
-    this BraidRing does not get destroyed properly :(
 
     public void Awake()
     {
         braidTimeScaleModifier.braidRing = this;
         Enabled();
-    }
-
-    public void OnDestroy()
-    {
-        braidTimeScaleModifier.braidRing = null;
     }
 
     public void OnEnable()

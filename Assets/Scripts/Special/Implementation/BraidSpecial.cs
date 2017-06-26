@@ -5,14 +5,9 @@ public class BraidSpecial : SpecialAction
 {
     public float ySpawnOffset;
     public BraidRing braidRingPrefab;
+    public BraidTimeScaleModifier distanceSlowModifier;
 
     private BraidRing braidRingInstance;
-
-    public void OnEnable()
-    {
-        braidRingInstance = Instantiate(braidRingPrefab, null, true) as BraidRing;
-        braidRingInstance.gameObject.SetActive(false);
-    }
 
     public override void DoAction(SpecialManager specialManager)
     {
@@ -24,5 +19,26 @@ public class BraidSpecial : SpecialAction
         braidRingInstance.gameObject.SetActive(false);
         braidRingInstance.transform.position = specialManager.player.transform.position - spawnOffset;
         braidRingInstance.gameObject.SetActive(true);
+    }
+
+    public override void SpecialRemoved(SpecialManager specialManager)
+    {
+        MyMonoBehaviourManager manager = Singleton<MyMonoBehaviourManager>.Instance;
+        manager.DeregisterMyMonoBehaviourTimeScaleModifier(distanceSlowModifier);
+    }
+
+    public override void SpecialEquiped(SpecialManager specialManager)
+    {
+        if (braidRingInstance == null)
+            CreateRing();
+        MyMonoBehaviourManager manager = Singleton<MyMonoBehaviourManager>.Instance;
+        distanceSlowModifier.braidRing = braidRingInstance;
+        manager.RegisterMyMonoBehaviourTimeScaleModifier(distanceSlowModifier);
+    }
+
+    private void CreateRing()
+    {
+        braidRingInstance = Instantiate(braidRingPrefab, null, true) as BraidRing;
+        braidRingInstance.gameObject.SetActive(false);
     }
 }

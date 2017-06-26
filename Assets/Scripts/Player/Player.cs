@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public PlayerHittable hittable;
     //TODO this SpecialAction is only for testing. It should be removed at some point.
     public SpecialAction testingSpecialAction;
+    //move this object to BraidSpecial
     public MyMonoBehaviourTimeScaleModifier testingModifier;
 
     public void Awake()
@@ -19,11 +20,6 @@ public class Player : MonoBehaviour
         specialManager.player = this;
 
         if (testingSpecialAction)
-        {
-            specialManager.specialAction = testingSpecialAction;
-            //TODO remove this code
-            MyMonoBehaviourManager manager = Singleton<MyMonoBehaviourManager>.Instance;
-            manager.RegisterMyMonoBehaviourTimeScaleModifier(testingModifier);
-        }
+            specialManager.SpecialAction = testingSpecialAction;
     }
 }

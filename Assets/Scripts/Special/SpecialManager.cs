@@ -12,8 +12,19 @@ public class SpecialManager : ScriptableObject
     public Player player;
     public List<SpecialUsedListener> specialUsedListeners;
     public List<SpecialFullListener> specialFullListeners;
-    public SpecialAction specialAction = null;
+    public SpecialAction SpecialAction
+    {
+        private get {return _specialAction; }
+        set
+        {
+            if (SpecialAction != null)
+                SpecialAction.SpecialRemoved(this);
+            _specialAction = value;
+            SpecialAction.SpecialEquiped(this);
+        }
+    }
 
+    private SpecialAction _specialAction;
     private float currentCharge;
 
     public void OnEnable()
@@ -44,9 +55,9 @@ public class SpecialManager : ScriptableObject
         if (currentCharge != MAX_VALUE)
             return;
 
-        if (specialAction != null)
+        if (SpecialAction != null)
         {
-            specialAction.DoAction(this);
+            SpecialAction.DoAction(this);
             NotifySpecialUsedListeners();
         }
     }

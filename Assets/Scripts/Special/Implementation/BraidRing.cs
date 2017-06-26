@@ -5,14 +5,12 @@
  */
 public class BraidRing : MonoBehaviour
 {
-    public BraidTimeScaleModifier braidTimeScaleModifier;
     public float maxEnabledTime;
 
     private float timer;
 
     public void Awake()
     {
-        braidTimeScaleModifier.braidRing = this;
         Enabled();
     }
 

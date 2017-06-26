@@ -14,3 +14,5 @@ MonoBehaviour:
   ySpawnOffset: 0.15
   braidRingPrefab: {fileID: 114702696193015724, guid: 1b684c68b3c7d474cb40baa1727ab567,
     type: 2}
+  distanceSlowModifier: {fileID: 11400000, guid: 2ab361ca239b0f7468d9527054700304,
+    type: 2}

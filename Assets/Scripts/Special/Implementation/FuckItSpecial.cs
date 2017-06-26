@@ -20,4 +20,12 @@ public class FuckItSpecial : SpecialAction
             hittable.Hit(hittable.GetCurrentHealth() * 3);
         }
     }
+
+    public override void SpecialEquiped(SpecialManager specialManager)
+    {
+    }
+
+    public override void SpecialRemoved(SpecialManager specialManager)
+    {
+    }
 }

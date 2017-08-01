@@ -7,7 +7,6 @@
  */
 public class ChargedExplodingBullet : BasicBullet
 {
-    private delegate void FixedUpdateAction(float myDeltaTime, float timeScale);
     private delegate void FinishAction();
 
     public float minimumTargetDistance;

@@ -3,17 +3,18 @@ using UnityEngine;
 
 /*
  * Any component that can be affected by time manipulation should implement this class.
- * //TODO figure out how to handle enabling and disabling objects
- * // It will probably be: on enable, set the MonoBehavior to be enabled, add it to the MyMonoBehaviorManager
- * //On disable, set the MonoBehavior to disabled, remove it from the MyMonoBehaviorManger
  */
 public abstract class MyMonoBehaviour : MonoBehaviour
 {
+    protected delegate void FixedUpdateAction(float myDeltaTime, float timeScale);
+
+
     public List<TimeScaleModifier> timeScaleModifiers;
 
     private MyMonoBehaviour previous;
-    private MyMonoBehaviour next;
     private MyMonoBehaviourManager manager;
+    private MyMonoBehaviour next;
+    private bool myEnabled;
 
     public MyMonoBehaviour Previous
     {
@@ -31,10 +32,31 @@ public abstract class MyMonoBehaviour : MonoBehaviour
     {
         previous = null;
         next = null;
-        timeScaleModifiers = new List<TimeScaleModifier>(3);
         manager = Singleton<MyMonoBehaviourManager>.Instance;
+        //TODO object pooling
+        timeScaleModifiers = new List<TimeScaleModifier>(3);
         manager.RegisterMyMonoBehavior(this);
+        myEnabled = true;
         MyAwake();
+    }
+
+    public void MyEnable()
+    {
+        manager.RegisterMyMonoBehavior(this);
+        gameObject.SetActive(true);
+        myEnabled = true;
+    }
+
+    public void MyDisable()
+    {
+        manager.DeregisterMyMonoBehavior(this);
+        gameObject.SetActive(false);
+        myEnabled = false;
+    }
+
+    public bool MyIsEnabled()
+    {
+        return myEnabled;
     }
 
     public void MyFixedUpdate(float timeScale)

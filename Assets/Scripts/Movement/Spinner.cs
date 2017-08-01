@@ -2,6 +2,13 @@
 
 public class Spinner : MyMonoBehaviour
 {
+    private delegate void WaitEndTrigger();
+    public enum SpinDirection
+    {
+        CLOCKWISE,
+        COUNTER_CLOCKWISE
+    };
+
     //TODO make this a range
     public float maxSpinRate;
     //TODO make this a range
@@ -9,100 +16,163 @@ public class Spinner : MyMonoBehaviour
     //TODO make this a range
     public float spinDownRate;
     //TODO make this a range
-    public float waitTime;
+    public float idleWaitTime;
+    //TODO make this a range
+    public float beamWaitTime;
     //TODO make this a range?
     public float beamStartEndRate;
+    public SpinDirection spinDirection;
     public Beam[] beams;
 
-    private int direction;
     private float spinSpeed;
     private float spinChange;
     private float waitTimer;
+    private FixedUpdateAction fixedUpdateAction;
+    private WaitEndTrigger waitEndTrigger;
 
     protected override void MyAwake()
     {
         spinSpeed = 0;
         spinChange = 0;
-        direction = 1;
-        StartWait();
-    }
-
-    /*
-     * Start spinning 
-     */
-    public void StartSpinUp()
-    {
-        spinChange = spinUpRate;
-        direction = 1;
-    }
-
-    /*
-     * Stop spinning 
-     */
-    public void StartSpinDown()
-    {
-        spinChange = spinDownRate;
+        fixedUpdateAction = DoNothing;
+        waitEndTrigger = NoTrigger;
+        StartBeamFire();
     }
 
     protected override void MyFixedUpdateWithDeltaTime(float myDeltaTime, float timeScale)
     {
-        if(waitTimer > 0)
-        {
-            waitTimer -= myDeltaTime;
-            if(waitTimer < 0)
-                StartSpinUp();
-            return;
-        }
-        Debug.Log("STARTED SPINNING");
-
-        spinSpeed += spinChange * timeScale;
-        Vector3 currentRotation = transform.rotation.eulerAngles;
-        currentRotation.y += spinSpeed * direction * myDeltaTime;
-        transform.eulerAngles = currentRotation;
-
-        CheckSpinningBounds();
-        CheckBeamBounds();
+        fixedUpdateAction(myDeltaTime, timeScale);
     }
 
-    private void CheckSpinningBounds()
+    private void Spin(float myDeltaTime, float timeScale)
     {
+        spinSpeed += spinChange * timeScale;
+        Vector3 currentRotation = transform.rotation.eulerAngles;
+        currentRotation.y += spinSpeed * GetSpinDirection() * myDeltaTime;
+        transform.eulerAngles = currentRotation;
+    }
+
+    private void WaitForBeamToBeFullForce(float myDeltaTime, float timeScale)
+    {
+        bool beamsAtMax = true;
+        foreach(Beam beam in beams)
+        {
+            if (!beam.AtMaxBeamWidth())
+            {
+                beamsAtMax = false;
+                break;
+            }
+        }
+
+        if (beamsAtMax)
+            SetUpSpinUp();
+    }
+
+    private void StartBeamFire()
+    {
+        fixedUpdateAction = WaitForBeamToBeFullForce;
+        foreach(Beam beam in beams)
+        {
+            beam.StartBeam();
+        }
+    }
+
+    private void WaitForBeamToBeZeroForce(float myDeltaTime, float timeScale)
+    {
+        bool beamsAtMin = true;
+        foreach (Beam beam in beams)
+        {
+            if (!beam.AtMinBeamWidth())
+            {
+                beamsAtMin = false;
+                break;
+            }
+        }
+
+        if (beamsAtMin)
+            SetUpIdleWait();
+    }
+
+    private void EndBeamFire()
+    {
+        fixedUpdateAction = WaitForBeamToBeZeroForce;
+        foreach (Beam beam in beams)
+        {
+            beam.EndBeam();
+        }
+    }
+
+    private void WaitAction(float myDeltaTime, float timeScale)
+    {
+        waitTimer -= myDeltaTime;
+        if (waitTimer < 0)
+            waitEndTrigger();
+    }
+
+    private void ConstantSpin(float myDeltaTime, float timeScale)
+    {
+        Spin(myDeltaTime, timeScale);
+        WaitAction(myDeltaTime, timeScale);
+    }
+
+    private void SetUpConstantSpin()
+    {
+        waitTimer = beamWaitTime;
+        fixedUpdateAction = ConstantSpin;
+        waitEndTrigger = SetUpSpinDown;
+    }
+
+    private void SpinUp(float myDeltaTime, float timeScale)
+    {
+        Spin(myDeltaTime, timeScale);
+
         if(spinSpeed > maxSpinRate)
         {
             spinSpeed = maxSpinRate;
             spinChange = 0;
+            SetUpConstantSpin();
         }
-        else if(spinSpeed < 0)
+    }
+
+    private void SetUpSpinUp()
+    {
+        spinChange = spinUpRate;
+        fixedUpdateAction = SpinUp;
+    }
+
+    private void SpinDown(float myDeltaTime, float timeScale)
+    {
+        Spin(myDeltaTime, timeScale);
+
+        if (spinSpeed < 0)
         {
             spinSpeed = 0;
             spinChange = 0;
-            StartWait();
+            EndBeamFire();
         }
     }
 
-    private void StartWait()
+    private void SetUpSpinDown()
     {
-        Debug.Log("STOP SPINNING");
-        waitTimer = waitTime;
+        spinChange = spinDownRate;
+        fixedUpdateAction = SpinDown;
     }
 
-    private void CheckBeamBounds()
+    private void SetUpIdleWait()
     {
-        Test this shit.
-        if(!beams[0].IsActive() && spinSpeed > beamStartEndRate)
-        {
-            Debug.Log("Activate the beam!");
-            foreach(Beam beam in beams)
-            {
-                beam.StartBeam();
-            }
-        }
-        else if(beams[0].IsActive() && spinSpeed < beamStartEndRate)
-        {
-            Debug.Log("Beam is deactivating");
-            foreach(Beam beam in beams)
-            {
-                beam.EndBeam();
-            }
-        }
+        waitTimer = idleWaitTime;
+        fixedUpdateAction = WaitAction;
+        waitEndTrigger = StartBeamFire;
     }
+
+    private int GetSpinDirection()
+    {
+        if (spinDirection == SpinDirection.COUNTER_CLOCKWISE)
+            return -1;
+
+        return 1;
+    }
+
+    private void DoNothing(float myDeltaTime, float timeScale) { }
+    private void NoTrigger() { }
 }

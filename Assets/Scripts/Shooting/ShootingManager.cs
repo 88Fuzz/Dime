@@ -59,7 +59,7 @@ public class ShootingManager : MyMonoBehaviour
 
         BulletManager bulletManager = player.bulletManager;
         spawnedBullet.player = player;
-        spawnedBullet.damage = bulletManager.hitInformationProvider.GetHitInformation();
+        spawnedBullet.hitInformation = bulletManager.hitInformationProvider.GetHitInformation();
         spawnedBullet.SetBulletVelocityModifier(bulletManager.bulletVelocityModifier);
         spawnedBullet.SetBulletSizeModifier(bulletManager.bulletSizeModifier);
         spawnedBullet.AddBulletHitListeners(bulletManager.hitListeners);
@@ -76,7 +76,7 @@ public class ShootingManager : MyMonoBehaviour
         //TODO some kind of object pooling
         Bullet spawnedBullet = Instantiate(bullet, bullet.transform.position, bullet.transform.rotation) as Bullet;
         spawnedBullet.player = bullet.player;
-        spawnedBullet.damage = bullet.damage;
+        spawnedBullet.hitInformation = bullet.hitInformation;
         spawnedBullet.velocityModifier = bullet.velocityModifier;
         spawnedBullet.sizeModifier = bullet.sizeModifier;
         spawnedBullet.hitListeners = bullet.hitListeners;

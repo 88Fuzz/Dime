@@ -12,3 +12,9 @@ MonoBehaviour:
   m_Name: DefaultBulletHitInformationProvider
   m_EditorClassIdentifier: 
   baseDamage: 10
+  critParticles: {fileID: 198927479386924544, guid: 9cd77195a7542784a97f7df5bc165e2e,
+    type: 2}
+  normalParticles: {fileID: 198140049723502808, guid: 0102ebdb71992024b888e5adc4831456,
+    type: 2}
+  glanceParticles: {fileID: 198282095944993322, guid: 0487e42101249a74cbe14339cf4a7d30,
+    type: 2}

@@ -15,8 +15,12 @@ public abstract class BulletHitInformationProvider : ScriptableObject
 
     //TODO whenever the BulletHitInformationProvider is changed, all the public variables will need to be transferred to the new one.
     public float baseDamage;
+    public ParticleSystem critParticles;
+    public ParticleSystem normalParticles;
+    public ParticleSystem glanceParticles;
+
     //A LinkList is here because all get/set operations needed are O(1). A queue has a max of O(n) when enqueing.
-    public LinkedList<DamageModifier> queuedTypes;
+    private LinkedList<DamageModifier> queuedTypes;
 
     public void OnEnable()
     {
@@ -40,15 +44,30 @@ public abstract class BulletHitInformationProvider : ScriptableObject
      * If any damage modifiers have been queued up, they will be used here.
      * If none are queued, the GetFallbackHitInformation will be called.
      */
-    public float GetHitInformation()
+    public BulletHitInformation GetHitInformation()
     {
+        DamageModifier damageModifier = DamageModifier.NONE;
+
         if (queuedTypes.Count == 0)
-            return GetFallbackHitInformation();
+        {
+            damageModifier = GetFallbackDamageModifier();
+        }
+        else
+        {
+            LinkedListNode<DamageModifier> node = queuedTypes.First;
+            queuedTypes.RemoveFirst();
+            damageModifier = node.Value;
+        }
 
-        LinkedListNode<DamageModifier> node = queuedTypes.First;
-        queuedTypes.RemoveFirst();
+        return CreateBulletHitInformation(damageModifier);
+    }
 
-        return GetDamageValue(node.Value);
+    /*
+     * Creates a BulletHitInformation based on the DamageModifier.
+     */
+    protected BulletHitInformation CreateBulletHitInformation(DamageModifier damageModifier)
+    {
+        return new BulletHitInformation(GetParticleSystem(damageModifier), GetDamageValue(damageModifier));
     }
 
     /*
@@ -74,7 +93,25 @@ public abstract class BulletHitInformationProvider : ScriptableObject
     }
 
     /*
+     * Given the DamageModifier, return the particle system that should be used when hitting an enemy.
+     */
+    protected ParticleSystem GetParticleSystem(DamageModifier damageModifier)
+    {
+        switch(damageModifier)
+        {
+            case DamageModifier.CRIT:
+                return critParticles;
+            case DamageModifier.GLANCE:
+                return glanceParticles;
+            case DamageModifier.NONE:
+                return normalParticles;
+            default:
+                return normalParticles;
+        }
+    }
+
+    /*
      * Return the damage information the bullet should inflict on an object.
      */
-    protected abstract float GetFallbackHitInformation();
+    protected abstract DamageModifier GetFallbackDamageModifier();
 }

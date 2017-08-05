@@ -13,11 +13,6 @@ public class Beam : MyMonoBehaviour
 
     private FixedUpdateAction updateAction;
 
-    //Figure out how to make this work.
-        //Also, Create a better hit animation. Where theres an explosion of lines from the hit point. The colors should be a little random, but mainly a specific color
-        //Crits are typically more deep red.
-        //Standard hits are oranges.
-        //Glances are yellowish.
     private LineRenderer lineRenderer;
     private Vector3[] linePositions;
 

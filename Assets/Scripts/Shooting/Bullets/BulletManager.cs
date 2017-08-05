@@ -43,6 +43,7 @@ public class BulletManager : ScriptableObject
         if (numberOfBullets <= 0)
             return new Bullet[0];
 
+        //TODO object pooling
         Bullet[] bulletSpawnInformation = new Bullet[numberOfBullets];
 
         for(int i = 0; i < numberOfBullets; i++)

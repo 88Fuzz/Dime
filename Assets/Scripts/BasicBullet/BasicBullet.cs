@@ -9,7 +9,7 @@ public abstract class BasicBullet : MyMonoBehaviour
     public float initialVelocity;
     public bool useGravity;
     public LayerMask layerMask;
-    public float damage;
+    public BulletHitInformation hitInformation;
 
     protected Vector3 velocity;
 
@@ -82,15 +82,30 @@ public abstract class BasicBullet : MyMonoBehaviour
         BulletFixedUpdate(myDeltaTime, timeScale);
     }
 
+    private void ColliderHit(Collider collider)
+    {
+        Hittable hittable = collider.gameObject.GetComponent<Hittable>();
+        if (hittable)
+        {
+            Vector3 hitPosition = collider.ClosestPointOnBounds(transform.position);
+            //TODO object pooling
+            ParticleSystem particleSystem = Instantiate<ParticleSystem>(hitInformation.ParticleSystem,hitPosition,Quaternion.identity,null);
+            particleSystem.transform.LookAt(transform);
+            Destroy(particleSystem, .5f);
+        }
+
+        ColliderHit(collider, collider.gameObject.GetComponent<Hittable>());
+    }
+
     /*
      * Get the LayerMask for determining hit collisions
      */
     protected abstract LayerMask GetLayerMask();
 
     /*
-     * Called when the bullet hits something.
+     * Called when the bullet hits something. Hittable is not null if the collider has a Hittable component.
      */
-    protected abstract void ColliderHit(Collider collider);
+    protected abstract void ColliderHit(Collider collider, Hittable hittable);
 
     /*
      * Called at the begininning of MyAwake

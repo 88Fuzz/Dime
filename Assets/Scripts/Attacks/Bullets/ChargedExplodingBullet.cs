@@ -48,17 +48,16 @@ public class ChargedExplodingBullet : BasicBullet
         fixedUpdateAction(myDeltaTime, timeScale);
     }
 
-    protected override void ColliderHit(Collider collider)
+    protected override void ColliderHit(Collider collider, Hittable hittable)
     {
-        Hittable hittable = collider.GetComponent<Hittable>();
+        if (fixedUpdateAction == MoveBulletToExpectedCollisionPoint)
+            StartExplosion();
+
         if (hittable)
-            hittable.Hit(damage);
+            hittable.Hit(hitInformation.Damage);
         //Do not do explosion if hitting anything other than a player
         else
             BulletDone();
-
-        if (fixedUpdateAction == MoveBulletToExpectedCollisionPoint)
-            StartExplosion();
     }
 
     private void DoNothingTimer(float myDeltaTime, float timeScale)

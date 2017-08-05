@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 //TODO, bullets should have a max amount of time to live
@@ -48,13 +47,12 @@ public class Bullet : BasicBullet
             SetRadius(newRadius);
     }
 
-    protected override void ColliderHit(Collider collider)
+    protected override void ColliderHit(Collider collider, Hittable hittable)
     {
-        Hittable hittable = collider.GetComponent<Hittable>();
         bool shouldDelete = true;
         if (hittable)
         {
-            bool hitKilled = hittable.Hit(damage);
+            bool hitKilled = hittable.Hit(hitInformation.Damage);
             if (hitKilled)
                 shouldDelete = OnEnemyKill(hittable);
             else 

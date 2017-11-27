@@ -14,6 +14,7 @@ public abstract class MyMonoBehaviour : MonoBehaviour
     private MyMonoBehaviourManager manager;
     private MyMonoBehaviour next;
     private bool myEnabled;
+    private bool destroyed;
 
     public MyMonoBehaviour Previous
     {
@@ -29,6 +30,7 @@ public abstract class MyMonoBehaviour : MonoBehaviour
 
     public void Awake()
     {
+        destroyed = false;
         previous = null;
         next = null;
         manager = Singleton<MyMonoBehaviourManager>.Instance;
@@ -71,9 +73,20 @@ public abstract class MyMonoBehaviour : MonoBehaviour
         MyFixedUpdateWithDeltaTime(Time.deltaTime * timeScale, timeScale);
     }
 
+    public void OnDestroy()
+    {
+        // TODO. I'm not a fan of how this on destroy stuff is structured with stupid flags and recurrsive calls.
+        // The reason the OnDestroy method is overloaded here is in the case where a MyMonoBehaviour has child MyMonoBehaviours and the parent is destroyed.
+        // How should the children MyMonoBehaviours handle the destroying? It seems like the parent should handle the destroying of children, but it first has
+        // to know about the children which can get messy. But is it more messy than what's currently going on?
+        MyDestroy();
+    }
+
     public void MyDestroy()
     {
-        //TODO is there a performance hit getting the Instance every time? I wouldn't think so
+        if (destroyed)
+            return;
+        destroyed = true;
         manager.DeregisterMyMonoBehavior(this);
         Destroy(gameObject);
     }

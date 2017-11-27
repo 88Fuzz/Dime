@@ -32,17 +32,18 @@ public class Spinner : MyMonoBehaviour
 
     protected override void MyAwake()
     {
+        if(spinDownRate > 0)
+            spinDownRate = -spinDownRate;
+
         spinSpeed = 0;
         spinChange = 0;
         fixedUpdateAction = DoNothing;
         waitEndTrigger = NoTrigger;
-        Debug.Log("IN here!!");
         StartBeamFire();
     }
 
     protected override void MyFixedUpdateWithDeltaTime(float myDeltaTime, float timeScale)
     {
-        Debug.Log("LOLOLOLOL " + fixedUpdateAction);
         fixedUpdateAction(myDeltaTime, timeScale);
     }
 
@@ -56,7 +57,6 @@ public class Spinner : MyMonoBehaviour
 
     private void WaitForBeamToBeFullForce(float myDeltaTime, float timeScale)
     {
-        Debug.Log("Shit balls!");
         bool beamsAtMax = true;
         foreach(Beam beam in beams)
         {
@@ -73,11 +73,9 @@ public class Spinner : MyMonoBehaviour
 
     private void StartBeamFire()
     {
-        Debug.Log("IN here!! 0");
         fixedUpdateAction = WaitForBeamToBeFullForce;
         foreach(Beam beam in beams)
         {
-        Debug.Log("IN here!! 1");
             beam.StartBeam();
         }
     }

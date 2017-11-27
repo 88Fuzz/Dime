@@ -19,60 +19,42 @@ public class Beam : MyMonoBehaviour
 
     protected override void MyAwake()
     {
+        if (widthShrinkRate > 0)
+            widthShrinkRate = -widthShrinkRate;
         //TODO object pooling
         linePositions = new Vector3[2];
         lineRenderer = GetComponentInChildren<LineRenderer>();
         updateAction = DoNothingAction;
-        SetWidth(width.max);
-        //SetInitialPositions();
-        //MyDisable();
-        //StartCoroutine(BringTheWidthDown());
+        SetWidth(width.min);
+        SetInitialPositions();
+        MyDisable();
     }
 
-    /*private void SetInitialPositions()
+    private void SetLineRendererPositions(Vector3 startPosition, Vector3 endPosition)
+    {
+        lineRenderer.SetPosition(0, startPosition);
+        lineRenderer.SetPosition(1, endPosition);
+    }
+
+    private void SetInitialPositions()
     {
         RaycastHit hitInfo;
         float currentWidth = GetWidth();
         Vector3 size = new Vector3(currentWidth / 2, Y_SIZE, currentWidth / 2);
-        Debug.Log("End position: " + (transform.position + transform.forward * MAX_DISTANCE));
-        Now the raycasts arent working :(
+        Vector3 startPosition;
+        Vector3 endPosition;
         if (Physics.Raycast(transform.position, transform.forward, out hitInfo, MAX_DISTANCE, initialLayerMaskCheck, QueryTriggerInteraction.Ignore))
         {
-            //TODO move this to common logic method
-            //TODO move this to common logic method
-            //TODO move this to common logic method
-            //TODO move this to common logic method
-            //TODO move this to common logic method
-            //TODO move this to common logic method
-            //TODO move this to common logic method
-            //TODO move this to common logic method
-            //TODO move this to common logic method
-            //TODO move this to common logic method
-            //TODO move this to common logic method
-            //TODO move this to common logic method
-            lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y, transform.position.z));
-            lineRenderer.SetPosition(1, new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z));
-            Debug.Log("In here mother fucker");
+            startPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            endPosition = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
         }
         else
         {
-            Vector3 fuck = transform.position + transform.forward * MAX_DISTANCE;
-            lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y, transform.position.z));
-            lineRenderer.SetPosition(1, fuck);
-            Debug.Log("Well shit");
+            startPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            endPosition = transform.position + transform.forward * MAX_DISTANCE;
         }
-    }*/
 
-    private IEnumerator BringTheWidthDown()
-    {
-        do
-        {
-            SetWidth(GetWidth() - 0.1f);
-            yield return null;
-        } while (GetWidth()> width.min);
-
-        SetWidth(width.min);
-        //StartBeam();
+        SetLineRendererPositions(startPosition, endPosition);
     }
 
     protected override void MyFixedUpdateWithDeltaTime(float myDeltaTime, float timeScale)
@@ -82,9 +64,7 @@ public class Beam : MyMonoBehaviour
 
     public bool AtMaxBeamWidth()
     {
-        return false;
-        //TODO this needs to be changed homie
-        //return GetWidth() >= width.max;
+        return GetWidth() >= width.max;
     }
 
     public bool AtMinBeamWidth()
@@ -94,11 +74,9 @@ public class Beam : MyMonoBehaviour
 
     public void StartBeam()
     {
-        Debug.Log("Starting the beammmmmmm");
         MyEnable();
         updateAction = ExpandBeamAction;
-        //SetWidth(width.min);
-        SetWidth(width.max);
+        SetWidth(width.min);
     }
 
     public void EndBeam()
@@ -109,7 +87,6 @@ public class Beam : MyMonoBehaviour
     private void ExpandBeamAction(float deltaTime, float timeScale)
     {
         float currentWidth = GetWidth();
-        Debug.Log("CURRENT WIDTH " + currentWidth);
         currentWidth += widthExpandRate * timeScale;
         if(currentWidth >= width.max)
         {
@@ -135,13 +112,12 @@ public class Beam : MyMonoBehaviour
 
     private void FullAttackBeamAction(float deltaTime, float timeScale)
     {
-        Debug.Log("Full on attacking!");
         ShootBeam();
     }
 
     private void ShootBeam()
     {
-        /*RaycastHit hitInfo;
+        RaycastHit hitInfo;
         float currentWidth = GetWidth();
         Vector3 size = new Vector3(currentWidth / 2, Y_SIZE, currentWidth / 2);
         Ray ray = new Ray(transform.position, transform.forward);
@@ -152,34 +128,23 @@ public class Beam : MyMonoBehaviour
         if(hittable)
             hittable.Hit(damage);
 
-        lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y, transform.position.z));
-        lineRenderer.SetPosition(1, new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z));*/
+        SetLineRendererPositions(new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z));
     }
 
     private void SetWidth(float width)
     {
-        //TODO AnimationCurve is a class and using new may not be good. Figure out a better way to handle this
-        //TODO you don't have to use new here. There's other ways of setting the curve but I don't remember how at the moment
-        //TODO you don't have to use new here. There's other ways of setting the curve but I don't remember how at the moment
-        //TODO you don't have to use new here. There's other ways of setting the curve but I don't remember how at the moment
-        //TODO you don't have to use new here. There's other ways of setting the curve but I don't remember how at the moment
-        //TODO you don't have to use new here. There's other ways of setting the curve but I don't remember how at the moment
-        //TODO you don't have to use new here. There's other ways of setting the curve but I don't remember how at the moment
-        //TODO you don't have to use new here. There's other ways of setting the curve but I don't remember how at the moment
-        //TODO you don't have to use new here. There's other ways of setting the curve but I don't remember how at the moment
-        //TODO you don't have to use new here. There's other ways of setting the curve but I don't remember how at the moment
-        //TODO you don't have to use new here. There's other ways of setting the curve but I don't remember how at the moment
-        //TODO you don't have to use new here. There's other ways of setting the curve but I don't remember how at the moment
-        //TODO you don't have to use new here. There's other ways of setting the curve but I don't remember how at the moment
-        //TODO you don't have to use new here. There's other ways of setting the curve but I don't remember how at the moment
-        //TODO you don't have to use new here. There's other ways of setting the curve but I don't remember how at the moment
-        Debug.Log("SET WIDTH " + width);
-        AnimationCurve curve = new AnimationCurve();
+        /*
+         * This line renderer is stupid as shit. It will sometimes ignore the requests to change the line width if you use start/endWidth methods.
+         * Using the AnimationCurve seems to work. I'm not 100% sure widthMultiplier will always work. But it seems to be. Keeping the AnimationCurve
+         * around because fuck line renderers.
+         */
+
+        /*AnimationCurve curve = new AnimationCurve();
         curve.AddKey(0, width);
         curve.AddKey(1, width);
-        lineRenderer.widthCurve = curve;
+        lineRenderer.widthCurve = curve;*/
 
-        //lineRenderer.widthMultiplier = width;
+        lineRenderer.widthMultiplier = width;
     }
 
     private float GetWidth()

@@ -85,7 +85,7 @@ public abstract class BasicBullet : MyMonoBehaviour
     private void ColliderHit(Collider collider)
     {
         Hittable hittable = collider.gameObject.GetComponent<Hittable>();
-        if (hittable)
+        if (hittable && hitInformation.ParticleSystem)
         {
             Vector3 hitPosition = collider.ClosestPointOnBounds(transform.position);
             //TODO object pooling

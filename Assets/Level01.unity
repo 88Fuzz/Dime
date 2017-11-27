@@ -421,13 +421,13 @@ GameObject:
   - component: {fileID: 325142347}
   - component: {fileID: 325142346}
   - component: {fileID: 325142350}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SpinnerTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &325142346
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -507,15 +507,15 @@ MonoBehaviour:
   killActions: []
   hitActions: []
   parentRoom: {fileID: 0}
-  maxHealth: 0
-  ySpawnOffset: 0
-  specialCharge: 0
+  maxHealth: 30
+  ySpawnOffset: 0.5
+  specialCharge: 3
   hitColor: {r: 1, g: 0, b: 0, a: 1}
-  hitColorFlashCount: 0
-  hitFlashSpeed: 0
-  hitColorFlashDuration: 0
+  hitColorFlashCount: 1
+  hitFlashSpeed: 10
+  hitColorFlashDuration: 0.2
   invulnerableWhenHit: 0
-  materialRenderer: {fileID: 0}
+  materialRenderer: {fileID: 325142346}
 --- !u!1001 &387765808
 Prefab:
   m_ObjectHideFlags: 0
@@ -613,7 +613,7 @@ GameObject:
   m_Component:
   - component: {fileID: 591641983}
   - component: {fileID: 591641984}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Beam (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -648,13 +648,16 @@ MonoBehaviour:
   timeScaleModifiers: []
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 3328
+  initialLayerMaskCheck:
+    serializedVersion: 2
+    m_Bits: 1280
   width:
-    min: 0
-    max: 0
-  widthExpandRate: 0
-  widthShrinkRate: 0
-  damage: 0
+    min: 0.1
+    max: 1
+  widthExpandRate: 0.01
+  widthShrinkRate: 0.02
+  damage: 10
 --- !u!1 &715432694
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,7 +720,7 @@ GameObject:
   m_Component:
   - component: {fileID: 734686751}
   - component: {fileID: 734686752}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Beam (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -752,13 +755,16 @@ MonoBehaviour:
   timeScaleModifiers: []
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 3328
+  initialLayerMaskCheck:
+    serializedVersion: 2
+    m_Bits: 1280
   width:
-    min: 0
-    max: 0
-  widthExpandRate: 0
-  widthShrinkRate: 0
-  damage: 0
+    min: 0.1
+    max: 1
+  widthExpandRate: 0.01
+  widthShrinkRate: 0.02
+  damage: 10
 --- !u!1 &843006709
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,7 +1040,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1070985661}
   - component: {fileID: 1070985662}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LineRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1216,7 +1222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1323168005}
   - component: {fileID: 1323168006}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LineRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2084,7 +2090,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1706542567}
   - component: {fileID: 1706542565}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2105,13 +2111,16 @@ MonoBehaviour:
   timeScaleModifiers: []
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 3328
+  initialLayerMaskCheck:
+    serializedVersion: 2
+    m_Bits: 1280
   width:
-    min: 0
-    max: 0
-  widthExpandRate: 0
-  widthShrinkRate: 0
-  damage: 0
+    min: 0.1
+    max: 1
+  widthExpandRate: 0.01
+  widthShrinkRate: 0.02
+  damage: 10
 --- !u!4 &1706542567
 Transform:
   m_ObjectHideFlags: 0
@@ -2229,7 +2238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1870729446}
   - component: {fileID: 1870729447}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LineRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2555,7 +2564,7 @@ GameObject:
   - component: {fileID: 2015848996}
   - component: {fileID: 2015848995}
   - component: {fileID: 2015848994}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SpinningBeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2590,14 +2599,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeScaleModifiers: []
-  maxSpinRate: 0
-  spinUpRate: 0
-  spinDownRate: 0
-  idleWaitTime: 0
-  beamWaitTime: 0
-  beamStartEndRate: 0
+  maxSpinRate: 100
+  spinUpRate: 2
+  spinDownRate: 1
+  idleWaitTime: 5
+  beamWaitTime: 5
+  beamStartEndRate: 5
   spinDirection: 0
-  beams: []
+  beams:
+  - {fileID: 1706542565}
+  - {fileID: 734686752}
+  - {fileID: 591641984}
 --- !u!23 &2015848995
 MeshRenderer:
   m_ObjectHideFlags: 0

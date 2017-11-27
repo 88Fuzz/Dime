@@ -114,7 +114,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 3328
-  damage: 15
+  damage: 10
   minimumTargetDistance: 0.1
   scanDistance: 40
   initalSize: 0.05

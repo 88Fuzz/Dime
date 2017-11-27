@@ -8,7 +8,6 @@ public abstract class MyMonoBehaviour : MonoBehaviour
 {
     protected delegate void FixedUpdateAction(float myDeltaTime, float timeScale);
 
-
     public List<TimeScaleModifier> timeScaleModifiers;
 
     private MyMonoBehaviour previous;
@@ -42,6 +41,8 @@ public abstract class MyMonoBehaviour : MonoBehaviour
 
     public void MyEnable()
     {
+        if(myEnabled)
+            return;
         manager.RegisterMyMonoBehavior(this);
         gameObject.SetActive(true);
         myEnabled = true;
@@ -49,6 +50,8 @@ public abstract class MyMonoBehaviour : MonoBehaviour
 
     public void MyDisable()
     {
+        if(!myEnabled)
+            return;
         manager.DeregisterMyMonoBehavior(this);
         gameObject.SetActive(false);
         myEnabled = false;

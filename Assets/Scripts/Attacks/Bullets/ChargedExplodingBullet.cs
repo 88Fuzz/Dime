@@ -9,6 +9,7 @@ public class ChargedExplodingBullet : BasicBullet
 {
     private delegate void FinishAction();
 
+    public float damage;
     public float minimumTargetDistance;
     public float scanDistance;
     public float initalSize;
@@ -41,6 +42,7 @@ public class ChargedExplodingBullet : BasicBullet
         SetRadius(initalSize);
         SetSizeModifierVariables(movementSize, initialSizeChange, IncreaseSize, StartMoving);
         distanceToHitPoint = -1;
+        hitInformation = new BulletHitInformation(null, damage);
     }
 
     protected override void BulletFixedUpdate(float myDeltaTime, float timeScale)

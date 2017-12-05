@@ -121,6 +121,7 @@ public class Beam : MyMonoBehaviour
         float currentWidth = GetWidth();
         Vector3 size = new Vector3(currentWidth / 2, Y_SIZE, currentWidth / 2);
         Ray ray = new Ray(transform.position, transform.forward);
+	    //TODO Yo, change this to raycasts at some point?
         if (!Physics.BoxCast(transform.position, size, transform.forward, out hitInfo, transform.rotation, MAX_DISTANCE, layerMask, QueryTriggerInteraction.Ignore))
             return;
 

@@ -39,7 +39,7 @@ public class Spinner : MyMonoBehaviour
         spinChange = 0;
         fixedUpdateAction = DoNothing;
         waitEndTrigger = NoTrigger;
-        StartBeamFire();
+        SetUpIdleWait();
     }
 
     protected override void MyFixedUpdateWithDeltaTime(float myDeltaTime, float timeScale)

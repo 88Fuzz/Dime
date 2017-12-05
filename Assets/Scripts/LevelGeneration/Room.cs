@@ -26,6 +26,7 @@ public class Room : MonoBehaviour
         if (!activeRoom)
             return;
 
+        Debug.Log("NumberOfEnemies: " + activeEnemies.Count);
         if (activeEnemies.Count == 0)
             DoClearActions();
     }
@@ -66,6 +67,7 @@ public class Room : MonoBehaviour
      */
     public void HittableKilled(Hittable hittable)
     {
+        Debug.Log("Called here fucker");
         activeEnemies.Remove(hittable);
     }
 

@@ -9,6 +9,7 @@ public abstract class MyMonoBehaviour : MonoBehaviour
     protected delegate void FixedUpdateAction(float myDeltaTime, float timeScale);
 
     public List<TimeScaleModifier> timeScaleModifiers;
+    public List<GameObjectDestroyed> onDestroyListeners;
 
     private MyMonoBehaviour previous;
     private MyMonoBehaviourManager manager;
@@ -36,6 +37,7 @@ public abstract class MyMonoBehaviour : MonoBehaviour
         manager = Singleton<MyMonoBehaviourManager>.Instance;
         //TODO object pooling
         timeScaleModifiers = new List<TimeScaleModifier>(3);
+        onDestroyListeners = new List<GameObjectDestroyed>(0);
         manager.RegisterMyMonoBehavior(this);
         myEnabled = true;
         MyAwake();
@@ -87,8 +89,20 @@ public abstract class MyMonoBehaviour : MonoBehaviour
         if (destroyed)
             return;
         destroyed = true;
+        if (onDestroyListeners.Count != 0)
+        {
+            foreach (GameObjectDestroyed listener in onDestroyListeners)
+            {
+                listener(gameObject);
+            }
+        }
         manager.DeregisterMyMonoBehavior(this);
         Destroy(gameObject);
+    }
+
+    public void RegisterOnDestroyListener(GameObjectDestroyed listener)
+    {
+        onDestroyListeners.Add(listener);
     }
 
     public virtual Vector3 GetPosition()

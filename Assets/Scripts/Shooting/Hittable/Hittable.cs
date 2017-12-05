@@ -19,7 +19,6 @@ public class Hittable : MonoBehaviour
 
     protected bool invulnerable;
     protected float currentHealth;
-    protected LayerMask enemyLayer;
     private Color baseColor;
     private MyMonoBehaviour myMonoBehaviour;
 
@@ -27,7 +26,6 @@ public class Hittable : MonoBehaviour
     {
         invulnerable = false;
         currentHealth = maxHealth;
-        enemyLayer = LayerMask.GetMask("Enemy");
         myMonoBehaviour = GetComponent<MyMonoBehaviour>();
     }
 

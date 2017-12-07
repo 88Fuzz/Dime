@@ -44,7 +44,9 @@ public class MobCircleOrchestrator : MyMonoBehaviour
     {
         if(mobCirclers.Count == 0)
         {
-            MyDestroy();
+            //Destroy the object as a hittable so that the kill message is sent
+            Hittable hittable = GetComponent<Hittable>();
+            hittable.Hit(1);
             return;
         }
 

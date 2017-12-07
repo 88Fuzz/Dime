@@ -24,6 +24,7 @@ public class Hittable : MonoBehaviour
 
     public void Awake()
     {
+        Singleton<EventManager>.Instance.PublishEvent(EventManager.EventName.HittableSpawned);
         invulnerable = false;
         currentHealth = maxHealth;
         myMonoBehaviour = GetComponent<MyMonoBehaviour>();
@@ -87,9 +88,7 @@ public class Hittable : MonoBehaviour
 
     protected virtual void DeadAction()
     {
-        if (parentRoom)
-            parentRoom.HittableKilled(this);
-
+        Singleton<EventManager>.Instance.PublishEvent(EventManager.EventName.HittableDestroyed);
         foreach(HittableKilledAction action in killActions)
         {
             action.HittableHasBeenKilled(this);

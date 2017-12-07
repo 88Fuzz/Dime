@@ -39,7 +39,6 @@ public class Spawner : EditorDebug
             Vector3 randomPosition = GetRandomPosition(hittable);
             GameObject newObject = Instantiate(hittable.gameObject, randomPosition, Quaternion.identity, null) as GameObject;
             Hittable newHittable = newObject.GetComponent<Hittable>();
-            parentRoom.activeEnemies.Add(newHittable);
             if (newHittable)
                 newHittable.parentRoom = parentRoom;
         }

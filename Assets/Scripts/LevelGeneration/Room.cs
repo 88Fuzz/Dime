@@ -15,19 +15,24 @@ public class Room : MonoBehaviour
     public Hittable[] enemies;
     public Transform spawnPosition = null;
     public Room nextRoom = null;
-    public HashSet<Hittable> activeEnemies;
 
     private bool roomCleared = false;
     //ActiveRoom means the player is currently in the room.
     private bool activeRoom = false;
+    private int numberOfEnemiesSpawned;
+
+    public void Awake()
+    {
+        numberOfEnemiesSpawned = 0;
+    }
 
     public void FixedUpdate()
     {
-        if (!activeRoom)
+        if(!activeRoom)
             return;
 
-        Debug.Log("NumberOfEnemies: " + activeEnemies.Count);
-        if (activeEnemies.Count == 0)
+        Debug.Log("Number of enemies: " + numberOfEnemiesSpawned);
+        if(numberOfEnemiesSpawned == 0)
             DoClearActions();
     }
 
@@ -62,20 +67,13 @@ public class Room : MonoBehaviour
             spawnAction.OnRoomActivated(this);
     }
 
-    /*
-     * Removed the Hittable from the set of enemies in the room.
-     */
-    public void HittableKilled(Hittable hittable)
-    {
-        Debug.Log("Called here fucker");
-        activeEnemies.Remove(hittable);
-    }
-
     public void DoClearActions()
     {
         if (roomCleared)
             return;
 
+        Singleton<EventManager>.Instance.DeregisterListener(EventManager.EventName.HittableSpawned, EventPublished);
+        Singleton<EventManager>.Instance.DeregisterListener(EventManager.EventName.HittableDestroyed, EventPublished);
         roomCleared = true;
         foreach (RoomClearAction clearAction in commonRoomActions.clearActions)
             clearAction.OnRoomClear(this);
@@ -111,13 +109,40 @@ public class Room : MonoBehaviour
         activeRoom = false;
     }
 
+    public void EventPublished(EventManager.EventName eventName)
+    {
+        //The way events are triggered and when a room becomes active seems to be fucking up?
+            //I think there is and order of operations that is making things break
+
+            //This did not fix anything. There is still broken spawning. Try debugging and see where stuff is being spawned.
+            //Also it looks the order in which common room actions take place are variable?
+        Debug.Log("Received publish event! " + eventName);
+        switch(eventName)
+        {
+            case EventManager.EventName.HittableSpawned:
+                numberOfEnemiesSpawned++;
+                break;
+            case EventManager.EventName.HittableDestroyed:
+                numberOfEnemiesSpawned--;
+                break;
+            default:
+                //Do nothing.
+                break;
+        }
+    }
+
     //TODO does this need to have an OnTriggerExit to deactivate the room????? Or will that be handled by the room turning "grey" once the player leaves
     public void OnTriggerEnter(Collider other)
     {
+        Singleton<EventManager>.Instance.RegisterListener(EventManager.EventName.HittableSpawned, EventPublished);
+        Singleton<EventManager>.Instance.RegisterListener(EventManager.EventName.HittableDestroyed, EventPublished);
         //TODO check if the other is the player!
         activeRoom = true;
         foreach (RoomStartAction startAction in commonRoomActions.playerEnterActions)
+        {
             startAction.OnPlayerEnter(this);
+            Debug.Log("Here it is: " + startAction);
+        }
         foreach(RoomStartAction startAction in startActions)
             startAction.OnPlayerEnter(this);
     }

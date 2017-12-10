@@ -29,6 +29,7 @@ public class MobCircleOrchestrator : MyMonoBehaviour
         else
         {
             targetTransform = transform;
+            Debug.Log("Yo, I can't find a damn target to hit :(");
         }
 
         for(int i=0; i<numberOfMobs; i++)

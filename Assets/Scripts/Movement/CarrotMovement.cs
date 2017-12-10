@@ -26,12 +26,12 @@ public class CarrotMovement : MyMonoBehaviour
     public float targetCheckRadius;
     [Range(0,1)]
     public float anticipationMovePercent;
+    public float maxSpeed;
+    public float maxAcceleration;
 
     private Animator animator;
     private SphereCollider sphereCollider;
     private UnityEngine.AI.NavMeshAgent navMeshAgent;
-    public float maxSpeed;
-    public float maxAcceleration;
     private float timer;
     private float anticipationMoveWaitTime;
     private float waitTime;

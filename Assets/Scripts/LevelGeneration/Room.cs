@@ -31,7 +31,6 @@ public class Room : MonoBehaviour
         if(!activeRoom)
             return;
 
-        Debug.Log("Number of enemies: " + numberOfEnemiesSpawned);
         if(numberOfEnemiesSpawned == 0)
             DoClearActions();
     }
@@ -111,12 +110,6 @@ public class Room : MonoBehaviour
 
     public void EventPublished(EventManager.EventName eventName)
     {
-        //The way events are triggered and when a room becomes active seems to be fucking up?
-            //I think there is and order of operations that is making things break
-
-            //This did not fix anything. There is still broken spawning. Try debugging and see where stuff is being spawned.
-            //Also it looks the order in which common room actions take place are variable?
-        Debug.Log("Received publish event! " + eventName);
         switch(eventName)
         {
             case EventManager.EventName.HittableSpawned:
@@ -141,7 +134,6 @@ public class Room : MonoBehaviour
         foreach (RoomStartAction startAction in commonRoomActions.playerEnterActions)
         {
             startAction.OnPlayerEnter(this);
-            Debug.Log("Here it is: " + startAction);
         }
         foreach(RoomStartAction startAction in startActions)
             startAction.OnPlayerEnter(this);

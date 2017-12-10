@@ -6,7 +6,6 @@ public class MobCircler : MyMonoBehaviour
     public Vector3 targetLocation;
     public Transform lookAtTarget;
     public float targetYOffset;
-    public float minimumDistance;
 
     private Rigidbody rb;
 

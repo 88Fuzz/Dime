@@ -33,14 +33,12 @@ public class EventManager : MonoBehaviour
 
     public void RegisterListener(EventName eventName, EventListener listener)
     {
-        Debug.Log("Requesting to be a listener to event: " + eventName + " and listener " + listener);
         List<EventListener> listeners = eventListeners[eventName];
         listeners.Add(listener);
     }
 
     public void DeregisterListener(EventName eventName, EventListener listener)
     {
-        Debug.Log("Requesting to no longer be a listener to event: " + eventName + " and listener " + listener);
         List<EventListener> listeners = eventListeners[eventName];
         listeners.RemoveAll(item => (item == listener));
     }
@@ -48,7 +46,6 @@ public class EventManager : MonoBehaviour
     public void PublishEvent(EventName eventName)
     {
         List<EventListener> listeners = eventListeners[eventName];
-        Debug.Log("Event that has been published: " + eventName + " number of listeners: " + listeners.Count);
         foreach(EventListener listener in listeners)
         {
             listener(eventName);

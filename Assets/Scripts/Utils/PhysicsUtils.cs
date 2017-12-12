@@ -93,4 +93,19 @@ public class PhysicsUtils
 
         return new InterceptData(bulletVelocity, collisionPoint, true);
     }
+
+    public static Vector3 GetVelocityVector(Vector3 currentPosition, Vector3 targetPosition, float moveSpeed, bool ignoreYDirection)
+    {
+        Vector3 directionToTarget = targetPosition - currentPosition;
+        if(ignoreYDirection)
+            directionToTarget.y = 0;
+
+        return directionToTarget.normalized * moveSpeed;
+    }
+
+    public static Vector3 GetNewPosition(Vector3 currentPosition, Vector3 velocity, float deltaTime)
+    {
+        Vector3 moveDistance = velocity * deltaTime;
+        return currentPosition + moveDistance;
+    }
 }

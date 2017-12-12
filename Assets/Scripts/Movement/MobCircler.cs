@@ -12,10 +12,12 @@ public class MobCircler : MyMonoBehaviour
     protected override void MyAwake()
     {
         rb = GetComponent<Rigidbody>();
+        transform.LookAt(lookAtTarget);
     }
 
     protected override void MyFixedUpdateWithDeltaTime(float myDeltaTime, float timeScale)
     {
+        //TODO replace this shit with PhysicsUtils methods
         Vector3 differenceToTarget = targetLocation - transform.position;
         differenceToTarget.y = 0;
         Vector3 velocity = moveSpeed * differenceToTarget.normalized;

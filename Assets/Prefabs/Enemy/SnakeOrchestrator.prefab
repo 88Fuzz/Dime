@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1091456477144984}
+  m_IsPrefabParent: 1
+--- !u!1 &1091456477144984
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4405604312886312}
+  - component: {fileID: 114248273547484830}
+  - component: {fileID: 114681388321187676}
+  m_Layer: 9
+  m_Name: SnakeOrchestrator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4405604312886312
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1091456477144984}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114248273547484830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1091456477144984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af0ad3cdb0d5aef46b54be9741414319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  killActions: []
+  hitActions: []
+  parentRoom: {fileID: 0}
+  maxHealth: 0
+  ySpawnOffset: 1
+  specialCharge: 0
+  hitColor: {r: 1, g: 0, b: 0, a: 1}
+  hitColorFlashCount: 0
+  hitFlashSpeed: 0
+  hitColorFlashDuration: 0
+  invulnerableWhenHit: 0
+  materialRenderer: {fileID: 0}
+--- !u!114 &114681388321187676
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1091456477144984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db12c999ae8a9d4aaef042bf09bf73e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeScaleModifiers: []
+  numberOfNodes:
+    min: 3
+    max: 11
+  snake: {fileID: 114360039085227598, guid: c6f5aa3f1ee290142a7231c4353357b1, type: 2}

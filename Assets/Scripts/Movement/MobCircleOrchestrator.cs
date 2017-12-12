@@ -35,7 +35,6 @@ public class MobCircleOrchestrator : MyMonoBehaviour
         for(int i=0; i<numberOfMobs; i++)
         {
             MobCircler mobCircler = Instantiate(prefab, transform);
-            mobCircler.lookAtTarget = targetTransform;
             mobCircler.RegisterOnDestroyListener(MobCircleDestroyed);
             mobCirclers.Add(mobCircler);
         }

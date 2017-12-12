@@ -105,6 +105,11 @@ public abstract class MyMonoBehaviour : MonoBehaviour
         onDestroyListeners.Add(listener);
     }
 
+    public void DeregisterOnDestroyListener(GameObjectDestroyed listener)
+    {
+        onDestroyListeners.RemoveAll(item => (item == listener));
+    }
+
     public virtual Vector3 GetPosition()
     {
         return transform.position;

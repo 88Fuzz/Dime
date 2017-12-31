@@ -125,6 +125,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   killActions: []
   hitActions: []
+  hittableSpawnArea:
+    halfDimentions: {x: 0.5, y: 0.5, z: 0.5}
   parentRoom: {fileID: 0}
   maxHealth: 30
   ySpawnOffset: 0

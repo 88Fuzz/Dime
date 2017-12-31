@@ -3,8 +3,15 @@ using System.Collections;
 
 public class Hittable : MonoBehaviour
 {
+    [System.Serializable]
+    public struct HittableSpawnArea
+    {
+        public Vector3 halfDimentions;
+    }
+
     public HittableKilledAction[] killActions;
     public HittableHitAction[] hitActions;
+    public HittableSpawnArea hittableSpawnArea;
     public Room parentRoom = null;
     public float maxHealth;
     public float ySpawnOffset;

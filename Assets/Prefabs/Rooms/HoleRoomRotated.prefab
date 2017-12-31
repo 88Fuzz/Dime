@@ -1557,6 +1557,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   size: {x: 10, y: 20}
+  unspawnableLayer:
+    serializedVersion: 2
+    m_Bits: 9472
 --- !u!114 &114297020594540736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1672,6 +1675,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   size: {x: 20, y: 10}
+  unspawnableLayer:
+    serializedVersion: 2
+    m_Bits: 9472
 --- !u!114 &114556406798386554
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1685,6 +1691,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   size: {x: 20, y: 10}
+  unspawnableLayer:
+    serializedVersion: 2
+    m_Bits: 9472
 --- !u!114 &114671568819300624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1698,6 +1707,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   size: {x: 10, y: 20}
+  unspawnableLayer:
+    serializedVersion: 2
+    m_Bits: 9472
 --- !u!114 &114811830065623058
 MonoBehaviour:
   m_ObjectHideFlags: 1

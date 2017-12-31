@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /*
  * Takes all the Enemies that correspond to a room and spawns them in the room.

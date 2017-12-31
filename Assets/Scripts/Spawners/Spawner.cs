@@ -8,9 +8,17 @@ public class Spawner : EditorDebug
     //In case a spawner is up against a door the player will enter, it can be deactivated so that enemies don't spawn on top of the player.
     public bool active;
     public Vector2 size;
+    public LayerMask unspawnableLayer;
 
     private Range xRange;
     private Range zRange;
+    private Collider[] colliders;
+
+    public void Awake()
+    {
+        //TODO object pooling
+        colliders = new Collider[1];
+    }
 
     /*
      * The room can be rotated any direction, which would cause the original orientation of the size to not be rotated.
@@ -36,7 +44,11 @@ public class Spawner : EditorDebug
     {
         if (active)
         {
-            Vector3 randomPosition = GetRandomPosition(hittable);
+            Vector3 randomPosition;
+            do
+            {
+                randomPosition = GetRandomPosition(hittable);
+            } while (!ValidatePosition(randomPosition, hittable));
             GameObject newObject = Instantiate(hittable.gameObject, randomPosition, Quaternion.identity, null) as GameObject;
             Hittable newHittable = newObject.GetComponent<Hittable>();
             if (newHittable)
@@ -44,6 +56,11 @@ public class Spawner : EditorDebug
         }
 
         return active;
+    }
+
+    private bool ValidatePosition(Vector3 randomPosition, Hittable hittable)
+    {
+        return Physics.OverlapBoxNonAlloc(randomPosition, hittable.hittableSpawnArea.halfDimentions, colliders, Quaternion.identity, unspawnableLayer, QueryTriggerInteraction.Ignore) == 0;
     }
 
     private Vector3 GetRandomPosition(Hittable hittable)
@@ -54,7 +71,6 @@ public class Spawner : EditorDebug
 
     private float GetSpawnPosition(Range range)
     {
-        //TODO this shouldn't be using the levelRNG, but instead the any use RNG?
         return LevelRandomNumberGenerator.levelRNG.GetValueInRange(range);
     }
 

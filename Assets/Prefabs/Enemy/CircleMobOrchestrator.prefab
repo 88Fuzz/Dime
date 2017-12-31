@@ -76,9 +76,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   killActions: []
   hitActions: []
+  hittableSpawnArea:
+    halfDimentions: {x: 0, y: 0, z: 0}
   parentRoom: {fileID: 0}
   maxHealth: 0
-  ySpawnOffset: 0
+  ySpawnOffset: 1
   specialCharge: 0
   hitColor: {r: 1, g: 0, b: 0, a: 1}
   hitColorFlashCount: 0

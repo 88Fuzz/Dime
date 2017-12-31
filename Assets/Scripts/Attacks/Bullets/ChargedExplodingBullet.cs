@@ -12,7 +12,6 @@ public class ChargedExplodingBullet : BasicBullet
     public float damage;
     public float minimumTargetDistance;
     public float scanDistance;
-    public float initalSize;
     public float movementSize;
     public float explosionSize;
     public float initialSizeChange;
@@ -39,7 +38,6 @@ public class ChargedExplodingBullet : BasicBullet
         colliderResults = new Collider[1];
         useGravity = false;
         currentLayerMask = targetMask;
-        SetRadius(initalSize);
         SetSizeModifierVariables(movementSize, initialSizeChange, IncreaseSize, StartMoving);
         distanceToHitPoint = -1;
         hitInformation = new BulletHitInformation(null, damage);

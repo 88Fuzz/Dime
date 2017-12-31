@@ -7,7 +7,6 @@ public class RandomWaitTimeShooter: MyMonoBehaviour
 {
     public Range waitTimeRange;
     public Transform attackPosition;
-    //public BasicBullet bullet;
     public AttackManager attackManager;
 
     private float waitTime;

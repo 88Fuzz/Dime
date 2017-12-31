@@ -77,6 +77,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeScaleModifiers: []
   numberOfNodes:
-    min: 3
-    max: 11
+    min: 4
+    max: 8
   snake: {fileID: 114360039085227598, guid: c6f5aa3f1ee290142a7231c4353357b1, type: 2}

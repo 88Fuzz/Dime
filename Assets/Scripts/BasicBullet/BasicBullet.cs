@@ -7,6 +7,7 @@ public abstract class BasicBullet : MyMonoBehaviour
 {
     private static readonly float MINIMUM_DISTANCE = .1f;
     public float initialVelocity;
+    public float initialSize;
     public bool useGravity;
     public LayerMask layerMask;
     public BulletHitInformation hitInformation;
@@ -44,9 +45,8 @@ public abstract class BasicBullet : MyMonoBehaviour
 
     protected override void MyAwake()
     { 
+        SetRadius(initialSize);
         BulletInit();
-        //TODO is GetComponent expensive to do everytime things are initialized?
-        //TODO I could just make it a public variable to have set in the prefab?
         bulletRigidbody = GetComponent<Rigidbody>();
         //TODO some kind of object pooling
         colliders = new Collider[1];

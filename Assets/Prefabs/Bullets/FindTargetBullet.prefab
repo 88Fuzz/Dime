@@ -9,33 +9,34 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1448796958083082}
+  m_RootGameObject: {fileID: 1183111707209020}
   m_IsPrefabParent: 1
---- !u!1 &1448796958083082
+--- !u!1 &1183111707209020
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4011292331657160}
-  - component: {fileID: 33636987279837582}
-  - component: {fileID: 23702047334328846}
-  - component: {fileID: 54942129833127888}
-  - component: {fileID: 114115010074285082}
+  - component: {fileID: 4635697283102806}
+  - component: {fileID: 33455670253323512}
+  - component: {fileID: 135709067846731964}
+  - component: {fileID: 23666334711384524}
+  - component: {fileID: 114451644956351636}
+  - component: {fileID: 54271579652544480}
   m_Layer: 17
-  m_Name: ChargedExplodingBullet
+  m_Name: FindTargetBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4011292331657160
+--- !u!4 &4635697283102806
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1448796958083082}
+  m_GameObject: {fileID: 1183111707209020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -43,20 +44,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23702047334328846
+--- !u!23 &23666334711384524
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1448796958083082}
+  m_GameObject: {fileID: 1183111707209020}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 0
+  m_ReceiveShadows: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 17a4ccc17809bc54db066d4d6ca4865b, type: 2}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -75,19 +76,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33636987279837582
+--- !u!33 &33455670253323512
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1448796958083082}
+  m_GameObject: {fileID: 1183111707209020}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54942129833127888
+--- !u!54 &54271579652544480
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1448796958083082}
+  m_GameObject: {fileID: 1183111707209020}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -97,33 +98,38 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114115010074285082
+--- !u!114 &114451644956351636
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1448796958083082}
+  m_GameObject: {fileID: 1183111707209020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e25af4ed633b2a428e5f26dfeefcdb6, type: 3}
+  m_Script: {fileID: 11500000, guid: b9068500c34151041a071c1a70c94d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timeScaleModifiers: []
-  initialVelocity: 35
-  initialSize: 0.05
-  useGravity: 0
+  initialVelocity: 25
+  initialSize: 0.5
+  useGravity: 1
   layerMask:
     serializedVersion: 2
     m_Bits: 3328
-  damage: 10
-  minimumTargetDistance: 0.1
-  scanDistance: 40
-  movementSize: 0.5
-  explosionSize: 2.5
-  initialSizeChange: 0.7
-  explosionSizeChange: 30
-  explosionWaitTime: 0.1
-  deflationWaitTime: 0.2
+  scanDistance: 100
   targetMask:
     serializedVersion: 2
     m_Bits: 2048
+  damage: 10
+--- !u!135 &135709067846731964
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1183111707209020}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

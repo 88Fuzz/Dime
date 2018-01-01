@@ -52,6 +52,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floorInformation: {fileID: 11400000, guid: 5133e7b1de157c744beaf9ff533af0c4, type: 2}
-  initialRoomCount: 1
+  initialRoomCount: 2
   randomUnconnectedDoorTryCount: 20
   randomRoomTryCount: 20

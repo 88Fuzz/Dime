@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33222859290079744}
   - component: {fileID: 64847884186545506}
   - component: {fileID: 23569756294439062}
+  - component: {fileID: 114341749464436604}
   m_Layer: 10
   m_Name: ClosedDoor
   m_TagString: Untagged
@@ -95,3 +96,18 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114341749464436604
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1401143226448836}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ab0d991dae4fc4e929344967de4288, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPosition: 0
+  movePercent: 0
+  minimumPositionTolerance: 0
+  eventName: 0

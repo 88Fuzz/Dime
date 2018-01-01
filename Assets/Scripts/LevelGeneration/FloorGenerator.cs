@@ -40,7 +40,6 @@ public class FloorGenerator : MonoBehaviour
 
         GameObject spawnRoomGameObject = Instantiate(floorInformation.GetRandomSpawnRoom().gameObject, Vector3.zero, Quaternion.identity);
         spawnRoomGameObject.name = "SpawnRoom";
-        //startRoom = roomGameObject;
         spawnRoomGameObject.transform.parent = gameObject.transform;
         Room spawnRoom = spawnRoomGameObject.GetComponent<Room>();
         GridGenerator gridGenerator = spawnRoomGameObject.GetComponent<GridGenerator>();
@@ -64,29 +63,8 @@ public class FloorGenerator : MonoBehaviour
         }
         lastRoom = previousRoom;
 
-        //process doors
-        /*for (int i = 0; i < rooms.Count; i++)
-        {
-            for (int j = 0; j < rooms[i].doors.Count; j++)
-            {
-                if (rooms[i].doors[j].door == null)
-                {
-                    Door d = ((GameObject)Instantiate(data.sets[dungeonSet].doors[0].gameObject)).GetComponent<Door>();
-                    doors.Add(d);
-                    rooms[i].doors[j].door = d;
-                    rooms[i].doors[j].sharedDoor.door = d;
-                    //
-                    d.gameObject.transform.position = rooms[i].doors[j].transform.position;
-                    d.gameObject.transform.rotation = rooms[i].doors[j].transform.rotation;
-                    d.gameObject.transform.parent = this.gameObject.transform;
-                }
-            }
-        }*/
-        //locked doors and keys, etc come next. 
-
         spawnRoom.LevelGenerationDone(floorInformation.unusedDoor);
         GenerationComplete(spawnRoom);
-        //Debug.Log("DungeonGenerator::Generation completed : " + DDebugTimer.Lap() + "ms");
     }
 
     public Room GenerateNeighborRooms(Room processRoom) {
@@ -141,8 +119,8 @@ public class FloorGenerator : MonoBehaviour
 
         AddAllGridCells(possibleRoomObject.GetComponent<GridGenerator>().gridCells);
         Room newRoom = possibleRoomObject.GetComponent<Room>();
-        newDoors.sourceDoor.ConnectDoor(floorInformation.closedDoor, newDoors.destinationDoor, false);
-        newDoors.destinationDoor.ConnectDoor(floorInformation.closedDoor, newDoors.sourceDoor, true);
+        newDoors.sourceDoor.ConnectDoor(floorInformation.closedDoor, newDoors.destinationDoor, true);
+        newDoors.destinationDoor.ConnectDoor(floorInformation.closedDoor, newDoors.sourceDoor, false);
         newRoom.LevelGenerationDone(floorInformation.unusedDoor);
 
         return newRoom;

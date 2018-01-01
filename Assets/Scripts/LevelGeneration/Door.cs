@@ -32,16 +32,29 @@ public class Door : MonoBehaviour
 
     public void ConnectDoor(GameObject doorObject, Door otherDoor, bool isEnterance)
     {
+        ApplyDoorObject(doorObject);
         this.isEnterance = isEnterance;
         isConnected = true;
         connectedDoor = otherDoor;
-        ApplyDoorObject(doorObject);
     }
 
     public void ApplyDoorObject(GameObject doorObject)
     {
+        /*
+         * If the door is not null, that means it is either
+         * 1) a wall not connected to another room
+         * 2) an actual door connected to another room
+         *
+         * In the case of:
+         * 1) we are now connecting the fake wall to another room and should delete it.
+         * 2) We are trying to connect the room that is already connected to this current room and should do nothing.
+         */
         if (door != null)
+        {
+            if (isConnected)
+                return;
             Destroy(door);
+        }
 
         door = Instantiate(doorObject, transform);
         door.transform.position = new Vector3(transform.position.x, transform.position.y + DOOR_SIZE / 2, transform.position.z);
@@ -52,5 +65,10 @@ public class Door : MonoBehaviour
         //3) Look at how the original FloorGenerator algorithm does the normalize angle thing. It does something that may be of use here.
         int yRotation = 90;
         door.transform.localEulerAngles = new Vector3(0, yRotation, 0);
+    }
+
+    public FloatUp GetDoorFloatUp()
+    {
+        return door.GetComponent<FloatUp>();
     }
 }

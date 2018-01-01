@@ -15,8 +15,13 @@ public class EventManager : MonoBehaviour
 {
     public enum EventName
     {
+        //Hittable events
         HittableSpawned,
-        HittableDestroyed
+        HittableDestroyed,
+        //Room events
+        RoomCleared,
+        RoomPieceSpawned,
+        RoomSpawned
     }
     public delegate void EventListener(EventName eventName);
 

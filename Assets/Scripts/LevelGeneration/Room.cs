@@ -13,6 +13,7 @@ public class Room : MonoBehaviour
     public Door[] doors;
     public Spawner[] spawners;
     public Hittable[] enemies;
+    public List<FloatUp> floatUpItems;
     public Transform spawnPosition = null;
     public Room nextRoom = null;
 
@@ -42,7 +43,7 @@ public class Room : MonoBehaviour
     {
         foreach(Door door in doors)
         {
-            if (door.isConnected)
+            if(door.isConnected)
                 continue;
 
             door.ApplyDoorObject(unusedDoorObject);
@@ -59,6 +60,24 @@ public class Room : MonoBehaviour
      */
     public void RoomActivated()
     {
+        foreach(Door door in doors)
+        {
+            floatUpItems.Add(door.GetDoorFloatUp());
+        }
+
+        foreach(FloatUp floatUp in floatUpItems)
+        {
+            floatUp.gameObject.SetActive(true);
+            floatUp.enabled = true;
+            floatUp.targetPosition = floatUp.transform.position.y;
+            floatUp.transform.position = new Vector3(floatUp.transform.position.x,
+                floatUp.transform.position.y - RandomNumberGeneratorUtils.unityRNG.GetValueInRange(100, 1000),
+                floatUp.transform.position.z);
+            floatUp.eventName = EventManager.EventName.RoomPieceSpawned;
+            floatUp.minimumPositionTolerance = .1f;
+            floatUp.movePercent = 3;
+        }
+
         foreach (RoomSpawnAction spawnAction in commonRoomActions.spawnActions)
             spawnAction.OnRoomActivated(this);
 
